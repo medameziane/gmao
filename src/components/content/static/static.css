@@ -1,0 +1,113 @@
+/* Start edit header content */
+.header-content {
+  background: var(--card-color);
+  padding: var(--padding-inside);
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.header-content .date-area input {
+  padding: var(--padding-inside);
+  border: none;
+  outline: none;
+  font-size: 15px;
+  color: var(--title-color);
+  border-radius: 5px;
+  background: var(--bg-color);
+}
+.header-content .title-content {
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--title-color);
+  text-transform:uppercase;
+}
+
+/* Start edit header routes */
+.header-routes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card-color);
+  padding: 5px var(--padding-inside);
+  margin: 5px 0;
+}
+.header-routes .routes-content,
+.header-routes .routes-content a{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.routes-content a:not(:last-child):after{
+  content: '\003E';
+  color: #000;
+  font-size: 20px;
+}
+.header-routes .btn-action {
+  margin: 0;
+  background: red;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+.header-routes .btn-action i{
+  font-size: 20px;
+}
+
+/* Confirm Delete Item */
+.confirm-delete,.success-action{
+  width: 400px;
+  background: var(--bg-color);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px var(--padding-inside);
+  text-align: center;
+  border-radius: 10px;
+  position: fixed;
+  z-index: 9999;
+  transform: translate(50%,-200%);
+  right: 50%;
+  opacity: 0;
+  transition: var(--transition-time);
+}
+.confirm-delete.show,
+.success-action.show{
+  opacity: 1;
+  transform: translate(50%,50%);
+}
+.confirm-delete i{
+  color: red;
+  font-size: 40px;
+}
+.confirm-delete h2,
+.success-action h2{
+  color: var(--title-color);
+  font-size: 18px;
+}
+.confirm-delete .delete-actions{
+  display: flex;
+  gap: 35px;
+}
+.confirm-delete .delete-actions .confirm{
+  background-color: red;
+}
+.confirm-delete .delete-actions .cancel{
+  background-color: var(--main-color);
+}
+
+/* Success Action */
+.success-action{
+  height: 200px;
+}
+.success-action h2{
+  font-size: 23px;
+}
+.success-action i{
+  color: green;
+  font-size: 55px;
+}

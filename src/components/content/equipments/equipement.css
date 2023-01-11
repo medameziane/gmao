@@ -1,0 +1,47 @@
+/* Start Edit Equipement Section */
+.equipement-section {
+  position: relative;
+}
+.equipement-section .add-form{
+  position: fixed;
+  left: 50%;
+  top: 70px;
+  transform: translateX(-500%);
+  opacity: 0;
+}
+.showEquipementForm{
+  transform: translateX(-50%) !important;
+  opacity: 1 !important;
+}
+.equipement-section .equipement-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  gap: 10px;
+  margin: 10px 0;
+  background-color: var(--card-color);
+  padding: 5px;
+}
+.equipement-section .equipement-content .box-content{
+  padding: 0;
+  background: var(--bg-color);
+}
+.equipement-section .equipement-content .box-content .box-description {
+  color: var(--text-color);
+}
+.equipement-section .equipement-content .box-content .box-body .box-hero{
+  position: relative;
+}
+.equipement-section .equipement-content .box-content .box-body img{
+  height: 190px;
+}
+.equipement-section .equipement-content .box-content .box-title {
+  position: absolute;
+  bottom: 3px;
+  color: #fff;
+  padding: 0 5px;
+  background: linear-gradient(to bottom,rgba(0,0,0,0) 10%,rgba(0,0,0,.5));
+  width: 100%;
+}
+.equipement-section .equipement-content .box-content .box-info{
+  padding: 0 5px;
+}

@@ -1,0 +1,33 @@
+.task-section .list-tasks .task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.task-section .list-tasks .task .task-header{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.task-section .list-tasks .task .task-header .task-icon{
+  font-size: 18px;
+  color: var(--main-color);
+}
+.task-section .list-tasks .task .task-header .task-title{
+  font-size: 18px;
+}
+.task-section .list-tasks .task .list-actions{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.task-section .add-form{
+  position: fixed;
+  right: 0;
+  top: 70px;
+  transform: translateX(100%);
+  opacity: 0;
+}
+.task-section .add-form.showTaskForm {
+  transform: translateX(0px);
+  opacity: 1;
+}
