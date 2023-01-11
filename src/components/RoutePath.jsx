@@ -5,6 +5,8 @@ import Header from './header/Header'
 import Dash from './content/dashboard/Dash'
 import Equipement from './content/equipments/Equipement'
 import Task from './content/tasks/Task'
+import Activity from './content/activities/Activity'
+import Technician from './content/technician/Technician'
 
 function RoutePath() {
   return (
@@ -20,6 +22,8 @@ function RoutePath() {
               <Route path="/" element={<Dash />} />
               <Route path="/equipment" element={<Equipement />} />
               <Route path="/task" element={<Task />} />
+              <Route path="/activity" element={<Activity />} />
+              <Route path="/technician" element={<Technician />} />
             </Routes>
           </div>
         </div>

@@ -22,8 +22,10 @@ function Sidebar() {
             <Link to="/"><span className="link-name"> <i className="fa-solid fa-house"></i> Dashboard</span></Link>
           </li>
 
-          <li className="nav-link"><Link to="/equipment"><span className="link-name">Equipements</span></Link></li>
-          <li className="nav-link"><Link to="/task"><span className="link-name">Tasks</span></Link></li>
+          <li className="nav-link"><Link to="/equipment"><span className="link-name"><i className="fa-solid fa-dharmachakra"></i> Equipements</span></Link></li>
+          <li className="nav-link"><Link to="/task"><span className="link-name"><i className="fa-solid fa-calendar-check"></i> Tâches</span></Link></li>
+          <li className="nav-link"><Link to="/technician"><span className="link-name"><i className="fa-solid fa-users"></i> Techniciens</span></Link></li>
+          <li className="nav-link"><Link to="/activity"><span className="link-name"><i className="fa-solid fa-screwdriver-wrench"></i> Activités</span></Link></li>
           
           {/* <li className="nav-link" onClick={ShowMenu}><Link to="#"><span className="link-name"><i className="fa-solid fa-user"></i>Users</span> <i className="fa-solid fa-chevron-right arrow"></i></Link>
             <ul className="drop-menu">

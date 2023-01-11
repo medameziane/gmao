@@ -1,7 +1,9 @@
 import './equipement.css'
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderContent from "../static/HeaderContent";
+
+
 
 const addEquipement = ()=>{
   document.querySelector(".equipement-section .add-form").classList.add("showEquipementForm")
@@ -14,37 +16,53 @@ const exitForm = ()=>{
 }
 
 function Equipement() {
+  const [categories, setCategories] = useState([])
   const [data,setData]=useState({})
+
+  // Fetch all data from categorie table
+  const getCat = () => {
+    axios.get("http://localhost/gmao-react/backend/tables/categorie.php").then((response) =>
+      setCategories(response.data)
+    )
+  }  
+
+  useEffect(()=>{
+    getCat();
+  }, []);
+
   const handleForm = (e)=>{
-      e.preventDefault()
+    e.preventDefault()
 
-      // Clear all inputs form
-      e.target.reset()
+    // Clear all inputs form
+    e.target.reset()
 
-      axios.post('http://localhost/gmao-react/backend/tables/equipement.php', data)
+    // Submit data to equipement table
+    axios.post('http://localhost/gmao-react/backend/tables/equipement.php', data)
 
-      // Hide Form From page
-      document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
-      document.querySelector(".overly").style.display = "none"
-    }
+    // Hide Form From page
+    document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
+    document.querySelector(".overly").style.display = "none"
+  }
   return (
     <div className="equipement-section">
       <HeaderContent title = "Equipements"/>
-      <div className="equipement-actions">
-        <div className="add-equipement btn-action" onClick={addEquipement}>Créer Equipement</div>
-      </div>
       <div className="equipement-content">
         <div className="box-content">
-          <div className="box-body">
-            <a href="#" className="box-hero">
-              <img src="assets/images/1.jpeg" className="box-image"/>
-              <h3 className="box-title">Equipement Ready To use.</h3>
-            </a>
-            <div className="box-info">
-              <div className="box-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit unde doloribus dicta nulla reiciendis.</div>
-            </div>
+          <div className="box-header">
+            <div className="add-equipement btn-action" onClick={addEquipement}>Créer Equipement</div>
           </div>
-          <div className="box-bottom">
+          <div className="box-body">
+            <div className="list-equipements">
+              <div className="equipment">
+                <a href="#" className="box-hero">
+                  <img src="assets/images/1.jpeg" className="box-image"/>
+                  <h3 className="box-title">Equipement Ready To use.</h3>
+                </a>
+                <div className="box-info">
+                  <div className="box-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit unde doloribus dicta nulla reiciendis.</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -65,10 +83,13 @@ function Equipement() {
                 <div className="input-box">
                   <label htmlFor="category" className="details">Catégorie</label>
                   <select id="category" onChange={(e)=>setData({...data,'categorie_id': e.target.value})} required>
-                    <option>Select Catégorie</option>
-                    <option>Label 1</option>
-                    <option>Label 2</option>
-                    <option>Label 3</option>
+                    <option defaultChecked>Select Catégorie</option>
+                    {categories.map((cat)=>{
+                      return (
+                        <option value={cat.id} key={cat.id}>{cat.categorie}</option>
+                      )
+                    })
+                    }
                   </select>
                 </div>
                 <div className="input-box">

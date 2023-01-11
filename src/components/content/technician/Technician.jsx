@@ -1,9 +1,9 @@
-import './task.css'
+import './technician.css'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import HeaderContent from "../static/HeaderContent";
 
-const addTask = ()=>{
+const addTechnician = ()=>{
   document.querySelector(".task-section .add-form").classList.add("showTaskForm")
   document.querySelector(".overly").style.display = "block"
 }
@@ -13,37 +13,22 @@ const exitForm = ()=>{
   document.querySelector(".overly").style.display = "none"
 }
 
-function Task() {
-  const [equipements, setEquipements] = useState([])
-  const [tasks,setTasks]=useState([])
-  const [etat,setEtat]=useState([])
-  const [taskData,setTaskData]=useState({})
+function Technician() {
+  const [technician,setTechnician]=useState([])
+  
+  const [technicianData,setTechnicianData]=useState({})
 
-  // Fetch all data from equipement table
-  const getEqui = () => {
-    axios.get("http://localhost/gmao-react/backend/tables/equipement.php").then((response) =>
-    setEquipements(response.data)
-    )
-  }  
 
   // Fetch all data from tasks table
-  const getTasks = () => {
-    axios.get("http://localhost/gmao-react/backend/tables/task.php").then((response) =>
-    setTasks(response.data)
+  const getTechnicians = () => {
+    axios.get("http://localhost/gmao-react/backend/tables/technician.php").then((response) =>
+    setTechnician(response.data)
     )
   }  
 
-  // Fetch all data from etat table
-  const getEtat = () => {
-    axios.get("http://localhost/gmao-react/backend/tables/etat.php").then((response) =>
-    setEtat(response.data)
-    )
-  }  
 
   useEffect(()=>{
-    getEqui();
-    getTasks();
-    getEtat();
+    getTechnicians();
   },[]);
 
   const handleForm = (e)=>{
@@ -53,7 +38,7 @@ function Task() {
     e.target.reset()
 
     // Submit data to task table
-    axios.post('http://localhost/gmao-react/backend/tables/task.php', taskData)
+    axios.post('http://localhost/gmao-react/backend/tables/task.php', technicianData)
 
     // Hide Form From page
     document.querySelector(".task-section .add-form").classList.remove("showTaskForm")
@@ -61,37 +46,19 @@ function Task() {
   }
 
   return (
-    <div className="task-section">
-      <HeaderContent title = "liste des tâches"/>
-      <div className="task-content">
+    <div className="technician-section">
+      <HeaderContent title = "liste des Technicians"/>
+      <div className="technician-content">
         <div className="box-content">
           <div className="box-header">
-            <div className="btn-action" onClick={addTask}>Créer tâche</div>
+            <div className="btn-action" onClick={addTechnician}>Créer tâche</div>
           </div>
           <div className="box-body">
-            <ul className="list-tasks">
-              {
-                tasks.map((task)=>{
-                  return(
-                    <li className="task" key={task.id}>
-                      <a href="#" className='task-header'>
-                        <i className="fa-solid fa-list-check task-icon"></i>
-                        <h2 className="task-title">{task.titre}</h2>
-                      </a>
-                      <div className="list-actions">
-                        <span className="btn-edit btn-action">Modifier</span>
-                        <span className="btn-delete btn-action">Supprimer</span>
-                        <span className="btn-view btn-action">View</span>
-                      </div>
-                    </li>
-                  )
-                })
-              }
-            </ul>
+            <h1>Technicians</h1>
           </div>
         </div>
       </div>
-      <div className="form-section">
+      {/* <div className="form-section">
         <div className="add-form">
           <div className="title">Ajouter un tâche <i className="fa-solid fa-tags"></i></div>
           <div className="form-content">
@@ -99,19 +66,19 @@ function Task() {
               <div className="form-details">
                 <div className="input-box">
                   <label htmlFor="titre" className="details">Titre</label>
-                  <input type="text" placeholder="Titre" id="titre" onChange={(e)=>setTaskData({...taskData,'titre': e.target.value})} required/>
+                  <input type="text" placeholder="Titre" id="titre" onChange={(e)=>setTechnicianData({...technicianData,'titre': e.target.value})} required/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="description" className="details">Description</label>
-                  <textarea placeholder="Description de la tâche..." id="description" onChange={(e)=>setTaskData({...taskData,'description': e.target.value})} required></textarea>
+                  <textarea placeholder="Description de la tâche..." id="description" onChange={(e)=>setTechnicianData({...technicianData,'description': e.target.value})} required></textarea>
                 </div>
                 <div className="input-box">
                   <label htmlFor="dure" className="details">Durée</label>
-                  <input type="text" placeholder="Durée" id="dure" onChange={(e)=>setTaskData({...taskData,'dure': e.target.value})} required/>
+                  <input type="text" placeholder="Durée" id="dure" onChange={(e)=>setTechnicianData({...technicianData,'dure': e.target.value})} required/>
                 </div>
                 <div className="input-box">
                   <label className="details">Sélectionnez votre équipement</label>
-                  <select onChange={(e)=>setTaskData({...taskData,'equipement_id': e.target.value})} required>
+                  <select onChange={(e)=>setTechnicianData({...technicianData,'equipement_id': e.target.value})} required>
                     <option>List d'équipement</option>
                     {
                       equipements.map((equip)=>{
@@ -124,7 +91,7 @@ function Task() {
                 </div>
                 <div className="input-box">
                   <label className="details">Spécifier l'état</label>
-                  <select onChange={(e)=>setTaskData({...taskData,'etat_id': e.target.value})} required>
+                  <select onChange={(e)=>setTechnicianData({...technicianData,'etat_id': e.target.value})} required>
                     <option>Spécifier l'état</option>
                     {
                       etat.map((et)=>{
@@ -144,9 +111,9 @@ function Task() {
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
 
-export default Task
+export default Technician
