@@ -12,7 +12,7 @@ function Sidebar() {
   return (
     <>
       <div className="logo-area">
-        <i className="fa-solid fa-g"></i> <h1>_ecom</h1>
+        <i className="fa-solid fa-g"></i> <h1>_mao</h1>
       </div>
       
       <div className="menu-area">

@@ -2,6 +2,7 @@ import './activity.css'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import HeaderContent from "../static/HeaderContent";
+import SubHeader from "../static/SubHeader";
 
 const addActivity = ()=>{
   document.querySelector(".activity-section .add-form").classList.add("showActivityForm")
@@ -54,6 +55,7 @@ function Activity() {
 
   return (
     <div className="activity-section">
+      <SubHeader />
       <HeaderContent title = "liste des tâches"/>
       <div className="activity-content">
         <div className="box-content">

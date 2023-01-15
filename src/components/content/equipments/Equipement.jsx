@@ -2,7 +2,8 @@ import './equipement.css'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import HeaderContent from "../static/HeaderContent";
-
+import SubHeader from "../static/SubHeader";
+import { Link } from 'react-router-dom';
 
 
 const addEquipement = ()=>{
@@ -17,17 +18,26 @@ const exitForm = ()=>{
 
 function Equipement() {
   const [categories, setCategories] = useState([])
+  const [equipements, setEquipements] = useState([])
   const [data,setData]=useState({})
 
-  // Fetch all data from categorie table
+  // Fetch all data from categories table
   const getCat = () => {
     axios.get("http://localhost/gmao-react/backend/tables/categorie.php").then((response) =>
       setCategories(response.data)
+    )
+  }
+
+  // Fetch all data from equipements table
+  const getEquipements = () => {
+    axios.get("http://localhost/gmao-react/backend/tables/equipement.php").then((response) =>
+      setEquipements(response.data)
     )
   }  
 
   useEffect(()=>{
     getCat();
+    getEquipements();
   }, []);
 
   const handleForm = (e)=>{
@@ -43,25 +53,30 @@ function Equipement() {
     document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
     document.querySelector(".overly").style.display = "none"
   }
+
   return (
     <div className="equipement-section">
-      <HeaderContent title = "Equipements"/>
+      <SubHeader />
+      <HeaderContent title = "List d'Équipement"/>
       <div className="equipement-content">
         <div className="box-content">
           <div className="box-header">
-            <div className="add-equipement btn-action" onClick={addEquipement}>Créer Equipement</div>
+            <div className="add-equipement btn-action" onClick={addEquipement}>Créer Équipement</div>
           </div>
           <div className="box-body">
             <div className="list-equipements">
-              <div className="equipment">
-                <a href="#" className="box-hero">
-                  <img src="assets/images/1.jpeg" className="box-image"/>
-                  <h3 className="box-title">Equipement Ready To use.</h3>
-                </a>
-                <div className="box-info">
-                  <div className="box-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit unde doloribus dicta nulla reiciendis.</div>
-                </div>
-              </div>
+              {
+                equipements.map((equip)=>{
+                  return (
+                    <div className="equipment" key={equip.id}>
+                      <Link to={"/equipement-details/"+equip.id} className="box-hero">
+                        <img src='https://app.mobility-work.com/media/cache/resolve/large/images//fake_dataimg/defaultData/compresseur.jpg' className="box-image"/>
+                        <h3 className="box-title">{equip.nom}</h3>
+                      </Link>
+                    </div>
+                  )
+                })
+              }
             </div>
           </div>
         </div>

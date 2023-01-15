@@ -12,10 +12,10 @@
 
   /* Colors */
   --main-color : #3498db;
-  --text-color : #37404a;
+  --text-color : #37404abf;
   --link-color : #222f3e;
   --card-color : #fff;
-  --border-color : #eee;
+  --border-color : #a4b0be87;
   --bg-color : #ecf0f1;
   --success-color : #2ecc71;
   --title-color : #000;
@@ -71,6 +71,8 @@ ul{
 .content-wrapper {
   padding: 0 var(--padding-inside);
   margin-top: 70px;
+  float: right;
+  width: 100%;
 }
 .overly {
   background-color: #37404a;
@@ -109,6 +111,22 @@ ul{
 }
 .btn-view{
   background: #ff9f1a !important;
+}
+.icon-delete{
+  color: red;
+  font-size: 25px;
+  cursor: pointer;
+}
+.icon-edit{
+  color: green;
+  font-size: 25px;
+  cursor: pointer;
+}
+.btn-action.csv-btn{
+  background-color: green;
+}
+.btn-action.pdf-btn{
+  background-color: red;
 }
 
 /* Start Edit Add Form Section */
@@ -167,6 +185,8 @@ ul{
   padding:0 15px;
   border: 1px solid var(--border-color);
   border-bottom-width: 2px;
+  background: var(--bg-color);
+  color: var(--link-color);
 }
 .input-box textarea{
   min-height: 100px;
@@ -265,4 +285,24 @@ background: var(--main-color);
 }
 .form-content .button :hover{
   color : #fff;
+}
+
+/* Start Edit Table Data */
+.table-data {
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  background-color: var(--card-color);
+  color: var(--title-color);
+}
+.table-data .table-row-data {
+  background: var(--bg-color);
+}
+.table-data .table-row-data td {
+  font-size: 16px;
+  padding: 5px var(--padding-inside);
+}
+.table-data tbody td {
+  border: 1px solid var(--border-color);
+  padding: var(--padding-inside);
 }

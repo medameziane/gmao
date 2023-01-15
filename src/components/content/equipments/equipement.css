@@ -24,20 +24,92 @@
 .equipement-section .equipement-content .box-content .box-description {
   color: var(--text-color);
 }
-.equipement-section .equipement-content .box-content .box-body .box-hero{
-  position: relative;
-}
 .equipement-section .equipement-content .box-content .box-body img{
   height: 190px;
 }
 .equipement-section .equipement-content .box-content .box-title {
-  position: absolute;
-  bottom: 3px;
-  color: #fff;
-  padding: 0 5px;
-  background: linear-gradient(to bottom,rgba(0,0,0,0) 10%,rgba(0,0,0,.5));
-  width: 100%;
+  color: var(--link-color);
+  font-size: 16px;
+  font-weight: 600;
 }
 .equipement-section .equipement-content .box-content .box-info{
   padding: 0 5px;
+}
+
+/* Start edit equipement details */
+.equipement-details-section .equipement-actions {
+  display: flex;
+  gap: 10px;
+}
+.equipement-details-section .details-items .items{
+  display: grid;
+  grid-template-areas: "left right right";
+  gap: 10px;
+  border: 1px solid var(--border-color);
+  padding: 5px;
+}
+.equipement-details-section .details-items .info-details .info-items{
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.equipement-details-section .details-items .items .equi-item-title{
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--title-color);
+  display: block;
+  margin-bottom: 10px;
+}
+.equipement-details-section .details-items .items .item-data{
+  font-size: 14px;
+  color: var(--link-color);
+  padding: 5px 30px;
+  display: block;
+}
+.equipement-details-section .details-items .items .item-title {
+  background: var(--bg-color);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+.equipement-details-section .details-items .items i{
+  color: var(--main-color);
+  font-size: 20px;
+}
+.item-image img{
+  height: 250px;
+}
+.equipement-additional .equip-task {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius : 10px;
+  margin-top: 20px;
+}
+.equipement-additional .equip-task .equip-task-icon {
+  width: 100px;
+  text-align: center;
+}
+.equipement-additional .equip-task .equip-task-icon i{
+  color: var(--text-color);
+  font-size: 40px;
+}
+.equipement-additional .equip-task .equip-task-info {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.equipement-additional .equip-task .equip-task-info .task-info-date {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--title-color);
+}
+.equipement-additional .equip-task .equip-task-info .task-info-des {
+  color: var(--text-color);
 }

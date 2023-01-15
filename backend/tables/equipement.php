@@ -15,11 +15,11 @@ switch ($method){
       if (isset($path[3]) && is_numeric($path[3])) {
         $stmt = $conn->prepare($sql);
         $stmt->execute();
-        $equipements = $stmt->fetch(PDO::FETCH_ASSOC);
+        $equipements = $stmt->fetch();
       } else {
         $stmt = $conn->prepare($sql);
         $stmt->execute();
-        $equipements = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $equipements = $stmt->fetchAll();
       }
       echo json_encode($equipements);
       break;

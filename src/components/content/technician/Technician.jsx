@@ -1,57 +1,16 @@
 import './technician.css'
-import axios from "axios";
-import React, { useEffect, useState } from "react";
 import HeaderContent from "../static/HeaderContent";
-
-const addTechnician = ()=>{
-  document.querySelector(".task-section .add-form").classList.add("showTaskForm")
-  document.querySelector(".overly").style.display = "block"
-}
-
-const exitForm = ()=>{
-  document.querySelector(".task-section .add-form").classList.remove("showTaskForm")
-  document.querySelector(".overly").style.display = "none"
-}
+import SubHeader from '../static/SubHeader';
 
 function Technician() {
-  const [technician,setTechnician]=useState([])
-  
-  const [technicianData,setTechnicianData]=useState({})
-
-
-  // Fetch all data from tasks table
-  const getTechnicians = () => {
-    axios.get("http://localhost/gmao-react/backend/tables/technician.php").then((response) =>
-    setTechnician(response.data)
-    )
-  }  
-
-
-  useEffect(()=>{
-    getTechnicians();
-  },[]);
-
-  const handleForm = (e)=>{
-    e.preventDefault()
-
-    // Clear all inputs form
-    e.target.reset()
-
-    // Submit data to task table
-    axios.post('http://localhost/gmao-react/backend/tables/task.php', technicianData)
-
-    // Hide Form From page
-    document.querySelector(".task-section .add-form").classList.remove("showTaskForm")
-    document.querySelector(".overly").style.display = "none"
-  }
-
   return (
     <div className="technician-section">
+      <SubHeader />
       <HeaderContent title = "liste des Technicians"/>
       <div className="technician-content">
         <div className="box-content">
           <div className="box-header">
-            <div className="btn-action" onClick={addTechnician}>Créer tâche</div>
+            <div className="btn-action">Créer tâche</div>
           </div>
           <div className="box-body">
             <h1>Technicians</h1>
