@@ -1,6 +1,6 @@
 /* Start Edit Sidebar */
 .sidebar{
-  background-color: var(--sidebar-color);
+  background-color: #000;
   width: var(--sidebar-width);
   height: 100vh;
   position: fixed;
@@ -8,7 +8,7 @@
   top: 0;
   overflow: hidden auto;
   margin-left: 0px;
-  z-index: 99999;
+  z-index: 999;
   transition: var(--transition-time);
 }
 .sidebar.show{
@@ -32,16 +32,26 @@
   position: fixed;
   width: var(--sidebar-width);
   top: 0;
-  background: var(--sidebar-color);
+  background: #000;
   z-index: 999;
 }
 .sidebar .logo-area h1, i {
   font-size: 30px;
   color: var(--sidebar-title-color);
 }
-.sidebar .menu-area {
-  padding: 40px 30px;
-  margin-top: 60px;
+.sidebar .menu-area{
+  padding: 0px 30px;
+  margin-top: 90px;
+  max-height: 80vh;
+  overflow: auto;
+}
+.sidebar .menu-area::-webkit-scrollbar-thumb{
+  height: 10%;
+  background-color: var(--bg-color);
+}
+.sidebar .menu-area::-webkit-scrollbar{
+  background-color: var(--sidebar-color);
+  width: 3px;
 }
 .sidebar .menu-area i{
   font-size: 17px;

@@ -10,10 +10,10 @@ include '../db.php';
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method){
   case "GET":
-    $sql = "SELECT * FROM tache";
+    $sql = "SELECT * FROM technicien";
     $path = explode('/', $_SERVER['REQUEST_URI']);
     if (isset($path[5]) && is_numeric($path[5])){
-      $sql = "SELECT * from tache WHERE id = :id";
+      $sql = "SELECT * FROM technicien WHERE id = :id";
       $stmt = $conn->prepare($sql);
       $stmt->bindParam(':id', $path[5]);
       $stmt->execute();
@@ -28,7 +28,7 @@ switch ($method){
 
   case "POST":
     $equipe = json_decode(file_get_contents('php://input'));
-    $sql = "INSERT INTO tache VALUES (NULL,'$equipe->description',CURRENT_DATE,'10', '$equipe->etat_id', '$equipe->equipement_id')";
+    $sql = "INSERT INTO technicien VALUES (NULL,'$equipe->nom','$equipe->prenom','$equipe->email','$equipe->phone','$equipe->specialite_id')";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $response = ['status' => 1, 'message' => 'Record created successfully.'];
@@ -38,27 +38,10 @@ switch ($method){
     break;
 
   case "DELETE":
-    $sql = "DELETE FROM tache WHERE id = :id";
+    $sql = "DELETE FROM technicien WHERE id = :id";
     $path = explode('/', $_SERVER['REQUEST_URI']);
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $path[5]);
     $stmt->execute();
-    break;
-
-  case "PUT":
-    $task = json_decode( file_get_contents('php://input') );
-    
-    $sql = "UPDATE tache SET `titre`='$task->titre' WHERE `id` = :id";
-    $path = explode('/', $_SERVER['REQUEST_URI']);
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id', $path[5]);
-
-    if($stmt->execute()) {
-        $response = ['status' => 1, 'message' => 'Record updated successfully.'];
-    } else {
-        $response = ['status' => 0, 'message' => 'Failed to update record.'];
-    }
-    echo json_encode($response);
     break;
 }

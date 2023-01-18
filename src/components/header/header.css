@@ -9,7 +9,7 @@
   position: fixed;
   top: 0;
   width: var(--content-width);
-  z-index: 99999;
+  z-index: 999999;
   transition: var(--transition-time);
 }
 .header .toggle-sidebar{

@@ -1,12 +1,12 @@
 /* Start edit task section */
-.task-section .add-form{
+.add-task .add-form{
   position: fixed;
   right: 0;
   top: 70px;
   transform: translateX(100%);
   opacity: 0;
 }
-.task-section .add-form.showTaskForm {
+.add-task .add-form.showTaskForm {
   transform: translateX(0px);
   opacity: 1;
 }
@@ -78,19 +78,19 @@
   cursor: pointer;
   display: none;
 }
-.task-section .task-full-info{
+.task-full-info{
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: var(--card-color);
   padding:10px 5px;
 }
-.task-section .task-full-info .task-actions{
+.task-full-info .task-actions{
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.task-section .task-full-info .task-count {
+.task-full-info .task-count {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -98,11 +98,11 @@
   font-weight: 700;
   color: var(--link-color);
 }
-.task-section .task-full-info .task-count .icon-task{
+.task-full-info .task-count .icon-task{
   font-size: 20px;
   color: var(--link-color);
 }
-.task-section .table-data .actions {
+.table-data .actions {
   display: flex;
   gap: 10px;
   justify-content: space-around;
@@ -157,7 +157,7 @@
 }
 .task-details-section .items .item-more{
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
   gap: 5px;
 }
 .task-details-section .activities-items .activity-item {
@@ -182,15 +182,26 @@
   background: var(--main-color);
   position: relative;
 }
-.task-details-section .activities-items .activity-scroll .sircle {
+.task-details-section .activities-items .activity-scroll .sircle{
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border : 1px solid var(--main-color);
-  left: -10px;
+  border: 2px solid var(--bg-color);
+  left: -20px;
   top: 50%;
   transform: translateY(-50%);
+}
+@keyframes identifier {
+  0%{
+    width: 40px;
+    height: 40px;
+  }
+  100%{
+    width: 35px;
+    height: 35px;
+    left: -17.5px;
+  }
 }
 .task-details-section .activities-items .activity,
 .task-details-section .activities-items .activity .activity-date{
@@ -263,7 +274,6 @@
 .activities-task .add-form{
   display: none;
   opacity: 0;
-  transition: display 5s;
   transform: translateY(-20px);
   z-index: 100;
 }
@@ -273,9 +283,6 @@
   width: 90%;
   transform: translateY(0px);
 }
-
-
-
 .task-details-section .details-info .right-item{
   border: 1px solid var(--border-color);
   padding: 10px;
@@ -289,6 +296,7 @@
 }
 .task-details-section .details-info .right-item-details{
   display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 .task-details-section .details-info .right-item-details .right-item-data .right-item-data-title {
@@ -300,6 +308,6 @@
   font-size: 14px;
   color: var(--text-color);
 }
-.task-details-section .details-info .right-item-icon img {
-  width: 80px;
+.task-details-section .details-info .right-item-icon img{
+  height: 250px;
 }

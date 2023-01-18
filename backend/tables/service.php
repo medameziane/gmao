@@ -10,17 +10,17 @@ include '../db.php';
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method){
   case "GET":
-    $sql = "SELECT * FROM etat";
+    $sql = "SELECT * FROM service";
     $path = explode('/', $_SERVER['REQUEST_URI']);
     if (isset($path[5]) && is_numeric($path[5])) {
       $stmt = $conn->prepare($sql);
       $stmt->execute();
-      $etat = $stmt->fetch();
+      $service = $stmt->fetch();
     } else {
       $stmt = $conn->prepare($sql);
       $stmt->execute();
-      $etat = $stmt->fetchAll();
+      $service = $stmt->fetchAll();
     }
-    echo json_encode($etat);
+    echo json_encode($service);
     break;
 }

@@ -7,6 +7,7 @@
   font-size: 14px;
   line-height: 1.7;
   font-weight: 500;
+  word-break: break-word;
 }
 :root{
 
@@ -82,7 +83,7 @@ ul{
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 9998;
+  z-index: 99999;
   display: none;
   -webkit-transition: all .2s ease-out;
   transition: var(--transition-time);
@@ -141,7 +142,7 @@ ul{
   overflow: auto;
   min-height: fit-content;
   max-height: 700px;
-  z-index: 99999;
+  z-index: 9999999;
   transition: 0.5s;
 }
 .add-form .title{
@@ -155,6 +156,7 @@ ul{
 .add-form .title i{
   font-size: 25px;
   color: var(--title-color);
+  cursor: pointer;
 }
 .add-form .title::before{
   content: "";
@@ -194,6 +196,9 @@ ul{
 }
 .input-box input[type="file"] {
   padding: 7px;
+}
+.input-box .input-error {
+  color: red;
 }
 .input-box input:focus,
 .input-box select:valid,

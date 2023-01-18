@@ -63,10 +63,12 @@ function Header() {
     <div className='header'>
       <div className="toggle-nav">
         <i className="fa-solid fa-bars toggle-sidebar" onClick={toggleNav}></i>
+        {/* <p onClick={toggleNav}>Show</p> */}
       </div>
       <div className="header-items">
         <div className="header-settings">
           <i className="fa-solid fa-gear settings-icon" onClick={showSettings}></i>
+          {/* <p onClick={showSettings}>Show</p> */}
           <div className="settings-area">
             <i className="fa-solid fa-xmark close-settings" onClick={hideSettings}></i>
             <div className="settings-header"><h2>Settings</h2></div>
@@ -76,7 +78,7 @@ function Header() {
                 <div className="setting-content">
                   <div className="color-theme">
                     <ul>    
-                      <li><input type="radio" onChange={handleTheme} value="light" id='light'name='theme'/> </li>
+                      <li><input type="radio" onChange={handleTheme} value="light" id='light'name='theme'/></li>
                       <li><input type="radio" onChange={handleTheme} value="dark" id='dark' name='theme'/></li>
 
                       <label htmlFor='light' onClick={handleLight} className='theme light'>
@@ -96,7 +98,7 @@ function Header() {
                 </div>
               </div>
 
-              <div className="box-settings">
+              {/* <div className="box-settings">
                 <h3 className="title-header-setting">Main color</h3>
                 <div className="setting-content">
                   <div className="list-colors">
@@ -110,7 +112,7 @@ function Header() {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
             </div>
           </div>

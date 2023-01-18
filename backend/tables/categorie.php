@@ -24,16 +24,16 @@ switch ($method){
     echo json_encode($categories);
     break;
 
-    // case "POST":
-    // $equipe = json_decode(file_get_contents('php://input'));
-    // $sql = "INSERT INTO categorie VALUES (NULL,'$equipe->name', '$equipe->description',NULL,CURRENT_DATE, '$equipe->prix', '$equipe->marque', '$equipe->reference', '$equipe->piecedeRechange','$equipe->document', NULL)";
-    // $stmt = $conn->prepare($sql);
+    case "POST":
+    $equipe = json_decode(file_get_contents('php://input'));
+    $sql = "INSERT INTO categorie VALUES (NULL,'$equipe->name', '$equipe->description',NULL,CURRENT_DATE, '$equipe->prix', '$equipe->marque', '$equipe->reference', '$equipe->piecedeRechange','$equipe->document', NULL)";
+    $stmt = $conn->prepare($sql);
 
-    // if ($stmt->execute()) {
-    //     $response = ['status' => 1, 'message' => 'Record created successfully.'];
-    // } else {
-    //     $response = ['status' => 0, 'message' => 'Failed to create record.'];
-    // }
-    // echo "succes";
-    // break;
+    if ($stmt->execute()) {
+        $response = ['status' => 1, 'message' => 'Record created successfully.'];
+    } else {
+        $response = ['status' => 0, 'message' => 'Failed to create record.'];
+    }
+    echo "succes";
+    break;
 }
