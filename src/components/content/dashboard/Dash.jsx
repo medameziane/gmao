@@ -15,6 +15,7 @@ function Dash() {
   const [equipements,setEquipements] = useState([])
   const [tasks,setTasks] = useState([])
   const [activities,setActivities] = useState([])
+  const [techniciens,setTechniciens] = useState([])
 
   // main path php
   const mainPath = (page, id, action) => {
@@ -32,6 +33,7 @@ function Dash() {
     axios.get(mainPath("equipement.php")).then(res => setEquipements(res.data));
     axios.get(mainPath("task.php")).then(res=>setTasks(res.data))
     axios.get(mainPath("activity.php")).then(res=>setActivities(res.data))
+    axios.get(mainPath("technicien.php")).then(res=>setTechniciens(res.data))
   };
 
   useEffect(()=>{
@@ -63,7 +65,7 @@ function Dash() {
       <div className="latest-section">
         <div className="latest">
           <div className="box-content">
-            <div className="box-header"><h3>Latest 5 Tasks</h3><span><Link to="/task">View more</Link></span></div>
+            <div className="box-header"><h3>5 dernières tâches</h3><span><Link to="/technician">View more</Link></span></div>
             <div className="box-body">
               <ul>
                 {
@@ -74,6 +76,29 @@ function Dash() {
                   })
                 }
               </ul>
+            </div>
+          </div>
+        </div>
+        <div className="latest">
+          <div className="box-content">
+            <div className="box-header"><h3>5 dernières techniciens</h3><span><Link to="/technician">View more</Link></span></div>
+            <div className="box-body">
+              <div className="circles">
+              {
+                techniciens.map(tech=>{
+                  return (
+                    <Link to ={"tech-details/"+tech.id}>
+                      <div className="circle">
+                        <span className="circle-logo">
+                          <img src={"https://app.mobility-work.com/media/cache/resolve/large/img/profile.JPG"}/>
+                        </span>
+                        <h3 className="circle-title">{tech.nom}</h3>
+                      </div>
+                    </Link>
+                  )
+                })
+              }
+              </div>
             </div>
           </div>
         </div>

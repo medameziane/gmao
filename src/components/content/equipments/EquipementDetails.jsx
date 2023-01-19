@@ -2,16 +2,17 @@ import './equipement.css'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import UpdateEquipement from './UpdateEquipement';
 
 function EquipementDetails() {
   const {id} = useParams()
   const [equipement, setEquipement] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [etat, setEtat] = useState([]);
+  const [categorie, setCategorie] = useState([]);
   const [taskData, setTaskData] = useState({
     equipement_id : id
   });
-  console.log(taskData)
   // main path php
   const mainPath = (page, id, action) => {
     if (page && id && action) {
@@ -24,15 +25,20 @@ function EquipementDetails() {
   };
   
   const getAllData = () => {
-    axios.get(mainPath("equipement.php",id)).then((response) => setEquipement(response.data));
-    axios.get(mainPath("task.php")).then((response) => setTasks(response.data));
-    axios.get(mainPath("etat.php")).then((response) => setEtat(response.data));
+    axios.get(mainPath("equipement.php",id)).then((res) => setEquipement(res.data));
+    axios.get(mainPath("task.php")).then((res) => setTasks(res.data));
+    axios.get(mainPath("etat.php")).then((res) => setEtat(res.data));
+    axios.get(mainPath("categorie.php")).then((res) => setCategorie(res.data));
   };
 
   const addTask = () => {
     document.querySelector(".equipement-additional .add-form").classList.add("showtaskform");
   };
 
+  const handleUpdate = () => {
+    document.querySelector(".update-equipement .add-form").classList.add("showupdateform");
+  };
+  
   // Hide form after submit data
   const exitForm = () => {
     document.querySelector(".equipement-additional .add-form").classList.remove("showtaskform");
@@ -44,7 +50,6 @@ function EquipementDetails() {
     
     // Submit data to task table
     axios.post(mainPath("task.php"), taskData);
-    console.log(taskData)
     getAllData();
     
     // Hide Form From page
@@ -56,13 +61,14 @@ function EquipementDetails() {
     getAllData()
   },[]);
 
+  console.log(categorie)
   return (
     <div className='equipement-details'>
       <div className="box-content">
         <div className="box-header">
           <div className="equipement-actions">
             <span className="btn-action" onClick={addTask}>Ajouter une tâche</span>
-            <span className="btn-action btn-edit">Modifier l'équipement</span>
+            <span className="btn-action btn-edit" onClick={handleUpdate}>Modifier l'équipement</span>
             <span className="btn-action btn-delete">Supprimer l'équipement</span>
           </div>
         </div>
@@ -86,6 +92,14 @@ function EquipementDetails() {
                   <div className="item-info">
                     <h3 className='item-title'><i className="fa-solid fa-eye"></i>Visibility</h3>
                     <span className="item-data">Public</span>
+                  </div>
+                  <div className="item-info">
+                    <h3 className='item-title'><i className="fa-solid fa-tag"></i>Catégorie</h3>
+                    <span className="item-data">{
+                      categorie.map(cat=>{
+                        cat.id = equipement.categorie_id ? cat.categorie : ''
+                      })
+                    }</span>
                   </div>
                   <div className="item-info">
                     <h3 className='item-title'>Reference</h3>
@@ -166,6 +180,7 @@ function EquipementDetails() {
               }          
             </div>
           </div>
+          <UpdateEquipement />
         </div>
       </div>
     </div>

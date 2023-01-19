@@ -148,12 +148,12 @@
   font-size: 20px;
 }
 .task-details-section .activities-items {
-  margin: 5px auto;
-  padding: var(--padding-inside);
+  margin: 0px auto;
+  padding: 1px var(--padding-inside);
   color: var(--link-color);
   display: flex;
-  gap: 60px;
-  width: 95%;
+  gap: 50px;
+  width: 90%;
 }
 .task-details-section .items .item-more{
   display: grid;

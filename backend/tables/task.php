@@ -18,7 +18,7 @@ switch ($method){
       $stmt->bindParam(':id', $path[5]);
       $stmt->execute();
       $tasks = $stmt->fetch();
-    } else {
+    }else {
       $stmt = $conn->prepare($sql);
       $stmt->execute();
       $tasks = $stmt->fetchAll();

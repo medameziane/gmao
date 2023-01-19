@@ -141,7 +141,7 @@ ul{
   position: relative;
   overflow: auto;
   min-height: fit-content;
-  max-height: 700px;
+  max-height: 800px;
   z-index: 9999999;
   transition: 0.5s;
 }
@@ -210,6 +210,7 @@ ul{
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
+  margin-right: 10px;
 }
 .input-box select {
   height: 45px;

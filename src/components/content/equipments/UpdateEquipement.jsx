@@ -1,14 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-function AddEquipement() {
+function UpdateEquipement() {
+  const {id} = useParams()
   const [categories, setCategories] = useState([])
   const [service, setService] = useState([])
+  const [equipement, setEquipement] = useState([])
   const [equipementData,setEquipementData]=useState({})
   const [handleError,setHandleError]=useState({})
-  const [inputStatus,setInputStatus]=useState({
-    status : false
-  })
   const formData = new FormData();
 
   // main path php
@@ -25,6 +25,7 @@ function AddEquipement() {
   const getAllData = () => {
     axios.get(mainPath("categorie.php")).then(res =>setCategories(res.data))
     axios.get(mainPath("service.php")).then((res) =>setService(res.data))
+    axios.get(mainPath("equipement.php",id)).then((res) =>setEquipement(res.data))
   }
 
   const handleImage = ()=>{
@@ -42,7 +43,6 @@ function AddEquipement() {
 
   const showHideInput = ()=>{
     document.querySelector(".hide-categorie").classList.toggle("showHideCategoie")
-    setInputStatus({status : true})
   }
 
   const handleDocument = ()=>{
@@ -58,18 +58,16 @@ function AddEquipement() {
     }
   }
 
-  const exitForm = ()=>{
-    document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
-    document.querySelector(".overly").style.display = "none"
-  }
+  const exitForm = () => {
+    document.querySelector(".update-equipement .add-form").classList.remove("showupdateform");
+  };
 
   const handleForm = (e)=>{
     e.preventDefault()
     handleImage()
     handleDocument()
-    console.log(equipementData)
-    // axios.post("http://localhost/gmao-react/backend/tables/equipement.php",formData)
-    // axios.post('http://localhost/gmao-react/backend/tables/equipement.php',equipementData)
+    axios.post("http://localhost/gmao-react/backend/tables/equipement.php",formData)
+    axios.post('http://localhost/gmao-react/backend/tables/equipement.php',equipementData)
     getAllData()
 
     // Hide Form From page
@@ -78,7 +76,6 @@ function AddEquipement() {
     
     // Clear all inputs form
     e.target.reset()
-    console.log(equipementData)
   }
 
   useEffect(()=>{
@@ -86,20 +83,13 @@ function AddEquipement() {
   },[])
 
   return (
-    <div className='add-equipement'>
+    <div className='update-equipement'>
       <div className="form-section">
         <div className="add-form">
-          <div className="title">Ajouter un équipement <i className="fa-solid fa-xmark" onClick={exitForm}></i></div>
+          <div className="title">Mettre à jour l'équipement <i className="fa-solid fa-xmark" onClick={exitForm}></i></div>
           <div className="form-content">
             <form onSubmit={handleForm}>
               <div className="form-details">
-                <div className="input-box">
-                  <label htmlFor="piecedeRechange" className="details">Est-ce que cette équipement est une pièce de rechange ?</label>
-                  <select id="piecedeRechange" onChange={(e)=>setEquipementData({...equipementData,'piecedeRechange': e.target.value})}>
-                    <option value={0}>Non</option>
-                    <option value={1}>Oui</option>
-                  </select>
-                </div>
                 <div className="input-box">
                   <label htmlFor="fileInput" className="details">Photo d'équipement</label>
                   <input type="file" id="fileInput" onChange={handleImage}/>
@@ -107,21 +97,18 @@ function AddEquipement() {
                 </div>
                 <div className="input-box">
                   <label htmlFor="name" className="details">Nom</label>
-                  <input type="text" placeholder="Nom" id="name" onChange={(e)=>setEquipementData({...equipementData,'name': e.target.value})}/>
-                </div>
-                <div className="input-box">
-                  <label htmlFor="reference" className="details">Reference</label>
-                  <input type="text" placeholder="Reference" id="reference" onChange={(e)=>setEquipementData({...equipementData,'reference': e.target.value})}/>
+                  <input type="text" placeholder="Nom" id="name" defaultValue={equipement.nom} onChange={(e)=>setEquipementData({...equipementData,'name': e.target.value})}/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="description" className="details">Description</label>
-                  <textarea placeholder="Description..." id="description" onChange={(e)=>setEquipementData({...equipementData,description: e.target.value})}></textarea>
+                  <textarea placeholder="Description..." id="description" defaultValue={equipement.description} onChange={(e)=>setEquipementData({...equipementData,description: e.target.value})}></textarea>
                 </div>
                 <div className="input-box">
                   <label htmlFor="category" className="details">Catégorie</label>
                   <div className="sub-input">
-                    <select id="category" disabled = {inputStatus.status} onChange={(e)=>setEquipementData({...equipementData,'categorie_id': e.target.value})}>
+                    <select id="category" defaultValue={equipement.categorie} onChange={(e)=>setEquipementData({...equipementData,'categorie_id': e.target.value})}>
                       <option>Select Catégorie</option>
+                      <option selected>{equipement.categorie_id}</option>
                       {categories.map((cat)=>{
                         return (
                           <option value={cat.id} key={cat.id}>{cat.categorie}</option>
@@ -129,18 +116,26 @@ function AddEquipement() {
                         })
                       }
                     </select>
-                    {/* <span className='btn-action' onClick={showHideInput}>Autre</span> */}
+                    <span className='btn-action' onClick={showHideInput}>Autre</span>
                   </div>
                   {/* <input type="text" className='hide-categorie' placeholder="Catégorie" onChange={(e)=>setEquipementData({...equipementData,'categorie': e.target.value})}/> */}
                 </div>
                 <div className="input-box">
                   <label htmlFor="price" className="details">Prix</label>
-                  <input type="number" placeholder="Prix" id="price" onChange={(e)=>setEquipementData({...equipementData,'prix': e.target.value})}/>
+                  <input type="number" placeholder="Prix" id="price" defaultValue={equipement.prix} onChange={(e)=>setEquipementData({...equipementData,'prix': e.target.value})}/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="marque" className="details">Marque</label>
-                  <input type="text" placeholder="Marque" id="marque" onChange={(e)=>setEquipementData({...equipementData,'marque': e.target.value})}/>
+                  <input type="text" placeholder="Marque" id="marque" defaultValue={equipement.marque} onChange={(e)=>setEquipementData({...equipementData,'marque': e.target.value})}/>
                 </div>
+                <div className="input-box">
+                  <label htmlFor="reference" className="details">Reference</label>
+                  <input type="text" placeholder="Reference" id="reference" defaultValue={equipement.reference} onChange={(e)=>setEquipementData({...equipementData,'reference': e.target.value})}/>
+                </div>
+                {/* <div className="input-box">
+                  <label htmlFor="piecedeRechange" className="details">PiecedeRechange ?</label>
+                  <input type="text" placeholder="piecedeRechange" id="piecedeRechange" onChange={(e)=>setEquipementData({...equipementData,'piecedeRechange': e.target.value})}/>
+                </div> */}
                 <div className="input-box">
                   <label htmlFor="document" className="details">Document</label>
                   <input type="file" id="document" onChange={handleDocument}/>
@@ -148,7 +143,7 @@ function AddEquipement() {
                 </div>
                 <div className="input-box">
                   <label className="details">Service</label>
-                  <select onChange={(e)=>setEquipementData({...equipementData,'service_id': e.target.value})}>
+                  <select defaultValue={equipement.service} onChange={(e)=>setEquipementData({...equipementData,'service_id': e.target.value})}>
                     <option>Selection Service</option>
                     {
                       service.map(ser=>{
@@ -168,9 +163,9 @@ function AddEquipement() {
             </form>
           </div>
         </div>
-      </div>
+      </div>         
     </div>
   )
 }
 
-export default AddEquipement
+export default UpdateEquipement

@@ -2,7 +2,6 @@ import './equipement.css'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import HeaderContent from "../static/HeaderContent";
-import SubHeader from "../static/SubHeader";
 import { Link } from 'react-router-dom';
 import AddEquipement from './AddEquipement';
 
@@ -54,9 +53,8 @@ function Equipement() {
 
   return (
     <div className="equipement-section">
-      <SubHeader />
       <AddEquipement />
-      <HeaderContent title = "List d'Équipement"/>
+      <HeaderContent title = "Liste d'équipement"/>
       <div className="equipement-content">
         <div className="box-content">
           <div className="box-header">

@@ -2,7 +2,6 @@ import './technician.css'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import HeaderContent from "../static/HeaderContent";
-import SubHeader from '../static/SubHeader';
 import {CSVLink} from "react-csv"
 import jsPDF from "jspdf";
 import 'jspdf-autotable'
@@ -69,7 +68,6 @@ function Technician() {
 
   return (
     <div className="technician-section">
-      <SubHeader />
       <HeaderContent title = "liste des Technicians"/>
       <AddTechnicien />
 

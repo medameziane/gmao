@@ -6,7 +6,6 @@ import {Link } from "react-router-dom"
 import {CSVLink} from "react-csv"
 import jsPDF from "jspdf";
 import 'jspdf-autotable'
-import SubHeader from "../static/SubHeader";
 import AddTask from "./AddTask";
 
 function Task() {
@@ -16,7 +15,6 @@ function Task() {
 
   const [filterdata, setFilterdata]= useState([]);
   
-  // main path php
   const mainPath = (page, id, action) => {
     if (page && id && action) {
       return "http://localhost/gmao-react/backend/tables/" +page +"/" +id +"/" +action
@@ -27,9 +25,7 @@ function Task() {
     }
   };
 
-  // Get all data we need from table
   const getAllData = () => {
-    // Fetch all tasks data
     axios.get(mainPath("task.php")).then(res=>setTasks(res.data))
     axios.get(mainPath("task.php")).then(res=>setFilterdata(res.data))
   };
@@ -52,7 +48,6 @@ function Task() {
     }
   }
 
-  // Delete task
   const delTask = (id) => {
     axios.delete(mainPath("task.php", id));
     getAllData();
@@ -69,7 +64,6 @@ function Task() {
 
   return (
     <div className="task-section">
-      <SubHeader />
       <HeaderContent title="liste des tâches" />
       <div className="box-content">
         <div className="box-header">

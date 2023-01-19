@@ -1,8 +1,7 @@
 /* Start edit header content */
 .header-content {
   background: var(--card-color);
-  padding: var(--padding-inside);
-  margin: 10px 0;
+  padding: 5px var(--padding-inside);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,29 +21,6 @@
   font-weight: 600;
   color: var(--title-color);
   text-transform:uppercase;
-}
-
-/* Start edit Sub header */
-.sub-header{
-  background:var(--card-color);
-  padding: var(--padding-inside);
-  transition: var(--transition-time);
-}
-.sub-header .menu-area .nav-menu {
-  display: flex;
-  gap: 30px;
-}
-.sub-header .menu-area .nav-menu .link-name{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  color: var(--link-color);
-}
-.sub-header .menu-area .nav-menu .link-name i{
-  color: var(--link-color);
-  font-size: 25px;
-  margin: 0;
 }
 
 /* Start edit header routes */

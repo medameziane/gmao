@@ -19,10 +19,13 @@
 }
 .equipement-section .add-form{
   position: fixed;
-  left: 50%;
+  right: -50%;
   top: 70px;
-  transform: translateX(-500%);
   opacity: 0;
+}
+.equipement-section .add-form.showEquipementForm{
+  right:0;
+  opacity: 1;
 }
 .equipement-section .add-form .sub-input {
   display: flex;
@@ -36,15 +39,10 @@
 .equipement-section .add-form .hide-categorie.showHideCategoie{
   display: block;
 }
-.equipement-section .add-form.showEquipementForm{
-  transform: translateX(-50%);
-  opacity: 1;
-}
 .equipement-section .equipement-content .list-equipements{
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
   gap: 10px;
-  margin: 10px 0;
   background-color: var(--card-color);
   padding: 5px;
 }
@@ -56,7 +54,6 @@
 }
 .equipement-section .equipement-content .box-content .box-title {
   color: var(--link-color);
-  font-size: 16px;
   font-weight: 600;
 }
 .equipement-section .equipement-content .box-content .box-info{
@@ -92,6 +89,14 @@
   gap: 10px;
   border: 1px solid var(--border-color);
   padding: 5px;
+}
+.equipement-details .details-items .saveChange {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  color: green;
+  font-size: 25px;
+  cursor: pointer;
 }
 .equipement-details .details-items .info-details .info-items{
   display: grid;
@@ -173,4 +178,22 @@
 }
 .equipement-additional .add-form .form-details{
   grid-template-columns: repeat(auto-fill,minmax(600px,1fr));
+}
+
+/* Update Equipement */
+.update-equipement .add-form {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 0%;
+  transition: var(--transition-time);
+  opacity: 0;
+}
+.update-equipement .add-form.showupdateform{
+  width: 100%;
+  right: 0;
+  opacity: 1;
+}
+.update-equipement .add-form .form-content .form-details{
+  grid-template-columns: repeat(auto-fill,minmax(400px,1fr));
 }
