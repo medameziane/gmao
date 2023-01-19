@@ -68,8 +68,8 @@ function AddEquipement() {
     handleImage()
     handleDocument()
     console.log(equipementData)
-    // axios.post("http://localhost/gmao-react/backend/tables/equipement.php",formData)
-    // axios.post('http://localhost/gmao-react/backend/tables/equipement.php',equipementData)
+    axios.post("http://localhost/gmao-react/backend/tables/equipement.php",formData)
+    axios.post('http://localhost/gmao-react/backend/tables/equipement.php',equipementData)
     getAllData()
 
     // Hide Form From page
