@@ -85,6 +85,14 @@
   background: var(--card-color);
   padding:10px 5px;
 }
+.task-equip{
+  display: flex;
+  gap: 10px;
+}
+.task-equip img {
+  height: 100px;
+  width: 150px;
+}
 .task-full-info .task-actions{
   display: flex;
   align-items: center;

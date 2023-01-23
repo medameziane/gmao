@@ -2,18 +2,17 @@ import "./task.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import HeaderContent from "../static/HeaderContent";
-import {Link } from "react-router-dom"
+import ConfirmDelete from "../static/ConfirmDelete";
+import {Link, useNavigate } from "react-router-dom"
 import {CSVLink} from "react-csv"
 import jsPDF from "jspdf";
 import 'jspdf-autotable'
 import AddTask from "./AddTask";
 
 function Task() {
+  const navigate = useNavigate()
   const [equipements, setEquipements] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [etat, setEtat] = useState([]);
-
-  const [filterdata, setFilterdata]= useState([]);
   
   const mainPath = (page, id, action) => {
     if (page && id && action) {
@@ -27,7 +26,7 @@ function Task() {
 
   const getAllData = () => {
     axios.get(mainPath("task.php")).then(res=>setTasks(res.data))
-    axios.get(mainPath("task.php")).then(res=>setFilterdata(res.data))
+    axios.get(mainPath("equipement.php")).then(res=>setEquipements(res.data))
   };
 
   // Export Data to pdf
@@ -37,21 +36,16 @@ function Task() {
     pdf.save('tâches.pdf')
   }
 
-  // Search data from table
-  const handlesearch=(event)=>{
-    const getSearch = event.target.value;
-    if(getSearch.length > 0){     
-      const searchdata = tasks.filter(fl=> fl.description.toLowerCase().includes(getSearch));
-      setTasks(searchdata);
-    }else {
-      setTasks(filterdata);
-    }
+  const delTask=(id)=>{
+    document.querySelector(".confirm-delete").classList.add("show")
+    document.querySelector(".overly").style.display = "block"
+    document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
+      axios.delete((mainPath("task.php",id)))
+      document.querySelector(".confirm-delete").classList.remove("show")
+      document.querySelector(".overly").style.display = "none"
+      navigate(0)
+    })
   }
-
-  const delTask = (id) => {
-    axios.delete(mainPath("task.php", id));
-    getAllData();
-  };
 
   const addTask = () => {
     document.querySelector(".add-task .add-form").classList.add("showTaskForm");
@@ -59,8 +53,8 @@ function Task() {
   };
 
   useEffect(() => {
-    getAllData()
-  },[]);
+    getAllData();
+  }, []);
 
   return (
     <div className="task-section">
@@ -73,11 +67,11 @@ function Task() {
           <div className="filter-data">
             <div className="search-area input-box">
               <i className="fa-solid fa-magnifying-glass search-icon"></i>
-              <input type="text" onChange={(e)=>handlesearch(e)} placeholder='Cherche ici...' />
+              <input type="text" placeholder='Cherche ici...' />
             </div>
           </div>
           <div className="task-full-info">
-            <span className="task-count"><i className="fa-solid fa-calendar-check icon-task"></i>{tasks.length} Tâches</span>
+            <span className="task-count"><i className="fa-solid fa-calendar-check icon-task"></i>{tasks.length} Tâche(s)</span>
             <div className="task-actions">
               <CSVLink data ={tasks} filename="Données de tâches" className="btn-action csv-btn">Export CSV</CSVLink>
               <div className="btn-action pdf-btn" onClick={pdfData}>Export PDF</div>
@@ -109,7 +103,13 @@ function Task() {
                           </ul>
                         </div>
                       </td>
-                      <td>{task.equipement_id}</td>
+                      <td>{equipements.map(equip=>{
+                          return equip.id === task.equipement_id ? <Link to={"/equipement-details/"+equip.id} className="task-equip" key={equip.id}>
+                            <img src={"http://localhost/gmao-react/backend/images/"+equip.equip_image} alt={equip.nom} title={equip.nom}/>
+                            <div className="task-equip-title">{equip.nom}</div>
+                          </Link> : ""
+                        })
+                      }</td>
                       <td>{task.etat_id}</td>
                       <td>
                         <div className="actions">
@@ -126,6 +126,7 @@ function Task() {
         </div>
       </div>
       <AddTask />
+      <ConfirmDelete />
     </div>
   );
 }

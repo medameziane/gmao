@@ -12,7 +12,7 @@
 :root{
 
   /* Colors */
-  --main-color : #3498db;
+  --main-color : #005187;
   --text-color : #37404abf;
   --link-color : #222f3e;
   --card-color : #fff;
@@ -228,6 +228,8 @@ input[type="checkbox"] {
   padding:5px 15px;
   border: 1px solid var(--border-color);
   border-bottom-width: 2px;
+  background: var(--bg-color);
+  color: var(--link-color);
 }
 .input-box .details{
   display: inline-block;
@@ -313,7 +315,6 @@ background: var(--main-color);
 .table-data {
   margin: auto;
   width: 100%;
-  text-align: center;
   background-color: var(--card-color);
   color: var(--title-color);
 }

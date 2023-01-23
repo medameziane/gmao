@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 function UpdateEquipement() {
   const {id} = useParams()
   const navigate = useNavigate()
-  // main path php
+
   const mainPath = (page, id, action) => {
     if (page && id && action) {
       return "http://localhost/gmao-react/backend/tables/" +page +"/" +id +"/" +action
@@ -98,7 +98,7 @@ function UpdateEquipement() {
                 </div> */}
                 <div className="input-box">
                   <label htmlFor="name" className="details">Nom</label>
-                  <input type="text" id="name" defaultValue={equipement.nom} name = 'nom' onChange={handleChange}/>
+                  <input type="text" id="name" defaultValue={equipement.nom} name='nom' onChange={handleChange}/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="description" className="details">Description</label>

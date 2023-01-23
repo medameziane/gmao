@@ -2,6 +2,7 @@ import './header.css'
 
 const toggleNav = ()=>{
   document.querySelector('.sidebar').classList.toggle('hidden')
+  document.querySelector('.sidebar').classList.toggle('hidden-mobile')
   document.querySelector('.container').classList.toggle('full')
   document.querySelector('.header').classList.toggle('full')
   localStorage.setItem("sidebar","0")

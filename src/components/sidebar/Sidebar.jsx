@@ -8,6 +8,15 @@ const ShowMenu = (e)=>{
   e.target.parentElement.parentElement.classList.toggle("showMenu")
 }
 
+
+window.addEventListener("load",()=>{
+  document.querySelectorAll(".nav-link").forEach(nav=>{
+    nav.addEventListener("click",()=>{
+      document.querySelector(".sidebar").classList.add("hidden-mobile")
+    })
+  })
+})
+
 function Sidebar() {
   return (
     <>

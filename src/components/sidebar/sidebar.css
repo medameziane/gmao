@@ -94,15 +94,23 @@
   transition: var(--transition-time);
   transform: rotate(90deg);
 }
+
 @media (max-width : 535px){
+  .sidebar.hidden{
+    margin-left:0;
+  }
   .sidebar,.sidebar .logo-area{
     width:100%;
     top: 60px;
+    opacity: .9;
+  }
+  .sidebar .menu-area{
+    max-height : 70vh;
   }
   .sidebar,.sidebar .nav-link:not(:last-child){
     border-bottom: 1px solid var(--border-color);
   }
-  .sidebar.hidden{
+  .sidebar.hidden-mobile{
     margin-left: -100%;
   }
 }

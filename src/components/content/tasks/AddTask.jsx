@@ -26,12 +26,16 @@ function AddTask(props){
     axios.get(mainPath("equipement.php")).then(res=> setEquipements(res.data));
   };
   
+  const handleChange = (e)=>{
+    const name = e.target.name
+    const value = e.target.value
+    setTaskData(values => ({...values , [name] : value}))
+  }
+
   const handleForm = (e) => {
     e.preventDefault();
-    
     axios.post(mainPath("task.php"), taskData);
-    
-    document .querySelector(".add-task .add-form") .classList.remove("showTaskForm")
+    document.querySelector(".add-task .add-form").classList.remove("showTaskForm")
     document.querySelector(".overly").style.display = "none"
     e.target.reset();
   };
@@ -50,7 +54,7 @@ function AddTask(props){
               <div className="form-details">
                 <div className="input-box">
                   <label className="details">Sélectionnez équipement</label>
-                  <select onChange={(e) => setTaskData({...taskData,equipement_id: e.target.value})}>
+                  <select name='equipement_id' onChange={handleChange}>
                     <option>List d'équipement</option>{
                       equipements.map(equip=> {
                         if(props.id){
@@ -63,15 +67,15 @@ function AddTask(props){
                 </div>
                 <div className="input-box">
                   <label htmlFor="description" className="details">Description</label>
-                  <textarea placeholder="Description de la tâche..." id="description" onChange={(e) => setTaskData({ ...taskData, description: e.target.value })}></textarea>
+                  <textarea placeholder="Description..." id="description" name="description" onChange={handleChange}></textarea>
                 </div>
                 <div className="input-box">
                   <label htmlFor="dure" className="details">Durée</label>
-                  <input type="text" placeholder="Durée" id="dure" onChange={(e) => setTaskData({ ...taskData, dure: e.target.value })}/>
+                  <input type="text" placeholder="Durée" id="dure" name='dure' onChange={handleChange}/>
                 </div>
                 <div className="input-box">
                   <label className="details">Spécifier l'état</label>
-                  <select onChange={(e) => setTaskData({ ...taskData, etat_id: e.target.value })}>
+                  <select name='etat_id' onChange={handleChange}>
                     <option>Spécifier l'état</option>
                     {
                     etat.map((et) => {

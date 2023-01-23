@@ -17,7 +17,6 @@ function EquipementDetails() {
     equipement_id : id
   });
   
-  // main path php
   const mainPath = (page, id, action) => {
     if (page && id && action) {
       return "http://localhost/gmao-react/backend/tables/" +page +"/" +id +"/" +action
@@ -26,23 +25,23 @@ function EquipementDetails() {
     } else {
       return "http://localhost/gmao-react/backend/tables/" + page;
     }
-  };
+  }
   
-  const getAllData = () => {
+  const getAllData =()=>{
     axios.get(mainPath("equipement.php",id)).then((res) => setEquipement(res.data));
     axios.get(mainPath("task.php")).then((res) => setTasks(res.data));
     axios.get(mainPath("etat.php")).then((res) => setEtat(res.data));
     axios.get(mainPath("categorie.php")).then((res) => setCategorie(res.data));
     axios.get(mainPath("service.php")).then((res) => setService(res.data));
-  };
+  }
 
   const addTask = () => {
     document.querySelector(".equipement-additional .add-form").classList.add("showtaskform");
-  };
+  }
 
   const handleUpdate = () => {
     document.querySelector(".update-equipement .add-form").classList.add("showupdateform");
-  };
+  }
 
   const handleDelete = ()=>{
     document.querySelector(".confirm-delete").classList.add("show")
@@ -55,18 +54,22 @@ function EquipementDetails() {
     })
   }
 
-
   const exitForm = () => {
     document.querySelector(".equipement-additional .add-form").classList.remove("showtaskform");
   };
 
-  // Submit data to tache table
+  const handleChange = (e)=>{
+    const name = e.target.name
+    const value = e.target.value
+    setTaskData(values => ({...values , [name] : value}))
+  }
+
   const handleForm = (e) => {
     e.preventDefault();
     
     // Submit data to task table
     axios.post(mainPath("task.php"), taskData);
-    getAllData();
+    navigate(0)
     
     // Hide Form From page
     document.querySelector(".equipement-additional .add-form").classList.remove("showtaskform")
@@ -75,7 +78,7 @@ function EquipementDetails() {
 
   useEffect(() => {
     getAllData()
-  },[]);
+  }, []);
 
   return (
     <div className='equipement-details'>
@@ -91,7 +94,7 @@ function EquipementDetails() {
           <div className="details-items">
             <div className='items'>
               <div className="item-image">
-                <img src={"http://localhost/gmao-react/backend/images/"+equipement.equip_image}/>
+                <img src={"http://localhost/gmao-react/backend/images/"+equipement.equip_image} alt={equipement.nom}/>
               </div>  
               <div className="info-details">
                 <span className="equi-item-title">{equipement.nom}</span>
@@ -148,15 +151,15 @@ function EquipementDetails() {
                     <div className="form-details">
                       <div className="input-box">
                         <label htmlFor="description" className="details">Description</label>
-                        <textarea placeholder="Description de la tâche..." id="description" onChange={(e) => setTaskData({ ...taskData, description: e.target.value })}></textarea>
+                        <textarea placeholder="Description de la tâche..." id="description" name="description" onChange={handleChange}></textarea>
                       </div>
                       <div className="input-box">
                         <label htmlFor="dure" className="details">Durée</label>
-                        <input type="text" placeholder="Durée" id="dure" onChange={(e) => setTaskData({ ...taskData, dure: e.target.value })}/>
+                        <input type="text" placeholder="Durée" id="dure" name="dure" onChange={handleChange}/>
                       </div>
                       <div className="input-box">
                         <label className="details">Spécifier l'état</label>
-                        <select onChange={(e) => setTaskData({ ...taskData, etat_id: e.target.value })}>
+                        <select name='etat_id' onChange={handleChange}>
                           <option>Spécifier l'état</option>
                           {
                           etat.map((et) => {
@@ -179,7 +182,7 @@ function EquipementDetails() {
             </div> 
               {
                 tasks.map(task=>{
-                  if (task.equipement_id === equipement.id){
+                  if(task.equipement_id === equipement.id){
                     return (
                       <Link to={"/task-details/"+task.id} key={task.id}>
                       <div className="equip-task">
@@ -192,6 +195,7 @@ function EquipementDetails() {
                               if (et.id === task.etat_id){
                                 return et.etat
                               }
+                              return null
                             })
                           }</div>
                         </div>
@@ -199,6 +203,7 @@ function EquipementDetails() {
                     </Link>
                     )
                   }
+                  return null
                 })
               }          
             </div>
