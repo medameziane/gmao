@@ -110,19 +110,9 @@
 
 
 /* Start Edit task details */
-.task-details-section .details-info{
-  display: flex;
-  gap: 10px;
-}
-.task-details-section .details-info .left-section{
-  width: 68%;
-}
-.task-details-section .details-info .right-section{
-  width: 32%;
-}
 .task-details-section .details-items .items{
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(450px,1fr));
+  grid-template-columns: repeat(auto-fill,minmax(400px,1fr));
   gap: 5px;
   border: 1px solid var(--border-color);
   padding: 5px;
@@ -147,13 +137,13 @@
   color: var(--main-color);
   font-size: 20px;
 }
-.task-details-section .activities-items {
+.task-details-section .activities-items{
   margin: 0px auto;
   padding: 1px var(--padding-inside);
   color: var(--link-color);
   display: flex;
   gap: 50px;
-  width: 90%;
+  width: 100%;
 }
 .task-details-section .items .item-more{
   display: grid;
@@ -283,31 +273,22 @@
   width: 90%;
   transform: translateY(0px);
 }
-.task-details-section .details-info .right-item{
-  border: 1px solid var(--border-color);
+.task-details-section .right-item{
+  border-left: 1px solid var(--border-color);
   padding: 10px;
-  background: var(--card-color);
-  margin-bottom : 5px;
 }
-.task-details-section .details-info .right-item .right-item-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-.task-details-section .details-info .right-item-details{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.task-details-section .details-info .right-item-details .right-item-data .right-item-data-title {
+.task-details-section .right-item .right-item-title {
   font-size: 16px;
   font-weight: 600;
   color: var(--link-color);
-}
-.task-details-section .details-info .right-item-details .right-item-data p{
-  font-size: 14px;
-  color: var(--text-color);
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
 }
 .task-details-section .details-info .right-item-icon img{
   height: 250px;
+}
+@media (max-width : 460px){
+  .task-details-section .details-items .items {
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  }
 }

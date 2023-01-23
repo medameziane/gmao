@@ -1,27 +1,28 @@
 import './header.css'
 
 const toggleNav = ()=>{
-  document.querySelector('.sidebar').classList.toggle('show')
+  document.querySelector('.sidebar').classList.toggle('hidden')
   document.querySelector('.container').classList.toggle('full')
   document.querySelector('.header').classList.toggle('full')
+  localStorage.setItem("sidebar","0")
 }
-let showSettings = ()=>{
+const showSettings = ()=>{
   document.querySelector(".settings-area").classList.add("show")
   document.querySelector(".overly").style.display = "block"
 }
-let hideSettings = ()=>{
+const hideSettings = ()=>{
   document.querySelector(".settings-area").classList.remove("show")
   document.querySelector(".overly").style.display = "none"
 }
-let handleLight = ()=>{
+const handleLight = ()=>{
   document.querySelector(".dot-dark").classList.remove("active")
   document.querySelector(".dot-light").classList.add("active")
 }
-let handleDark = ()=>{
+const handleDark = ()=>{
   document.querySelector(".dot-dark").classList.add("active")
   document.querySelector(".dot-light").classList.remove("active")
 }
-let handleTheme = (e)=>{
+const handleTheme = (e)=>{
   if(e.target.value==="dark"){
     document.body.classList.add("is-dark")
     localStorage.setItem('color_option','green')
@@ -33,6 +34,13 @@ let handleTheme = (e)=>{
 
 }
 
+if(localStorage.getItem('sidebar')){
+  window.addEventListener('load',()=>{
+    document.querySelector('.container').classList.add('full')
+    document.querySelector('.header').classList.add('full')
+    document.querySelector('.sidebar').classList.add('hidden')
+  })
+}
 if(localStorage.getItem('color_option')){
   document.body.classList.add("is-dark")
   window.addEventListener('load',()=>{

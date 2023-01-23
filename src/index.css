@@ -83,7 +83,7 @@ ul{
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 99999;
+  z-index: 99998;
   display: none;
   -webkit-transition: all .2s ease-out;
   transition: var(--transition-time);
@@ -176,6 +176,13 @@ ul{
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
   gap: 10px;
+}
+.form-content .form-details .radio-box {
+  display: flex;
+  gap: 30px;
+}
+.form-content .form-details .radio-box label {
+  margin-left: 5px;
 }
 .input-box input,.input-box textarea{
   height: 45px;
@@ -276,8 +283,17 @@ grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
+  padding: 5px 0;
   background: var(--card-color);
   border: 1px solid var(--main-color);
+}
+.form-content .button input[type="submit"]{
+  background: var(--card-color);
+  border: 1px solid var(--main-color);
+}
+.form-content .button input[type="reset"]{
+  background: var(--card-color);
+  border: 1px solid red;
 }
 .form-content .button input:hover{
 transform: scale(0.99);
@@ -311,4 +327,25 @@ background: var(--main-color);
 .table-data tbody td {
   border: 1px solid var(--border-color);
   padding: var(--padding-inside);
+}
+
+
+@media (max-width : 600px){
+  .add-form{
+    width: 100%;
+    max-height: 600px;
+  }
+  .form-content .form-details{
+    grid-template-columns: repeat(auto-fill,minmax(350px,1fr)) !important;
+  }
+}
+@media (max-width : 535px){
+  .container,.header{
+    width: 100% !important;
+  }
+}
+@media (max-width : 390px){
+  .form-content .form-details{
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr)) !important;
+  }
 }

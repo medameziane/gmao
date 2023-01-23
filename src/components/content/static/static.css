@@ -57,31 +57,31 @@
 /* Confirm Delete Item */
 .confirm-delete,.success-action{
   width: 400px;
-  background: var(--bg-color);
-  margin: auto;
+  background: var(--card-color);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 20px;
   padding: 20px var(--padding-inside);
   text-align: center;
   border-radius: 10px;
   position: fixed;
-  z-index: 9999;
-  transform: translate(50%,-200%);
-  right: 50%;
+  z-index: 999999;
+  transform: translate(-50%,-200%);
+  left: 50%;
+  top: 50%;
   opacity: 0;
   transition: var(--transition-time);
+  border: 1px solid var(--border-color);
 }
 .confirm-delete.show,
 .success-action.show{
   opacity: 1;
-  transform: translate(50%,50%);
+  transform: translate(-50%,-50%);
 }
 .confirm-delete i{
   color: red;
-  font-size: 40px;
+  font-size: 50px;
 }
 .confirm-delete h2,
 .success-action h2{
@@ -92,11 +92,26 @@
   display: flex;
   gap: 35px;
 }
+.confirm-delete .delete-actions span{
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--link-color);
+  cursor: pointer;
+  transition: var(--transition-time);
+}
 .confirm-delete .delete-actions .confirm{
-  background-color: red;
+  border:1px solid red;
+}
+.confirm-delete .delete-actions .confirm:hover{
+  background-color:red;
+  color: #fff;
 }
 .confirm-delete .delete-actions .cancel{
-  background-color: var(--main-color);
+  border:1px solid var(--main-color);
+}
+.confirm-delete .delete-actions .cancel:hover{
+  background-color:var(--main-color);
+  color: #fff;
 }
 
 /* Success Action */

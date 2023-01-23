@@ -1,12 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-function AddTask() {
+function AddTask(props){
   const [taskData, setTaskData] = useState({});
   const [etat, setEtat] = useState([]);
   const [equipements, setEquipements] = useState([]);
 
-  // main path php
   const mainPath = (page, id, action) => {
     if (page && id && action) {
       return "http://localhost/gmao-react/backend/tables/" +page +"/" +id +"/" +action
@@ -17,36 +16,31 @@ function AddTask() {
     }
   };
 
-  // Hide form after submit data
   const exitForm = () => {
     document.querySelector(".add-task .add-form").classList.remove("showTaskForm");
     document.querySelector(".overly").style.display = "none";
   };
 
-  // Get all data we need from table
   const getAllData = () => {
     axios.get(mainPath("equipement.php")).then(res=> setEquipements(res.data));
     axios.get(mainPath("etat.php")).then(res => setEtat(res.data));
   };
   
-  // Submit data to tache table
   const handleForm = (e) => {
     e.preventDefault();
     
-    // Submit data to task table
-    axios.post(mainPath("task.php"), taskData);
+    // axios.post(mainPath("task.php"), taskData);
     getAllData();
+    console.log(taskData)
     
-    // Hide Form From page
     document .querySelector(".add-task .add-form") .classList.remove("showTaskForm")
     document.querySelector(".overly").style.display = "none"
     e.target.reset();
   };
-
+  
   useEffect(() => {
     getAllData()
   },[]);
-
   return (
     <div className='add-task'>
       <div className="form-section">
@@ -60,9 +54,12 @@ function AddTask() {
                   <select onChange={(e) => setTaskData({...taskData,equipement_id: e.target.value})}>
                     <option>List d'équipement</option>{
                       equipements.map(equip=> {
-                        return <option key={equip.id} value={equip.id}>{equip.nom}
-                    </option>}) 
-                    }
+                        if(props.id){
+                          return equip.id === props.id ?<option key={equip.id} value={equip.id}>{equip.nom}</option>:""
+                        }else{
+                          return <option key={equip.id} value={equip.id}>{equip.nom}</option>
+                        }
+                    })}
                   </select>
                 </div>
                 <div className="input-box">

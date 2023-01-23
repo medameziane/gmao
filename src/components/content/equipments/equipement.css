@@ -1,30 +1,15 @@
-/* Start Edit Equipement Section */
-/* .equipement-section .list-equipements .equipment{
-  position: relative;
-}
-.equipement-section .list-equipements .equipment:hover::after {
-  content: "";
-  width: 100%;
-  height: 190px;
-  top: 0;
-  left: 0;
-  background: var(--main-color);
-  position: absolute;
-  opacity: .2;
-  transition: var(--transition-time);
-  z-index: 9999;
-} */
 .equipement-section {
   position: relative;
 }
 .equipement-section .add-form{
   position: fixed;
-  right: -50%;
+  right: 0;
   top: 70px;
   opacity: 0;
+  transform: translateX(100%);
 }
 .equipement-section .add-form.showEquipementForm{
-  right:0;
+  transform: translateX(0%);
   opacity: 1;
 }
 .equipement-section .add-form .sub-input {
@@ -41,10 +26,59 @@
 }
 .equipement-section .equipement-content .list-equipements{
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
   gap: 10px;
   background-color: var(--card-color);
   padding: 5px;
+}
+.equipement-section .equipement-content .list-equipements .equipment{
+  position: relative;
+  background: var(--bg-color);
+  overflow: hidden;
+}
+.equipement-section .list-equipements .equipment::after,
+.equipement-section .list-equipements .equipment .equipement-actions{
+  position: absolute;
+  top: 0;
+  width: 0%;
+  height: 60%;
+  transition: var(--transition-time);
+}
+.equipement-section .list-equipements .equipment .equipement-actions{
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  left: -100%;
+}
+.equipement-section .list-equipements .equipment::after{
+  content: "";
+  background: #000;
+  opacity: .5;
+  z-index: 1;
+}
+.equipement-section .list-equipements .equipment:hover::after,
+.equipement-section .list-equipements .equipment:hover .equipement-actions
+{
+  width: 100%;
+  left: 0;
+}
+
+
+.equipement-section .equipement-content .list-equipements .equipment .equipement-more{
+  background: var(--bg-color);
+  padding: 5px;
+  color: var(--link-color);
+  border-top: 1px solid var(--border-color);
+  margin-top: 10px;
+}
+.equipement-section .equipement-content .list-equipements .equipment .equipement-more li{
+  border: 0;
+  padding: 0;
+}
+.equipement-section .equipement-content .list-equipements .equipment .equipement-more span{
+  font-weight: 700;
 }
 .equipement-section .equipement-content .box-content .box-description {
   color: var(--text-color);
@@ -55,6 +89,11 @@
 .equipement-section .equipement-content .box-content .box-title {
   color: var(--link-color);
   font-weight: 600;
+  width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 5px;
 }
 .equipement-section .equipement-content .box-content .box-info{
   padding: 0 5px;
@@ -84,11 +123,15 @@
   gap: 10px;
 }
 .equipement-details .details-items .items{
-  display: grid;
-  grid-template-areas: "left right right";
+  display: flex;
   gap: 10px;
   border: 1px solid var(--border-color);
   padding: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.equipement-details .details-items .items .info-details{
+  flex: 1;
 }
 .equipement-details .details-items .saveChange {
   position: absolute;
@@ -103,6 +146,7 @@
   grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
   gap: 10px;
   margin-top: 10px;
+  text-align: center;
 }
 .equipement-details .details-items .items .equi-item-title{
   font-size: 20px;
@@ -114,7 +158,7 @@
 .equipement-details .details-items .items .item-data{
   font-size: 14px;
   color: var(--link-color);
-  padding: 5px 30px;
+  padding: 5px;
   display: block;
 }
 .equipement-details .details-items .items .item-title {
@@ -123,7 +167,7 @@
   gap: 10px;
   align-items: center;
   padding: 5px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-color);
 }
@@ -132,7 +176,8 @@
   font-size: 20px;
 }
 .item-image img{
-  height: 250px;
+  width: 250px;
+  height: 200px;
 }
 .equipement-additional .equip-task {
   display: flex;
@@ -195,5 +240,14 @@
   opacity: 1;
 }
 .update-equipement .add-form .form-content .form-details{
-  grid-template-columns: repeat(auto-fill,minmax(400px,1fr));
+  grid-template-columns: repeat(auto-fill,minmax(800px,1fr));
+  gap : 20px;
+}
+.update-equipement .add-form .form-content .form-details .input-box-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+  gap: 10px;
+}
+.update-equipement .add-form .form-content .button{
+  grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
 }

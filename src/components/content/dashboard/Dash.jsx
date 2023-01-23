@@ -87,7 +87,7 @@ function Dash() {
               {
                 techniciens.map(tech=>{
                   return (
-                    <Link to ={"tech-details/"+tech.id}>
+                    <Link to ={"tech-details/"+tech.id} key={tech.id}>
                       <div className="circle">
                         <span className="circle-logo">
                           <img src={"https://app.mobility-work.com/media/cache/resolve/large/img/profile.JPG"}/>

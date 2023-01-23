@@ -63,7 +63,6 @@ function TaskDetails() {
     getAllData()
   },[]);
 
-  console.log(task)
   return (
     <div className="task-details-section">
       <HeaderContent title="Tâche Details" />
@@ -98,11 +97,23 @@ function TaskDetails() {
                       }</span>
                       </div>
                       <div className="item-more-info">
-                        <h3 className='item-title'><i className="fa-solid fa-battery-half title-icon"></i>Durée</h3>
+                        <h3 className='item-title'><i className="fa-solid fa-clock"></i>Durée</h3>
                       <span className="item-data">{task.dure}</span>
                       </div>
                     </div>
-                  </div>      
+                  </div>
+                  {equipements.map(equip=>{
+                    if(equip.id===task.equipement_id){
+                      return (
+                        <div className="right-item" key={equip.id}>
+                          <h3 className="right-item-title">{equip.nom}</h3>
+                          <div className="right-item-icon">
+                            <img key={equip.id} src={'http://localhost/gmao-react/backend/images/'+equip.equip_image}/>
+                          </div>
+                        </div>  
+                      )
+                    }})
+                  }
                 </div>
                 <div className="activities-task">
                   <div className="activities-header">
@@ -244,27 +255,6 @@ function TaskDetails() {
               </div>
               <div className="right-section">
                 <div className="right-items">
-                  <div className="right-item">
-                    {/* <h4 className="right-item-title">Equipement</h4> */}
-                    <div className="right-item-content">
-                      <div className="right-item-details">
-                        <div className="right-item-data">
-                          <h3 className="right-item-data-title">{equipements.map(equip=>{
-                            if(equip.id === task.equipement_id){
-                              return equip.nom
-                            }})
-                          }</h3>
-                          {/* <p>{task.dure}</p> */}
-                        </div>
-                        <div className="right-item-icon">{equipements.map(equip=>{
-                            if(equip.id === task.equipement_id){
-                              return <img key={equip.id} src={'http://localhost/gmao-react/backend/images/'+equip.equip_image}/>
-                            }})
-                          }
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
