@@ -22,25 +22,24 @@ function AddTask(props){
   };
 
   const getAllData = () => {
-    axios.get(mainPath("equipement.php")).then(res=> setEquipements(res.data));
     axios.get(mainPath("etat.php")).then(res => setEtat(res.data));
+    axios.get(mainPath("equipement.php")).then(res=> setEquipements(res.data));
   };
   
   const handleForm = (e) => {
     e.preventDefault();
     
-    // axios.post(mainPath("task.php"), taskData);
-    getAllData();
-    console.log(taskData)
+    axios.post(mainPath("task.php"), taskData);
     
     document .querySelector(".add-task .add-form") .classList.remove("showTaskForm")
     document.querySelector(".overly").style.display = "none"
     e.target.reset();
   };
-  
+
   useEffect(() => {
     getAllData()
-  },[]);
+  },[])
+
   return (
     <div className='add-task'>
       <div className="form-section">

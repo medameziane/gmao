@@ -67,7 +67,7 @@
   border-radius: 10px;
   position: fixed;
   z-index: 999999;
-  transform: translate(-50%,-200%);
+  transform: translate(-50%,-600%);
   left: 50%;
   top: 50%;
   opacity: 0;

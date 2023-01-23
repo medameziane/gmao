@@ -253,10 +253,6 @@ function TaskDetails() {
                   }
                 </div>
               </div>
-              <div className="right-section">
-                <div className="right-items">
-                </div>
-              </div>
             </div>
           </div>
         </div>

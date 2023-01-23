@@ -45,7 +45,6 @@ function Equipement() {
     setEquipID({id : e})
   };
 
-
   const handlesearch=(e)=>{
     const getSearch = e.target.value;
     if(getSearch.length > 0){     
@@ -59,7 +58,7 @@ function Equipement() {
 
   useEffect(()=>{
     getAllData();
-  }, []);
+  },[])
 
   return (
     <div className="equipement-section">

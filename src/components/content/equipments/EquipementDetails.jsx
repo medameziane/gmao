@@ -83,8 +83,8 @@ function EquipementDetails() {
         <div className="box-header">
           <span className="btn-action" onClick={addTask}>Ajouter une tâche</span>
           <div className="equipement-actions">
-            <span className="btn-action btn-edit" onClick={handleUpdate}>Modifier l'équipement</span>
-            <span className="btn-action btn-delete" onClick={handleDelete}>Supprimer l'équipement</span>
+            <span className="btn-action btn-edit" onClick={handleUpdate}>Modifier</span>
+            <span className="btn-action btn-delete" onClick={handleDelete}>Supprimer</span>
           </div>
         </div>
         <div className="box-body">
@@ -96,7 +96,7 @@ function EquipementDetails() {
               <div className="info-details">
                 <span className="equi-item-title">{equipement.nom}</span>
                 <div className="item-info-description">
-                  <h3 className='item-title'>Description</h3>
+                  <h3 className='item-title'><i className="fa-solid fa-align-left"></i>Description</h3>
                   <span className="item-data">{equipement.description}</span>
                 </div>
                 <div className="info-items">
