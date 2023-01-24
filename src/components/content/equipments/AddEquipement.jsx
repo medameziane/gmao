@@ -10,7 +10,7 @@ function AddEquipement() {
   const [handleError,setHandleError]=useState({})
   const formData = new FormData();
 
-  // main path php
+
   const mainPath = (page, id, action) => {
     if (page && id && action) {
       return "http://localhost/gmao-react/backend/tables/" +page +"/" +id +"/" +action
@@ -75,7 +75,8 @@ function AddEquipement() {
     axios.post('http://localhost/gmao-react/backend/tables/equipement.php',equipementData)
     navigate(0)
 
-    // Hide Form From page
+    console.log(equipementData)
+    console.log(formData)
     document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
     document.querySelector(".overly").style.display = "none"
 

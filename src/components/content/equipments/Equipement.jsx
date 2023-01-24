@@ -5,6 +5,7 @@ import HeaderContent from "../static/HeaderContent";
 import { Link } from 'react-router-dom';
 import AddEquipement from './AddEquipement';
 import AddTask from '../tasks/AddTask';
+import ConfirmDelete from '../static/ConfirmDelete';
 
 function Equipement() {
 
@@ -14,7 +15,6 @@ function Equipement() {
   const [equipID, setEquipID]= useState([]);
   const [query, setQuery] = useState('');
 
-  // main path php
   const mainPath = (page, id, action) => {
     if (page && id && action) {
       return "http://localhost/gmao-react/backend/tables/" +page +"/" +id +"/" +action
@@ -25,7 +25,6 @@ function Equipement() {
     }
   };
 
-  // Fetch all data from tables
   const getAllData = () => {
     axios.get(mainPath("equipement.php")).then(res=>{
       setEquipements(res.data)
@@ -43,7 +42,18 @@ function Equipement() {
     document.querySelector(".add-task .add-form").classList.add("showTaskForm");
     document.querySelector(".overly").style.display = "block";
     setEquipID({id : e})
-  };
+  }
+
+  const handleDelete = (id)=>{
+    document.querySelector(".confirm-delete").classList.add("show")
+    document.querySelector(".overly").style.display = "block"
+    document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
+      axios.delete((mainPath("equipement.php",id)))
+      document.querySelector(".confirm-delete").classList.remove("show")
+      document.querySelector(".overly").style.display = "none"
+      getAllData()
+    })
+  }
 
   const handlesearch=(e)=>{
     const getSearch = e.target.value;
@@ -63,6 +73,7 @@ function Equipement() {
   return (
     <div className="equipement-section">
       <AddEquipement />
+      <ConfirmDelete />
       <AddTask id={equipID.id}/>
       <HeaderContent title = "Liste d'équipement"/>
       <div className="equipement-content">
@@ -82,7 +93,7 @@ function Equipement() {
             </div>
             <div className="list-equipements">
               {
-                equipements.reverse().map((equip)=>{
+                equipements.map((equip)=>{
                   return (
                     <div className="equipment" key={equip.id}>
                       <Link to={"/equipement-details/"+equip.id} className="box-hero">
@@ -97,7 +108,9 @@ function Equipement() {
                         </ul>
                       </div>
                       <div className="equipement-actions">
-                        <span className="add-task btn-action" onClick={()=>{addTask(equip.id)}}>Ajouter une tâche</span>
+                        <span className='icon-delete' onClick={()=>{handleDelete(equip.id)}}><i className="fa-solid fa-trash-can icon-delete"></i></span>
+                        <span className="btn-action" onClick={()=>{addTask(equip.id)}}>Ajouter une tâche</span>
+                        <Link to={"/equipement-details/"+equip.id} className="btn-action btn-view">Voir les détails</Link>
                       </div>
                     </div>
                   )

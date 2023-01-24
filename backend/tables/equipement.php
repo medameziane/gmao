@@ -5,10 +5,11 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
+$myDate = date("ymdhmsms");
 include '../db.php';
-
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method){
+
   case "GET":
     $sql = "SELECT * FROM equipement";
     $path = explode('/', $_SERVER['REQUEST_URI']);
@@ -28,29 +29,30 @@ switch ($method){
   
   case "POST":
     $equipe = json_decode(file_get_contents('php://input'));
-
-    $target_dir = "../images/";
+    $target_dir = "../images/$myDate";
     $target_file = $target_dir . basename($_FILES["picture"]["name"]);
     move_uploaded_file($_FILES["picture"]["tmp_name"], $target_file);
     
-    $target_dir_document = "../documents/";
+    $target_dir_document = "../documents/$myDate";
     $target_file_document = $target_dir_document . basename($_FILES["document"]["name"]);
     move_uploaded_file($_FILES["document"]["tmp_name"], $target_file_document);
-
+    
+    $image =$myDate.$equipe->imageData;
+    $document =$myDate.$equipe->document;
     $sql = "INSERT INTO equipement VALUES(
-              NULL,
-              '$equipe->nom',
-              '$equipe->description',
-                CURRENT_DATE,
-              '$equipe->prix',
-              '$equipe->marque',
-              '$equipe->reference',
-              '$equipe->piecedeRechange',
-              '$equipe->document',
-              '$equipe->imageData',
-              '$equipe->categorie_id',
-              '$equipe->service_id'
-            )";
+            NULL,
+            '$equipe->nom',
+            '$equipe->description',
+            CURRENT_DATE,
+            '$equipe->prix',
+            '$equipe->marque',
+            '$equipe->reference',
+            '$equipe->piecedeRechange',
+            '$document',
+            '$image',
+            '$equipe->categorie_id',
+            '$equipe->service_id'
+          )";
 
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
@@ -59,6 +61,7 @@ switch ($method){
       $response = ['status' => 0, 'message' => 'Failed to create record.'];
     }
     break;
+
 
   case "PUT":
     $equipe = json_decode( file_get_contents('php://input'));

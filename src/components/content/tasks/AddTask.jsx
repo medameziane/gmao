@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function AddTask(props){
+  const navigate = useNavigate()
   const [taskData, setTaskData] = useState({});
   const [etat, setEtat] = useState([]);
   const [equipements, setEquipements] = useState([]);
@@ -37,6 +39,9 @@ function AddTask(props){
     axios.post(mainPath("task.php"), taskData);
     document.querySelector(".add-task .add-form").classList.remove("showTaskForm")
     document.querySelector(".overly").style.display = "none"
+    if(props.id){
+      navigate("/equipement-details/"+props.id)
+    }
     e.target.reset();
   };
 

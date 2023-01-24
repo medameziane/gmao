@@ -88,13 +88,14 @@ ul{
   -webkit-transition: all .2s ease-out;
   transition: var(--transition-time);
 }
-.btn-action {
+.btn-action{
   display: flex;
   align-items: center;
   background: var(--main-color);
   color: #fff;
   border-radius: 5px;
   width: fit-content;
+  height: fit-content;
   padding: 5px var(--padding-inside);
   font-size: 14px;
   gap: 10px;
