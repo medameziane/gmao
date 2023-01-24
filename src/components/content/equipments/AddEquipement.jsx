@@ -1,15 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { redirect, useNavigate, useNavigation } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 
 function AddEquipement() {
   const navigate = useNavigate()
   const [categories, setCategories] = useState([])
   const [service, setService] = useState([])
   const [equipementData,setEquipementData]=useState({})
+  const [categorieData,setCategorieData]=useState({})
   const [handleError,setHandleError]=useState({})
   const formData = new FormData();
-
 
   const mainPath = (page, id, action) => {
     if (page && id && action) {
@@ -26,12 +26,18 @@ function AddEquipement() {
     axios.get(mainPath("service.php")).then((res) =>setService(res.data))
   }
 
-  const handleImage = ()=>{
+
+  const showHideInput = ()=>{
+    document.querySelector(".hide-categorie").classList.toggle("showHideCategoie")
+  }
+
+  const handleImage = (e)=>{
     const fileInput = document.getElementById("fileInput");
     const file = fileInput.files[0];
     const acceptedTypes = ["image/jpeg", "image/png"];
     if (acceptedTypes.indexOf(file.type) === -1) {
       setHandleError({...handleError , "image" : "Invalid file type. Only JPEG, PNG files are allowed."})
+      e.target.value=""
     }else{
       setEquipementData({...equipementData , imageData : file.name})
       setHandleError({...handleError , "image" : ""})
@@ -39,16 +45,13 @@ function AddEquipement() {
     }
   }
 
-  const showHideInput = ()=>{
-    document.querySelector(".hide-categorie").classList.toggle("showHideCategoie")
-  }
-
-  const handleDocument = ()=>{
+  const handleDocument = (e)=>{
     const fileInput = document.getElementById("document");
     const file = fileInput.files[0];
     const acceptedTypes = ["application/pdf","application/docx"];
     if (acceptedTypes.indexOf(file.type) === -1) {
       setHandleError({...handleError , "document" : "Invalid file type. Only PDF, DOCX files are allowed."})
+      e.target.value=""
     }else{
       setEquipementData({...equipementData , document : file.name})
       setHandleError({...handleError , "document" : ""})
@@ -66,20 +69,22 @@ function AddEquipement() {
     const value = e.target.value
     setEquipementData(values => ({...values , [name] : value}))
   }
-  
+
   const handleForm = (e)=>{
     e.preventDefault()
     handleImage()
     handleDocument()
     axios.post("http://localhost/gmao-react/backend/tables/equipement.php",formData)
     axios.post('http://localhost/gmao-react/backend/tables/equipement.php',equipementData)
+    
+    if (categorieData.categorie){
+      axios.post('http://localhost/gmao-react/backend/tables/categorie.php',categorieData)
+    }
     navigate(0)
-
+    
     console.log(equipementData)
-    console.log(formData)
     document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
     document.querySelector(".overly").style.display = "none"
-
     e.target.reset()
   }
   
@@ -110,26 +115,26 @@ function AddEquipement() {
                 </div>
                 <div className="input-box">
                   <label htmlFor="fileInput" className="details">Photo d'équipement</label>
-                  <input type="file" id="fileInput" onChange={handleImage}/>
+                  <input type="file" id="fileInput" onChange={handleImage} required/>
                   <span className="input-error">{handleError.image}</span>
                 </div>
                 <div className="input-box">
                   <label htmlFor="name" className="details">Nom</label>
-                  <input type="text" placeholder="Nom" id="name" name='nom' onChange={handleChange}/>
+                  <input type="text" placeholder="Nom" id="name" name='nom' onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="reference" className="details">Reference</label>
-                  <input type="text" placeholder="Reference" id="reference" name='reference' onChange={handleChange}/>
+                  <input type="text" placeholder="Reference" id="reference" name='reference' onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="description" className="details">Description</label>
-                  <textarea placeholder="Description..." id="description" name='description' onChange={handleChange}></textarea>
+                  <textarea placeholder="Description..." id="description" name='description' onChange={handleChange} required></textarea>
                 </div>
                 <div className="input-box">
                   <label className="details">Catégorie</label>
                   <div className="sub-input">
-                    <select name='categorie_id' onChange={handleChange}>
-                      <option>Select Catégorie</option>
+                    <select name='categorie_id' onChange={handleChange} required>
+                      <option value="" disabled selected>Select Catégorie</option>
                       {categories.map((cat)=>{
                         return (
                           <option value={cat.id} key={cat.id}>{cat.categorie}</option>
@@ -137,27 +142,27 @@ function AddEquipement() {
                         })
                       }
                     </select>
-                    {/* <span className='btn-action' onClick={showHideInput}>Autre</span> */}
+                    <span className='btn-select-hidden' onClick={showHideInput}>Autre</span>
                   </div>
-                  {/* <input type="text" className='hide-categorie' placeholder="Catégorie" onChange={(e)=>setEquipementData({...equipementData,'categorie': e.target.value})}/> */}
+                  <input type="text" className='hide-categorie' placeholder="Catégorie" name='categorie' onChange={(e)=>{setCategorieData({...categorieData , 'categorie' : e.target.value})}}/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="price" className="details">Prix</label>
-                  <input type="number" placeholder="Prix" id="price" name="prix" onChange={handleChange}/>
+                  <input type="number" placeholder="Prix" id="price" name="prix" onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="marque" className="details">Marque</label>
-                  <input type="text" placeholder="Marque" id="marque" name='marque' onChange={handleChange}/>
+                  <input type="text" placeholder="Marque" id="marque" name='marque' onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="document" className="details">Document</label>
-                  <input type="file" id="document" onChange={handleDocument}/>
+                  <input type="file" id="document" onChange={handleDocument} required/>
                   <span className="input-error">{handleError.document}</span>
                 </div>
                 <div className="input-box">
                   <label className="details">Service</label>
-                  <select name='service_id' onChange={handleChange}>
-                    <option>Selection Service</option>
+                  <select name='service_id' onChange={handleChange} required>
+                    <option value="" disabled selected>Selection Service</option>
                     {
                       service.map(ser=>{
                         return (

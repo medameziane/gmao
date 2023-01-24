@@ -16,9 +16,24 @@
   display: flex;
   gap: 10px;
 }
+.btn-select-hidden{
+  width: 115px;
+  height: 45px;
+  border: 1px solid var(--main-color);
+  border-bottom-width: 2px;
+  background: var(--bg-color);
+  color: var(--link-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-weight: 700;
+}
 .equipement-section .add-form .hide-categorie{
   margin: 10px auto;
-  width: 88%;
+  width: calc(100% - 100px);
+  float: left;
   display: none;
 }
 .equipement-section .add-form .hide-categorie.showHideCategoie{
@@ -74,7 +89,6 @@
   text-align: center;
   border-bottom-left-radius: 5px;
 }
-
 .equipement-section .equipement-content .list-equipements .equipment .equipement-more{
   background: var(--bg-color);
   padding: 5px;

@@ -23,4 +23,14 @@ switch ($method){
     }
     echo json_encode($categorie);
     break;
+  case "POST":
+    $equipe = json_decode(file_get_contents('php://input'));
+    $sql = "INSERT INTO categorie VALUES(NULL,'$equipe->categorie')";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $response = ['status' => 1, 'message' => 'Record created successfully.'];
+    }else {
+      $response = ['status' => 0, 'message' => 'Failed to create record.'];
+    }
+    break;
 }
