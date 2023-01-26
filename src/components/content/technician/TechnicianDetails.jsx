@@ -22,7 +22,7 @@ function TechnicianDetails() {
 
   useEffect(() => {
     getAllData()
-  },[]);
+  });
   console.log(technicien)
   return (
     <div className='tech-details'>

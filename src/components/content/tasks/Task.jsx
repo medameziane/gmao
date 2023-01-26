@@ -43,7 +43,6 @@ function Task() {
       axios.delete((mainPath("task.php",id)))
       document.querySelector(".confirm-delete").classList.remove("show")
       document.querySelector(".overly").style.display = "none"
-      navigate(0)
     })
   }
 
@@ -54,7 +53,7 @@ function Task() {
 
   useEffect(() => {
     getAllData();
-  }, []);
+  });
 
   return (
     <div className="task-section">

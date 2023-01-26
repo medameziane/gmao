@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import AddEquipement from './AddEquipement';
 import AddTask from '../tasks/AddTask';
 import ConfirmDelete from '../static/ConfirmDelete';
-import SuccessAction from '../static/SuccessAction';
 
 function Equipement() {
   const [equipements, setEquipements] = useState([])
@@ -52,9 +51,9 @@ function Equipement() {
       document.querySelector(".confirm-delete").classList.remove("show")
       document.querySelector(".overly").style.display = "none"
       document.querySelector(".success-action .card-success").classList.add("showSuccess")
-      // setTimeout(()=>{
-      //   document.querySelector(".success-action .card-success").classList.remove("showSuccess")
-      // },5000)
+      setTimeout(()=>{
+        document.querySelector(".success-action .card-success").classList.remove("showSuccess")
+      },3000)
     })
   }
 
@@ -75,9 +74,8 @@ function Equipement() {
 
   return (
     <div className="equipement-section">
-      <AddEquipement />
       <ConfirmDelete />
-      <SuccessAction action='Supprimé'/>
+      <AddEquipement />
       <AddTask id={equipID.id}/>
       <HeaderContent title = "Liste d'équipement"/>
       <div className="equipement-content">

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import SuccessAction from '../static/SuccessAction';
+import SuccessAdd from '../static/SuccessAction';
 
 function AddTechnicien() {
   const [technicienData, setTechnicienData]= useState({});
@@ -17,10 +17,8 @@ function AddTechnicien() {
     }
   };
 
-  // Hide form after submit data
-  const exitForm = () => {
-    document.querySelector(".add-task .add-form").classList.remove("showTaskForm");
-    document.querySelector(".overly").style.display = "none";
+  const getAllData = () => {
+    axios.get(mainPath("specialite.php")).then(res=> setSpecialites(res.data));
   };
 
   const handleChange = (e)=>{
@@ -28,27 +26,22 @@ function AddTechnicien() {
     const value = e.target.value
     setTechnicienData(values => ({...values , [name] : value}))
   }
-  // Get all data we need from table
-  const getAllData = () => {
-    axios.get(mainPath("specialite.php")).then(res=> setSpecialites(res.data));
-  };
   
-  // Submit data to tache table
   const handleForm = (e) => {
     e.preventDefault();
-    
-    // Submit data to task table
     axios.post(mainPath("technicien.php"), technicienData);
-    getAllData();
-    
-    // Hide Form From page
-    document .querySelector(".add-task .add-form") .classList.remove("showTaskForm")
-    document.querySelector(".success-action .card-success").classList.add("showSuccess")
+    document.querySelector(".add-task .add-form").classList.remove("showTaskForm")
+    document.querySelector(".success-add .card-success").classList.add("showAdd")
     setTimeout(()=>{
-      document.querySelector(".success-action .card-success").classList.remove("showSuccess")
+      document.querySelector(".success-add .card-success").classList.remove("showAdd")
     },5000)
     document.querySelector(".overly").style.display = "none"
     e.target.reset();
+  };
+
+  const exitForm = () => {
+    document.querySelector(".add-task .add-form").classList.remove("showTaskForm");
+    document.querySelector(".overly").style.display = "none";
   };
 
   useEffect(() => {
@@ -57,7 +50,7 @@ function AddTechnicien() {
 
   return (
     <div className='add-task'>
-      <SuccessAction action="Ajouté"/>
+      <SuccessAdd/>
       <div className="form-section">
         <div className="add-form">
           <div className="title">Ajouter un téchnicien <i className="fa-solid fa-user"></i></div>

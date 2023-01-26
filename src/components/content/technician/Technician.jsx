@@ -8,7 +8,6 @@ import 'jspdf-autotable'
 import { Link } from 'react-router-dom';
 import AddTechnicien from './AddTechnicien';
 import ConfirmDelete from '../static/ConfirmDelete';
-import Test from '../static/Test';
 
 function Technician() {
   const [techniciens, setTechniciens] = useState([]);
@@ -26,7 +25,6 @@ function Technician() {
     }
   };
 
-  // Get all data we need from table
   const getAllData = () => {
     axios.get(mainPath("technicien.php")).then((res)=>{
       setTechniciens(res.data);
@@ -57,10 +55,9 @@ function Technician() {
     document.querySelector(".confirm-delete").classList.add("show")
     document.querySelector(".overly").style.display = "block"
     document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
-      axios.delete((mainPath("technicien.php",id)))
+      // axios.delete((mainPath("technicien.php",id)))
       document.querySelector(".confirm-delete").classList.remove("show")
       document.querySelector(".overly").style.display = "none"
-      getAllData()
     })
   }
 
@@ -75,7 +72,7 @@ function Technician() {
 
   return (
     <div className="technician-section">
-      <HeaderContent title = "liste des Technicians"/>
+      <HeaderContent title = "liste des Techniciens"/>
       <AddTechnicien />
       <ConfirmDelete />
       <div className="technician-content">

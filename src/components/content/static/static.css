@@ -76,7 +76,7 @@
 }
 .confirm-delete.show{
   opacity: 1;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,-100%);
 }
 .confirm-delete i{
   color: red;
@@ -112,7 +112,6 @@
   color: #fff;
 }
 
-/* Success Action */
 .success-action .card-success{
   background: #18b918c4;
   border-radius: 10px;
@@ -122,16 +121,24 @@
   text-align: center;
   padding: 10px 0;
   position: fixed;
-  right: 50%;
-  top: -1000%;
-  transform: translate(50%,50%);
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%,-600%);
   z-index: 999999;
-}
-.success-action .card-success.showSuccess{
-  top : 10%;
+  opacity: 0;
+  transition: var(--transition-time);
 }
 .success-action .card-success h2 {
   font-size: 18px;
   color: #fff;
   font-weight: 600;
+}
+
+.success-add .card-success.showAdd{
+  opacity: 1;
+  transform: translate(-50%,-100%);
+}
+.success-remove .card-success.showRemove{
+  opacity: 1;
+  transform: translate(-50%,-100%);
 }

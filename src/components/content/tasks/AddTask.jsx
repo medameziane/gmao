@@ -40,9 +40,11 @@ function AddTask(props){
     axios.post(mainPath("task.php"), taskData);
     document.querySelector(".add-task .add-form").classList.remove("showTaskForm")
     document.querySelector(".overly").style.display = "none"
+    document.querySelector(".success-add .card-success").classList.add("showAdd")
     setTimeout(()=>{
-      document.querySelector(".success-action .card-success").classList.remove("showSuccess")
-    },5000)
+      document.querySelector(".success-add .card-success").classList.remove("showAdd")
+    },3000)
+    
     if(props.id){
       navigate("/equipement-details/"+props.id)
     }
@@ -51,14 +53,14 @@ function AddTask(props){
 
   useEffect(() => {
     getAllData()
-  },[])
+  })
 
   return (
     <div className='add-task'>
-      <SuccessAction action="Ajouté"/>
+      <SuccessAction />
       <div className="form-section">
         <div className="add-form">
-          <div className="title"> Ajouter un tâche <i className="fa-solid fa-xmark" onClick={exitForm}></i></div>
+          <div className="title">Ajouter un tâche <i className="fa-solid fa-xmark" onClick={exitForm}></i></div>
           <div className="form-content">
             <form onSubmit={handleForm}>
               <div className="form-details">

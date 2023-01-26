@@ -56,7 +56,7 @@ function EquipementDetails() {
 
   useEffect(() => {
     getAllData()
-  }, []);
+  });
 
   return (
     <div className='equipement-details'>

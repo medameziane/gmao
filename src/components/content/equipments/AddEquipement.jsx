@@ -1,10 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useNavigate} from 'react-router-dom'
 import SuccessAction from '../static/SuccessAction'
 
 function AddEquipement() {
-  const navigate = useNavigate()
   const [categories, setCategories] = useState([])
   const [service, setService] = useState([])
   const [equipementData,setEquipementData]=useState({})
@@ -20,13 +18,12 @@ function AddEquipement() {
     } else {
       return "http://localhost/gmao-react/backend/tables/" + page;
     }
-  };
+  }
 
   const getAllData = () => {
     axios.get(mainPath("categorie.php")).then(res =>setCategories(res.data))
     axios.get(mainPath("service.php")).then((res) =>setService(res.data))
   }
-
 
   const showHideInput = ()=>{
     document.querySelector(".hide-categorie").classList.toggle("showHideCategoie")
@@ -81,23 +78,23 @@ function AddEquipement() {
     if (categorieData.categorie){
       axios.post('http://localhost/gmao-react/backend/tables/categorie.php',categorieData)
     }
-    
+
     document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
-    document.querySelector(".success-action .card-success").classList.add("showSuccess")
+    document.querySelector(".success-add .card-success").classList.add("showAdd")
     setTimeout(()=>{
-      document.querySelector(".success-action .card-success").classList.remove("showSuccess")
-    },5000)
+      document.querySelector(".success-add .card-success").classList.remove("showAdd")
+    },3000)
     document.querySelector(".overly").style.display = "none"
     e.target.reset()
   }
   
   useEffect(()=>{
     getAllData();
-  },[])
+  })
 
   return (
     <div className='add-equipement'>
-      <SuccessAction action="Ajouté"/>
+      <SuccessAction />
       <div className="form-section">
         <div className="add-form">
           <div className="title">Ajouter un équipement <i className="fa-solid fa-xmark" onClick={exitForm}></i></div>

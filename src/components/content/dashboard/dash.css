@@ -40,7 +40,6 @@
   grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
   gap: 10px;
   background: var(--card-color);
-  padding: 5px;
   margin: 10px 0;
 }
 .quick-res .quick-box{
