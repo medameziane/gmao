@@ -280,6 +280,7 @@
   opacity: 1;
   width: 90%;
   transform: translateY(0px);
+  margin-bottom: 10px;
 }
 .task-details-section .right-item{
   border-left: 1px solid var(--border-color);

@@ -8,7 +8,7 @@ function ConfirmDelete() {
   
   return (
     <div className='confirm-delete'>
-      <h2>Are you sure to delete this item?</h2>
+      <h2>Êtes-vous sûr de vouloir supprimer?</h2>
       <i className="fa-solid fa-triangle-exclamation"></i>
       <div className="delete-actions">
         <span className="confirm">Confirm</span>

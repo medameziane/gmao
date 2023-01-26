@@ -55,7 +55,7 @@
 }
 
 /* Confirm Delete Item */
-.confirm-delete,.success-action{
+.confirm-delete{
   width: 400px;
   background: var(--card-color);
   display: flex;
@@ -74,8 +74,7 @@
   transition: var(--transition-time);
   border: 1px solid var(--border-color);
 }
-.confirm-delete.show,
-.success-action.show{
+.confirm-delete.show{
   opacity: 1;
   transform: translate(-50%,-50%);
 }
@@ -83,8 +82,7 @@
   color: red;
   font-size: 50px;
 }
-.confirm-delete h2,
-.success-action h2{
+.confirm-delete h2{
   color: var(--title-color);
   font-size: 18px;
 }
@@ -115,13 +113,25 @@
 }
 
 /* Success Action */
-.success-action{
-  height: 200px;
+.success-action .card-success{
+  background: #18b918c4;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: block;
+  width: 350px;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  right: 50%;
+  top: -1000%;
+  transform: translate(50%,50%);
+  z-index: 999999;
 }
-.success-action h2{
-  font-size: 23px;
+.success-action .card-success.showSuccess{
+  top : 10%;
 }
-.success-action i{
-  color: green;
-  font-size: 55px;
+.success-action .card-success h2 {
+  font-size: 18px;
+  color: #fff;
+  font-weight: 600;
 }

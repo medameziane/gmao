@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import HeaderContent from "../static/HeaderContent";
 import { Link, useParams } from "react-router-dom";
+import HeaderRoutes from "../static/HeaderRoutes";
+import ConfirmDelete from "../static/ConfirmDelete";
 
 function TaskDetails() {
   const {id} = useParams()
@@ -15,7 +17,6 @@ function TaskDetails() {
     "tache_id" : id
   });
 
-  // main path php
   const mainPath = (page, id, action) => {
     if (page && id && action) {
       return "http://localhost/gmao-react/backend/tables/" +page +"/" +id +"/" +action
@@ -34,7 +35,13 @@ function TaskDetails() {
     axios.get(mainPath("technicien.php")).then((response) => setTechnicien(response.data));
   };
 
-  // Submit data to activity table
+  const handleChange = (e)=>{
+    const name = e.target.name
+    const value = e.target.value
+    setActivityData(values => ({...values , [name] : value}))
+    console.log(activityData)
+  }
+
   const handleForm = (e) => {
     e.preventDefault();
 
@@ -49,15 +56,24 @@ function TaskDetails() {
     document .querySelector(".activities-task .add-form") .classList.remove("showActivityForm")
   };
 
-  // Hide form after submit data
   const exitForm = () => {
     document.querySelector(".activities-task .add-form").classList.remove("showActivityForm");
   };
 
-  // Show Activity Form
   const addActivity = () => {
     document.querySelector(".activities-task .add-form").classList.add("showActivityForm");
   };
+
+  const handleDelete = (id)=>{
+    document.querySelector(".confirm-delete").classList.add("show")
+    document.querySelector(".overly").style.display = "block"
+    document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
+      axios.delete((mainPath("activity.php",id)))
+      document.querySelector(".confirm-delete").classList.remove("show")
+      document.querySelector(".overly").style.display = "none"
+    })
+    getAllData()
+  }
   
   useEffect(() => {
     getAllData()
@@ -65,13 +81,11 @@ function TaskDetails() {
 
   return (
     <div className="task-details-section">
+      <HeaderRoutes />
       <HeaderContent title="Tâche Details" />
-
+      <ConfirmDelete />
       <div className="task-content">
         <div className="box-content">
-          {/* <div className="box-header">
-            <div className="btn-action">Ajouter une activité</div>
-          </div> */}
           <div className="box-body">
             <div className="details-info">
               <div className="left-section details-items">
@@ -130,34 +144,30 @@ function TaskDetails() {
                           <div className="form-details">
                             <div className="input-box">
                               <label htmlFor="description" className="details">Description</label>
-                              <textarea placeholder="Description de la tâche..." id="description" onChange={(e) => setActivityData({ ...activityData, description: e.target.value })}></textarea>
+                              <textarea placeholder="Description de la tâche..." id="description" name="description" onChange={handleChange} required></textarea>
                             </div>
                             <div className="input-box">
                               <label htmlFor="dure" className="details">Durée</label>
-                              <input type="text" placeholder="Durée" id="dure" onChange={(e) => setActivityData({ ...activityData, dure: e.target.value })}/>
+                              <input type="text" placeholder="Durée" id="dure" name="dure" onChange={handleChange} required/>
                             </div>
                             <div className="input-box">
                               <label className="details">Spécifier l'état</label>
-                              <select onChange={(e) => setActivityData({ ...activityData, etat_id: e.target.value })}>
-                                <option>Spécifier l'état</option>
+                              <select name="etat_id" onChange={handleChange} required>
+                                <option value="" selected disabled>Spécifier l'état</option>
                                 {
-                                etat.map((et) => {
-                                    return (
-                                      <option key={et.id} value={et.id}>{et.etat}</option>
-                                    )
+                                etat.map(et=>{
+                                  return <option key={et.id} value={et.id}>{et.etat}</option>
                                   })
                                 }
                               </select>
                             </div>
                             <div className="input-box">
                               <label className="details">Téchnicien</label>
-                              <select onChange={(e) => setActivityData({ ...activityData, technicien_id: e.target.value })}>
-                                <option>Spécifier Téchnicien</option>
+                              <select name="technicien_id" onChange={handleChange} required>
+                                <option value="" selected disabled>Spécifier Téchnicien</option>
                                 {
-                                technicien.map((tech) => {
-                                    return (
-                                      <option key={tech.id} value={tech.id}>{tech.nom}</option>
-                                    )
+                                  technicien.map(tech=>{
+                                    return <option key={tech.id} value={tech.id}>{tech.nom}</option>
                                   })
                                 }
                               </select>
@@ -176,7 +186,7 @@ function TaskDetails() {
                     activities.map((activity,index)=>{
                       if (activity.tache_id === task.id){
                         return(
-                        <div key={activity.id}>
+                        <div key={index}>
                           {
                             etat.map(et=>{
                               if(et.id===activity.etat_id){
@@ -189,7 +199,7 @@ function TaskDetails() {
                                     </div>
                                     <div className="activity-item">
                                       <div className="activity-item-actions">
-                                        <i className="fa-solid fa-trash-can icon-delete"></i>
+                                        <i className="fa-solid fa-trash-can icon-delete" onClick={()=>{handleDelete(activity.id)}}></i>
                                         <span className="activity-nbr">#{index+1}</span>
                                       </div>
                                       <div className="activity">

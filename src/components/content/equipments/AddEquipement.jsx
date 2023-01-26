@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate} from 'react-router-dom'
+import SuccessAction from '../static/SuccessAction'
 
 function AddEquipement() {
   const navigate = useNavigate()
@@ -80,10 +81,12 @@ function AddEquipement() {
     if (categorieData.categorie){
       axios.post('http://localhost/gmao-react/backend/tables/categorie.php',categorieData)
     }
-    navigate(0)
     
-    console.log(equipementData)
     document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
+    document.querySelector(".success-action .card-success").classList.add("showSuccess")
+    setTimeout(()=>{
+      document.querySelector(".success-action .card-success").classList.remove("showSuccess")
+    },5000)
     document.querySelector(".overly").style.display = "none"
     e.target.reset()
   }
@@ -94,6 +97,7 @@ function AddEquipement() {
 
   return (
     <div className='add-equipement'>
+      <SuccessAction action="Ajouté"/>
       <div className="form-section">
         <div className="add-form">
           <div className="title">Ajouter un équipement <i className="fa-solid fa-xmark" onClick={exitForm}></i></div>

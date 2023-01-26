@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import SuccessAction from '../static/SuccessAction';
 
 function AddTask(props){
   const navigate = useNavigate()
@@ -33,12 +34,15 @@ function AddTask(props){
     const value = e.target.value
     setTaskData(values => ({...values , [name] : value}))
   }
-
+  
   const handleForm = (e) => {
     e.preventDefault();
     axios.post(mainPath("task.php"), taskData);
     document.querySelector(".add-task .add-form").classList.remove("showTaskForm")
     document.querySelector(".overly").style.display = "none"
+    setTimeout(()=>{
+      document.querySelector(".success-action .card-success").classList.remove("showSuccess")
+    },5000)
     if(props.id){
       navigate("/equipement-details/"+props.id)
     }
@@ -51,6 +55,7 @@ function AddTask(props){
 
   return (
     <div className='add-task'>
+      <SuccessAction action="Ajouté"/>
       <div className="form-section">
         <div className="add-form">
           <div className="title"> Ajouter un tâche <i className="fa-solid fa-xmark" onClick={exitForm}></i></div>
@@ -58,35 +63,40 @@ function AddTask(props){
             <form onSubmit={handleForm}>
               <div className="form-details">
                 <div className="input-box">
-                  <label className="details">Sélectionnez équipement</label>
-                  <select name='equipement_id' onChange={handleChange}>
-                    <option>List d'équipement</option>{
-                      equipements.map(equip=> {
-                        if(props.id){
-                          return equip.id === props.id ?<option key={equip.id} value={equip.id}>{equip.nom}</option>:""
-                        }else{
-                          return <option key={equip.id} value={equip.id}>{equip.nom}</option>
-                        }
-                    })}
-                  </select>
+                  {
+                    props.id?equipements.map(equip=>{
+                      return equip.id === props.id ?<input type ="text" key={equip.id} readOnly defaultValue={equip.nom}/>:""
+                    }):
+                    <>
+                      <label className="details">Sélectionnez équipement</label>
+                      <select name='equipement_id' onChange={handleChange} required>
+                        <option value="" disabled selected>List d'équipement</option>
+                        {equipements.map(equip=>{return <option key={equip.id} value={equip.id}>{equip.nom}</option>})}
+                      </select>
+                    </>
+                  }
                 </div>
                 <div className="input-box">
                   <label htmlFor="description" className="details">Description</label>
-                  <textarea placeholder="Description..." id="description" name="description" onChange={handleChange}></textarea>
+                  <textarea placeholder="Description..." id="description" name="description" onChange={(e)=>{
+                    if(props.id){
+                      setTaskData({...taskData,"equipement_id" : props.id,"description" : e.target.value})
+                    }else{
+                      setTaskData({...taskData,"description" : e.target.value})
+                    }
+                  }
+                  } required></textarea>
                 </div>
                 <div className="input-box">
                   <label htmlFor="dure" className="details">Durée</label>
-                  <input type="text" placeholder="Durée" id="dure" name='dure' onChange={handleChange}/>
+                  <input type="text" placeholder="Durée" id="dure" name='dure' onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label className="details">Spécifier l'état</label>
-                  <select name='etat_id' onChange={handleChange}>
-                    <option>Spécifier l'état</option>
-                    {
-                    etat.map((et) => {
-                        return (
-                          <option key={et.id} value={et.id}>{et.etat}</option>
-                        )
+                  <select name='etat_id' onChange={handleChange} required>
+                    <option value="" disabled selected>Spécifier l'état</option>{
+                    etat.map(et=>{
+                      return(<option key={et.id} value={et.id}>{et.etat}</option>)
                       })
                     }
                   </select>

@@ -16,6 +16,7 @@ function Dash() {
   const [tasks,setTasks] = useState([])
   const [activities,setActivities] = useState([])
   const [techniciens,setTechniciens] = useState([])
+  const nbtLatest = 5;
 
   // main path php
   const mainPath = (page, id, action) => {
@@ -46,19 +47,31 @@ function Dash() {
 
       <div className="quick-res">
         <div className="quick-box">
-          <div className="icon"><i className="fa-solid fa-dharmachakra"></i></div>
-          <span className="counter">{equipements.length}</span>
-          <span className="quick-title"><Link to="/equipment">Total d'équipements</Link></span>
+          <div className="quick equip">
+            <div className="info">
+              <Link to="/equipment">Equipements</Link>
+              <div className="counter">{equipements.length}</div>
+            </div>
+            <div className="icon"><i className="fa-solid fa-dharmachakra"></i></div>
+          </div>
         </div>
         <div className="quick-box">
-          <div className="icon"><i className="fa-solid fa-calendar-check"></i></div>
-          <span className="counter">{tasks.length}</span>
-          <span className="quick-title"><Link to="/task">Total des tâches</Link></span>
+          <div className="quick task">
+            <div className="info">
+              <Link to="/task">Tâches</Link>
+              <div className="counter">{tasks.length}</div>
+            </div>
+            <div className="icon"><i className="fa-solid fa-calendar-check"></i></div>
+          </div>
         </div>
         <div className="quick-box">
-          <div className="icon"><i className="fa-solid fa-screwdriver-wrench"></i></div>
-          <span className="counter">{activities.length}</span>
-          <span className="quick-title"><Link to="/activity">Total d'activités</Link></span>
+          <div className="quick activity">
+            <div className="info">
+              <Link to="/activity">Activités</Link>
+              <div className="counter">{activities.length}</div>
+            </div>
+            <div className="icon"><i className="fa-solid fa-screwdriver-wrench"></i></div>
+          </div>
         </div>
       </div>
 
@@ -67,12 +80,11 @@ function Dash() {
           <div className="box-content">
             <div className="box-header"><h3>5 dernières tâches</h3><span><Link to="/technician">View more</Link></span></div>
             <div className="box-body">
-              <ul>
-                {
-                tasks.map(task=>{
-                  return (
-                    <li key={task.id}><Link to ={"task-details/"+task.id}>{task.description}</Link></li>
-                    )
+              <ul>{
+                  tasks.reverse().map((task,index)=>{
+                    while(index < 5){
+                      return <li key={task.id}><Link to ={"task-details/"+task.id}>{task.description}</Link></li>
+                    }
                   })
                 }
               </ul>

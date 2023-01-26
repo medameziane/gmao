@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import UpdateEquipement from './UpdateEquipement';
 import ConfirmDelete from '../static/ConfirmDelete';
+import AddTask from '../tasks/AddTask';
+import HeaderContent from '../static/HeaderContent';
 
 function EquipementDetails() {
   const {id} = useParams()
@@ -13,9 +15,6 @@ function EquipementDetails() {
   const [etat, setEtat] = useState([]);
   const [service, setService] = useState([]);
   const [categorie, setCategorie] = useState([]);
-  const [taskData, setTaskData] = useState({
-    equipement_id : id
-  });
   
   const mainPath = (page, id, action) => {
     if (page && id && action) {
@@ -36,7 +35,8 @@ function EquipementDetails() {
   }
 
   const addTask = () => {
-    document.querySelector(".equipement-additional .add-form").classList.add("showtaskform");
+    document.querySelector(".add-task .add-form").classList.add("showTaskForm");
+    document.querySelector(".overly").style.display = "block"
   }
 
   const handleUpdate = () => {
@@ -54,34 +54,13 @@ function EquipementDetails() {
     })
   }
 
-  const exitForm = () => {
-    document.querySelector(".equipement-additional .add-form").classList.remove("showtaskform");
-  };
-
-  const handleChange = (e)=>{
-    const name = e.target.name
-    const value = e.target.value
-    setTaskData(values => ({...values , [name] : value}))
-  }
-
-  const handleForm = (e) => {
-    e.preventDefault();
-    
-    // Submit data to task table
-    axios.post(mainPath("task.php"), taskData);
-    navigate(0)
-    
-    // Hide Form From page
-    document.querySelector(".equipement-additional .add-form").classList.remove("showtaskform")
-    e.target.reset();
-  };
-
   useEffect(() => {
     getAllData()
   }, []);
 
   return (
     <div className='equipement-details'>
+      <HeaderContent title ={equipement.nom}/>
       <div className="box-content">
         <div className="box-header">
           <span className="btn-action" onClick={addTask}>Ajouter une tâche</span>
@@ -143,43 +122,6 @@ function EquipementDetails() {
           </div>
           <div className="equipement-additional">
             <div className="equipement-tasks">
-            <div className="form-section">
-              <div className="add-form">
-                <div className="title">Ajouter une nouvelle tâche</div>
-                <div className="form-content">
-                  <form onSubmit={handleForm}>
-                    <div className="form-details">
-                      <div className="input-box">
-                        <label htmlFor="description" className="details">Description</label>
-                        <textarea placeholder="Description de la tâche..." id="description" name="description" onChange={handleChange}></textarea>
-                      </div>
-                      <div className="input-box">
-                        <label htmlFor="dure" className="details">Durée</label>
-                        <input type="text" placeholder="Durée" id="dure" name="dure" onChange={handleChange}/>
-                      </div>
-                      <div className="input-box">
-                        <label className="details">Spécifier l'état</label>
-                        <select name='etat_id' onChange={handleChange}>
-                          <option>Spécifier l'état</option>
-                          {
-                          etat.map((et) => {
-                              return (
-                                <option key={et.id} value={et.id}>{et.etat}</option>
-                              )
-                            })
-                          }
-                        </select>
-                      </div>
-                    </div>
-                    <div className="button">
-                      <input type="submit" value="Créer" />
-                      <input type="reset" value="Vider tout" />
-                      <input type="button" onClick={exitForm} value="Fermer" />
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div> 
               {
                 tasks.map(task=>{
                   if(task.equipement_id === equipement.id){
@@ -210,6 +152,7 @@ function EquipementDetails() {
           </div>
           <UpdateEquipement />
           <ConfirmDelete />
+          <AddTask id={id}/>
         </div>
       </div>
     </div>

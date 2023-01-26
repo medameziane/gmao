@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import SuccessAction from '../static/SuccessAction';
 
 function AddTechnicien() {
   const [technicienData, setTechnicienData]= useState({});
@@ -22,6 +23,11 @@ function AddTechnicien() {
     document.querySelector(".overly").style.display = "none";
   };
 
+  const handleChange = (e)=>{
+    const name = e.target.name
+    const value = e.target.value
+    setTechnicienData(values => ({...values , [name] : value}))
+  }
   // Get all data we need from table
   const getAllData = () => {
     axios.get(mainPath("specialite.php")).then(res=> setSpecialites(res.data));
@@ -37,6 +43,10 @@ function AddTechnicien() {
     
     // Hide Form From page
     document .querySelector(".add-task .add-form") .classList.remove("showTaskForm")
+    document.querySelector(".success-action .card-success").classList.add("showSuccess")
+    setTimeout(()=>{
+      document.querySelector(".success-action .card-success").classList.remove("showSuccess")
+    },5000)
     document.querySelector(".overly").style.display = "none"
     e.target.reset();
   };
@@ -47,6 +57,7 @@ function AddTechnicien() {
 
   return (
     <div className='add-task'>
+      <SuccessAction action="Ajouté"/>
       <div className="form-section">
         <div className="add-form">
           <div className="title">Ajouter un téchnicien <i className="fa-solid fa-user"></i></div>
@@ -55,24 +66,24 @@ function AddTechnicien() {
               <div className="form-details">
                 <div className="input-box">
                   <label htmlFor="nom" className="details">Nom</label>
-                  <input type="text" placeholder="nom" id="nom" onChange={(e)=>setTechnicienData({...technicienData,'nom': e.target.value})}/>
+                  <input type="text" placeholder="nom" id="nom" name="nom" onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="prenom" className="details">Prenom</label>
-                  <input type="text" placeholder="prenom" id="prenom" onChange={(e)=>setTechnicienData({...technicienData,'prenom': e.target.value})}/>
+                  <input type="text" placeholder="prenom" id="prenom" name="prenom" onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="email" className="details">Email</label>
-                  <input type="text" placeholder="email" id="email" onChange={(e)=>setTechnicienData({...technicienData,'email': e.target.value})}/>
+                  <input type="email" placeholder="email" id="email" name="email" onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="phone" className="details">Téléphone</label>
-                  <input type="phone" placeholder="phone" id="phone" onChange={(e)=>setTechnicienData({...technicienData,'phone': e.target.value})}/>
+                  <input type="phone" placeholder="phone" id="phone" name="phone" onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label className="details">Spécifier la spécialité</label>
-                  <select onChange={(e)=>setTechnicienData({...technicienData,'specialite_id': e.target.value})} required>
-                    <option>Spécifier l'état</option>
+                  <select name='specialite_id' onChange={handleChange} required>
+                    <option value="" disabled selected>Spécialité</option>
                     {
                       specialites.map((sp)=>{
                         return (

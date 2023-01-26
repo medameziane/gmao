@@ -7,6 +7,8 @@ import jsPDF from "jspdf";
 import 'jspdf-autotable'
 import { Link } from 'react-router-dom';
 import AddTechnicien from './AddTechnicien';
+import ConfirmDelete from '../static/ConfirmDelete';
+import Test from '../static/Test';
 
 function Technician() {
   const [techniciens, setTechniciens] = useState([]);
@@ -51,11 +53,16 @@ function Technician() {
     }
   }
 
-  // Delete task
-  const delTech = (id) => {
-    axios.delete(mainPath("technicien.php", id));
-    getAllData();
-  };
+  const handleDelete = (id)=>{
+    document.querySelector(".confirm-delete").classList.add("show")
+    document.querySelector(".overly").style.display = "block"
+    document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
+      axios.delete((mainPath("technicien.php",id)))
+      document.querySelector(".confirm-delete").classList.remove("show")
+      document.querySelector(".overly").style.display = "none"
+      getAllData()
+    })
+  }
 
   const addTech = () => {
     document.querySelector(".add-task .add-form").classList.add("showTaskForm");
@@ -64,13 +71,13 @@ function Technician() {
 
   useEffect(() => {
     getAllData()
-  },[]);
+  });
 
   return (
     <div className="technician-section">
       <HeaderContent title = "liste des Technicians"/>
       <AddTechnicien />
-
+      <ConfirmDelete />
       <div className="technician-content">
         <div className="box-content">
           <div className="box-header">
@@ -84,7 +91,7 @@ function Technician() {
             </div>
           </div>
           <div className="task-full-info">
-            <span className="task-count"><i className="fa-solid fa-calendar-check icon-task"></i>{techniciens.length} Téchnicien(s)</span>
+            <span className="task-count"><i className="fa-solid fa-users icon-task"></i>{techniciens.length} Téchnicien(s)</span>
             <div className="task-actions">
               <CSVLink data ={techniciens} filename="Données de tâches" className="btn-action csv-btn">Export CSV</CSVLink>
               <div className="btn-action pdf-btn" onClick={pdfData}>Export PDF</div>
@@ -121,7 +128,7 @@ function Technician() {
                       }</td>
                       <td>
                         <div className="actions">
-                          <i className="fa-solid fa-trash-can icon-delete" onClick={()=>{delTech(tech.id)}}></i>
+                          <i className="fa-solid fa-trash-can icon-delete" onClick={()=>{handleDelete(tech.id)}}></i>
                           <Link to={"/tech-details/"+tech.id}><i className="fa-solid fa-eye icon-edit"></i></Link>
                         </div>
                       </td>

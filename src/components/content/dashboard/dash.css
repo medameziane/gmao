@@ -35,36 +35,50 @@
 }
 
 /* Start Edit Quick Result progress */
-.quick-res {
+.quick-res{
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
+  grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
   gap: 10px;
   background: var(--card-color);
   padding: 5px;
   margin: 10px 0;
 }
-.quick-res .quick-box {
-  background: var(--bg-color);
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
+.quick-res .quick-box{
+  padding: 5px;
+  border-radius: var(--padding-inside);
 }
-.quick-res .quick-box .icon i {
-  color: var(--title-color);
+.quick-res .quick{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  padding: 30px 0;
+}
+.quick-res .quick .icon i{
+  color: var(--bg-color);
+  font-size: 70px;
+}
+.quick-res .quick .counter,
+.quick-res .quick a{
+  color: #fff;
+  text-align: center;
+}
+.quick-res .quick .counter{
   font-size: 30px;
 }
-.quick-res .quick-box .counter {
-  font-size: 22px;
-  font-weight: 600;
-  display: block;
-  color: var(--title-color);
+.quick-res .quick a{
+  font-size: 20px;
 }
-.quick-res .quick-box .quick-title a{
-  font-size: 17px;
-  font-weight: 600;
+.quick-res .activity{
+  background-color: #ff6a31;
+}
+.quick-res .task{
+  background: var(--main-color);
+}
+.quick-res .equip{
+  background-color: #706f6f;
 }
 
 /* Start Edit Latest Section*/
@@ -80,7 +94,7 @@
   text-align: center;
 }
 .latest-section .circles .circle img {
-  width: 90px;
+  width: 75px;
 }
 
 /* Start Edit Progress Section*/

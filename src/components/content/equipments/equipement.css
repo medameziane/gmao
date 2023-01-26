@@ -231,22 +231,6 @@
 .equipement-additional .equip-task .equip-task-info .task-info-des {
   color: var(--text-color);
 }
-.equipement-additional .add-form{
-  margin-top: 10px;
-  width: 100%;
-  display: none;
-  opacity: 0;
-  transform: translateY(-20px);
-  z-index: 100;
-}
-.equipement-additional .add-form.showtaskform{
-  display: block;
-  opacity: 1;
-  transform: translateY(0px);
-}
-.equipement-additional .add-form .form-details{
-  grid-template-columns: repeat(auto-fill,minmax(600px,1fr));
-}
 
 /* Update Equipement */
 .update-equipement .add-form {
