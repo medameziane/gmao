@@ -56,7 +56,7 @@ function EquipementDetails() {
 
   useEffect(() => {
     getAllData()
-  });
+  },[]);
 
   return (
     <div className='equipement-details'>
@@ -76,7 +76,7 @@ function EquipementDetails() {
                 <img src={"http://localhost/gmao-react/backend/images/"+equipement.equip_image} alt={equipement.nom}/>
               </div>  
               <div className="info-details">
-                <span className="equi-item-title">{equipement.nom}</span>
+                {/* <span className="equi-item-title">{equipement.nom}</span> */}
                 <div className="item-info-description">
                   <h3 className='item-title'><i className="fa-solid fa-align-left"></i>Description</h3>
                   <span className="item-data">{equipement.description}</span>

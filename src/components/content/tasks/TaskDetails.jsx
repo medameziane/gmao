@@ -5,6 +5,8 @@ import HeaderContent from "../static/HeaderContent";
 import { Link, useParams } from "react-router-dom";
 import HeaderRoutes from "../static/HeaderRoutes";
 import ConfirmDelete from "../static/ConfirmDelete";
+import AddActivity from "../activities/AddActivity";
+import SuccessAction from "../static/SuccessAction";
 
 function TaskDetails() {
   const {id} = useParams()
@@ -13,9 +15,6 @@ function TaskDetails() {
   const [etat, setEtat] = useState([]);
   const [activities, setActivities] = useState([]);
   const [technicien, setTechnicien] = useState([]);
-  const [activityData, setActivityData] = useState({
-    "tache_id" : id
-  });
 
   const mainPath = (page, id, action) => {
     if (page && id && action) {
@@ -25,7 +24,7 @@ function TaskDetails() {
     } else {
       return "http://localhost/gmao-react/backend/tables/" + page;
     }
-  };
+  }
 
   const getAllData = () => {
     axios.get(mainPath("activity.php")).then((response) => setActivities(response.data));
@@ -33,59 +32,49 @@ function TaskDetails() {
     axios.get(mainPath("task.php",id)).then((response) => setTask(response.data));
     axios.get(mainPath("etat.php")).then((response) => setEtat(response.data));
     axios.get(mainPath("technicien.php")).then((response) => setTechnicien(response.data));
-  };
-
-  const handleChange = (e)=>{
-    const name = e.target.name
-    const value = e.target.value
-    setActivityData(values => ({...values , [name] : value}))
-    console.log(activityData)
   }
-
-  const handleForm = (e) => {
-    e.preventDefault();
-
-    // Clear all inputs after submit
-    e.target.reset();
-
-    // Submit data to task table
-    axios.post(mainPath("activity.php"), activityData);
-    getAllData();
-
-    // Hide Form From page
-    document .querySelector(".activities-task .add-form") .classList.remove("showActivityForm")
-  };
-
-  const exitForm = () => {
-    document.querySelector(".activities-task .add-form").classList.remove("showActivityForm");
-  };
 
   const addActivity = () => {
     document.querySelector(".activities-task .add-form").classList.add("showActivityForm");
-  };
+  }
 
+  const updateEtat = ()=>{
+    axios.put(mainPath("task.php"))
+  }
+
+  const etatTask = etat.map(et=>{
+      return et.id === task.etat_id?<span className="task-etat" style={{"border" : `1px solid ${et.couleur}`,color : et.couleur}} key={et.id}>{et.etat}</span>:""})
+  
   const handleDelete = (id)=>{
     document.querySelector(".confirm-delete").classList.add("show")
     document.querySelector(".overly").style.display = "block"
     document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
       axios.delete((mainPath("activity.php",id)))
       document.querySelector(".confirm-delete").classList.remove("show")
+      document.querySelector(".success-action .success-remove .card-success").classList.add("showRemove")
+      setTimeout(()=>{
+        document.querySelector(".success-action .success-remove .card-success").classList.remove("showRemove")
+        getAllData()
+      },3000)
       document.querySelector(".overly").style.display = "none"
     })
-    getAllData()
   }
   
   useEffect(() => {
     getAllData()
-  },[]);
+  },[])
 
   return (
-    <div className="task-details-section">
+    <div className="task-details">
       <HeaderRoutes />
-      <HeaderContent title="Tâche Details" />
       <ConfirmDelete />
+      <SuccessAction />
       <div className="task-content">
         <div className="box-content">
+          <div className="box-header">
+            <div className="task-teails-header">{etatTask}</div>
+            <div className="btn-action" onClick={updateEtat}>Marquer comme terminé</div>
+          </div>
           <div className="box-body">
             <div className="details-info">
               <div className="left-section details-items">
@@ -97,8 +86,12 @@ function TaskDetails() {
                   <div className="item">
                     <div className="item-more">
                       <div className="item-more-info">
-                        <h3 className='item-title'><i className="fa-solid fa-calendar-days title-icon"></i>Date</h3>
-                        <span className="item-data">{task.date}</span>
+                        <h3 className='item-title'><i className="fa-solid fa-calendar-days title-icon"></i>Date prévue</h3>
+                        <span className="item-data">{new Date(task.date).toDateString()+" - "+new Date(task.end_date).toDateString()}</span>
+                      </div>
+                      <div className="item-more-info">
+                        <h3 className='item-title'><i className="fa-solid fa-clock"></i>Durée</h3>
+                        <span className="item-data">{task.dure > 1 ? task.dure+" Jours" : "Moins d'un jour"}</span>
                       </div>
                       <div className="item-more-info">
                         <h3 className='item-title'><i className="fa-solid fa-battery-half title-icon"></i>Etat</h3>
@@ -109,10 +102,6 @@ function TaskDetails() {
                           }
                         })
                       }</span>
-                      </div>
-                      <div className="item-more-info">
-                        <h3 className='item-title'><i className="fa-solid fa-clock"></i>Durée</h3>
-                      <span className="item-data">{task.dure}</span>
                       </div>
                     </div>
                   </div>
@@ -132,56 +121,15 @@ function TaskDetails() {
                 <div className="activities-task">
                   <div className="activities-header">
                     <h2 className="activities-title">Activités</h2>
-                    <div className="activities-actions">
-                      <div className="add-new btn-action" onClick={addActivity}>Ajouter une activité</div>
+                    <div className="activities-actions">{
+                      etat.map(et=>{
+                        if(et.id === task.etat_id){
+                          return et.etat!=="Terminée"?<div className="add-new btn-action" onClick={addActivity}>Ajouter une activité</div> :<div className="add-new btn-action btn-disabled" title="la tâche a été terminée">Ajouter une activité</div>
+                        }})
+                      }
                     </div>
                   </div>
-                  <div className="form-section">
-                    <div className="add-form">
-                      <div className="title"> Ajouter une activité <i className="fa-solid fa-tags"></i></div>
-                      <div className="form-content">
-                        <form onSubmit={handleForm}>
-                          <div className="form-details">
-                            <div className="input-box">
-                              <label htmlFor="description" className="details">Description</label>
-                              <textarea placeholder="Description de la tâche..." id="description" name="description" onChange={handleChange} required></textarea>
-                            </div>
-                            <div className="input-box">
-                              <label htmlFor="dure" className="details">Durée</label>
-                              <input type="text" placeholder="Durée" id="dure" name="dure" onChange={handleChange} required/>
-                            </div>
-                            <div className="input-box">
-                              <label className="details">Spécifier l'état</label>
-                              <select name="etat_id" onChange={handleChange} required>
-                                <option value="" selected disabled>Spécifier l'état</option>
-                                {
-                                etat.map(et=>{
-                                  return <option key={et.id} value={et.id}>{et.etat}</option>
-                                  })
-                                }
-                              </select>
-                            </div>
-                            <div className="input-box">
-                              <label className="details">Téchnicien</label>
-                              <select name="technicien_id" onChange={handleChange} required>
-                                <option value="" selected disabled>Spécifier Téchnicien</option>
-                                {
-                                  technicien.map(tech=>{
-                                    return <option key={tech.id} value={tech.id}>{tech.nom}</option>
-                                  })
-                                }
-                              </select>
-                            </div>
-                          </div>
-                          <div className="button">
-                            <input type="submit" value="Créer" />
-                            <input type="reset" value="Vider tout" />
-                            <input type="button" onClick={exitForm} value="Fermer" />
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
+                  <AddActivity myId={id}/>
                   {
                     activities.map((activity,index)=>{
                       if (activity.tache_id === task.id){

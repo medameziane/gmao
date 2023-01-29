@@ -8,10 +8,10 @@ import 'jspdf-autotable'
 import { Link } from 'react-router-dom';
 import AddTechnicien from './AddTechnicien';
 import ConfirmDelete from '../static/ConfirmDelete';
+import SuccessAction from '../static/SuccessAction';
 
 function Technician() {
   const [techniciens, setTechniciens] = useState([]);
-  const [filterdata, setFilterdata]= useState([]);
   const [specialites, setSpecialites] = useState([]);
 
   // main path php
@@ -26,11 +26,8 @@ function Technician() {
   };
 
   const getAllData = () => {
-    axios.get(mainPath("technicien.php")).then((res)=>{
-      setTechniciens(res.data);
-      setFilterdata(res.data);
-    })
-    axios.get(mainPath("specialite.php")).then(res=> setSpecialites(res.data));
+    axios.get(mainPath("technicien.php")).then(res=>setTechniciens(res.data))
+    axios.get(mainPath("specialite.php")).then(res=> setSpecialites(res.data))
   };
 
   // Export Data to pdf
@@ -40,23 +37,18 @@ function Technician() {
     pdf.save('techniciens.pdf')
   }
 
-  // Search data from table
-  const handlesearch=(event)=>{
-    const getSearch = event.target.value;
-    if(getSearch.length > 0){     
-      const searchdata = techniciens.filter(fl=> fl.nom.includes(getSearch));
-      setTechniciens(searchdata);
-    }else {
-      setTechniciens(filterdata);
-    }
-  }
 
   const handleDelete = (id)=>{
     document.querySelector(".confirm-delete").classList.add("show")
     document.querySelector(".overly").style.display = "block"
     document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
-      // axios.delete((mainPath("technicien.php",id)))
+      axios.delete((mainPath("technicien.php",id)))
       document.querySelector(".confirm-delete").classList.remove("show")
+      document.querySelector(".success-action .success-remove .card-success").classList.add("showRemove")
+      setTimeout(()=>{
+        document.querySelector(".success-action .success-remove .card-success").classList.remove("showRemove")
+        getAllData()
+      },3000)
       document.querySelector(".overly").style.display = "none"
     })
   }
@@ -68,25 +60,20 @@ function Technician() {
 
   useEffect(() => {
     getAllData()
-  });
+  },[]);
 
   return (
     <div className="technician-section">
       <HeaderContent title = "liste des Techniciens"/>
       <AddTechnicien />
       <ConfirmDelete />
+      <SuccessAction />
       <div className="technician-content">
         <div className="box-content">
           <div className="box-header">
             <div className="btn-action" onClick={addTech}>Ajouter un téchnicien</div>
           </div>
           <div className="box-body">
-          <div className="filter-data">
-            <div className="search-area input-box">
-              <i className="fa-solid fa-magnifying-glass search-icon"></i>
-              <input type="text" onChange={(e)=>handlesearch(e)} placeholder='Cherche ici...' />
-            </div>
-          </div>
           <div className="task-full-info">
             <span className="task-count"><i className="fa-solid fa-users icon-task"></i>{techniciens.length} Téchnicien(s)</span>
             <div className="task-actions">

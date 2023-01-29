@@ -70,27 +70,25 @@ function AddEquipement() {
 
   const handleForm = (e)=>{
     e.preventDefault()
-    handleImage()
-    handleDocument()
-    axios.post("http://localhost/gmao-react/backend/tables/equipement.php",formData)
-    axios.post('http://localhost/gmao-react/backend/tables/equipement.php',equipementData)
-    
-    if (categorieData.categorie){
+    // handleImage()
+    // handleDocument()
+    // axios.post("http://localhost/gmao-react/backend/tables/equipement.php",formData)
+    // axios.post('http://localhost/gmao-react/backend/tables/equipement.php',equipementData)
+    if(categorieData.categorie){
       axios.post('http://localhost/gmao-react/backend/tables/categorie.php',categorieData)
     }
-
     document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
-    document.querySelector(".success-add .card-success").classList.add("showAdd")
-    setTimeout(()=>{
-      document.querySelector(".success-add .card-success").classList.remove("showAdd")
-    },3000)
     document.querySelector(".overly").style.display = "none"
+    document.querySelector(".add-equipement .success-equip .card-success").classList.add("showEquip")
+    setTimeout(()=>{
+      document.querySelector(".add-equipement .success-equip .card-success").classList.remove("showEquip")
+    },3000)
     e.target.reset()
   }
   
   useEffect(()=>{
     getAllData();
-  })
+  },[])
 
   return (
     <div className='add-equipement'>
@@ -119,7 +117,7 @@ function AddEquipement() {
                   <input type="file" id="fileInput" onChange={handleImage} required/>
                   <span className="input-error">{handleError.image}</span>
                 </div>
-                <div className="input-box">
+                {/* <div className="input-box">
                   <label htmlFor="name" className="details">Nom</label>
                   <input type="text" placeholder="Nom" id="name" name='nom' onChange={handleChange} required/>
                 </div>
@@ -172,7 +170,7 @@ function AddEquipement() {
                       })
                     }
                   </select>
-                </div>
+                </div> */}
               </div>
               <div className="button">
                 <input type="submit" value="Créer"/>

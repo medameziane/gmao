@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import SuccessAdd from '../static/SuccessAction';
+import { useNavigate } from 'react-router-dom';
+import SuccessAction from '../static/SuccessAction';
 
 function AddTechnicien() {
+  const navigate = useNavigate()
   const [technicienData, setTechnicienData]= useState({});
   const [specialites, setSpecialites] = useState([]);
 
@@ -15,11 +17,11 @@ function AddTechnicien() {
     } else {
       return "http://localhost/gmao-react/backend/tables/" + page;
     }
-  };
+  }
 
   const getAllData = () => {
     axios.get(mainPath("specialite.php")).then(res=> setSpecialites(res.data));
-  };
+  }
 
   const handleChange = (e)=>{
     const name = e.target.name
@@ -31,18 +33,19 @@ function AddTechnicien() {
     e.preventDefault();
     axios.post(mainPath("technicien.php"), technicienData);
     document.querySelector(".add-task .add-form").classList.remove("showTaskForm")
-    document.querySelector(".success-add .card-success").classList.add("showAdd")
+    document.querySelector(".success-technician .card-success").classList.add("showTech")
     setTimeout(()=>{
-      document.querySelector(".success-add .card-success").classList.remove("showAdd")
-    },5000)
+      document.querySelector(".success-technician .card-success").classList.remove("showTech")
+      navigate(0)
+    },3000)
     document.querySelector(".overly").style.display = "none"
     e.target.reset();
-  };
+  }
 
   const exitForm = () => {
     document.querySelector(".add-task .add-form").classList.remove("showTaskForm");
     document.querySelector(".overly").style.display = "none";
-  };
+  }
 
   useEffect(() => {
     getAllData()
@@ -50,7 +53,7 @@ function AddTechnicien() {
 
   return (
     <div className='add-task'>
-      <SuccessAdd/>
+      <SuccessAction />
       <div className="form-section">
         <div className="add-form">
           <div className="title">Ajouter un téchnicien <i className="fa-solid fa-user"></i></div>

@@ -13,6 +13,7 @@ function Task() {
   const navigate = useNavigate()
   const [equipements, setEquipements] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [etat, setEtat] = useState([]);
   
   const mainPath = (page, id, action) => {
     if (page && id && action) {
@@ -27,6 +28,7 @@ function Task() {
   const getAllData = () => {
     axios.get(mainPath("task.php")).then(res=>setTasks(res.data))
     axios.get(mainPath("equipement.php")).then(res=>setEquipements(res.data))
+    axios.get(mainPath("etat.php")).then(res => setEtat(res.data));
   };
 
   // Export Data to pdf
@@ -42,8 +44,14 @@ function Task() {
     document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
       axios.delete((mainPath("task.php",id)))
       document.querySelector(".confirm-delete").classList.remove("show")
+      document.querySelector(".success-action .success-remove .card-success").classList.add("showRemove")
+      setTimeout(()=>{
+        document.querySelector(".success-action .success-remove .card-success").classList.remove("showRemove")
+        getAllData()
+      },3000)
       document.querySelector(".overly").style.display = "none"
     })
+      getAllData()
   }
 
   const addTask = () => {
@@ -53,22 +61,18 @@ function Task() {
 
   useEffect(() => {
     getAllData();
-  });
+  },[]);
 
   return (
     <div className="task-section">
       <HeaderContent title="liste des tâches" />
+      <AddTask />
+      <ConfirmDelete />
       <div className="box-content">
         <div className="box-header">
           <span className="btn-action" onClick={addTask}> Créer tâche</span>
         </div>
         <div className="box-body">
-          <div className="filter-data">
-            <div className="search-area input-box">
-              <i className="fa-solid fa-magnifying-glass search-icon"></i>
-              <input type="text" placeholder='Cherche ici...' />
-            </div>
-          </div>
           <div className="task-full-info">
             <span className="task-count"><i className="fa-solid fa-calendar-check icon-task"></i>{tasks.length} Tâche(s)</span>
             <div className="task-actions">
@@ -84,9 +88,9 @@ function Task() {
                 </td>
                 <td><div className="title-details">Equipement</div></td>
                 <td>
-                  <div className="title-details"><i className="fa-solid fa-battery-half title-icon"></i>Etat</div>
+                  <div className="title-details">Etat</div>
                 </td>
-                <td>Actions</td>
+                <td style={{width:"10%"}}>Actions</td>
               </tr>
             </thead>
             <tbody>
@@ -98,7 +102,7 @@ function Task() {
                         <div className="task-quick-info">
                           <ul>
                             <li><Link to={"/task-details/"+task.id}>{task.description}</Link></li>
-                            <li><i className="fa-solid fa-clock title-icon"></i> {task.dure}</li>
+                            <li><i className="fa-solid fa-clock title-icon"></i> {task.dure} Jours</li>
                           </ul>
                         </div>
                       </td>
@@ -109,7 +113,34 @@ function Task() {
                           </Link> : ""
                         })
                       }</td>
-                      <td>{task.etat_id}</td>
+                      <td style={{"textAlign":"center",width:"15%"}}>{etat.map(et=>{
+                        if(et.id === task.etat_id){
+                          switch (et.etat){
+                            case "En cours":
+                              return (
+                              <>
+                                <i className="fa-solid fa-hourglass-half" style={{"color" : et.couleur}}></i>
+                                <p className="etat">{et.etat}</p>
+                              </>
+                              )
+                            case "Terminée":
+                              return (
+                              <>
+                                <i className="fa-solid fa-circle-check" style={{"color" : et.couleur}}></i>
+                                <p className="etat">{et.etat}</p>
+                              </>
+                              )
+                            case "En retard":
+                              return (
+                              <>
+                                <i className="fa-solid fa-circle-exclamation" style={{"color" : et.couleur}}></i>
+                                <p className="etat">{et.etat}</p>
+                              </>
+                              )
+                          }
+                        }
+                      })}
+                      </td>
                       <td>
                         <div className="actions">
                           <i className="fa-solid fa-trash-can icon-delete" onClick={()=>{delTask(task.id)}}></i>
@@ -124,8 +155,6 @@ function Task() {
           </table>
         </div>
       </div>
-      <AddTask />
-      <ConfirmDelete />
     </div>
   );
 }

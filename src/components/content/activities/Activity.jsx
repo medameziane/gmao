@@ -14,15 +14,12 @@ function Activity() {
   const [etat,setEtat]=useState([])
   const [activityData,setActivityData]=useState({})
 
-
-  // Fetch all data from activities table
   const getActivities = () => {
     axios.get("http://localhost/gmao-react/backend/getdata.php?table=activite").then((response) =>
     setActivities(response.data)
     )
   }  
 
-  console.log(activities)
   useEffect(()=>{
     getActivities();
   },[]);

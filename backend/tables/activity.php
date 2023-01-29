@@ -27,7 +27,17 @@ switch ($method){
 
   case "POST":
     $equipe = json_decode(file_get_contents('php://input'));
-    $sql = "INSERT INTO activite VALUES (NULL,'$equipe->description','CURRENT_DATE','10','$equipe->etat_id','$equipe->technicien_id','$equipe->tache_id')";
+    $sql = "INSERT INTO activite VALUES (
+      NULL,
+      '$equipe->description',
+      '$equipe->start_date',
+      '$equipe->end_date',
+      '$equipe->dure',
+      '$equipe->etat_id',
+      '$equipe->technicien_id',
+      '$equipe->tache_id'
+      )";
+
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $response = ['status' => 1, 'message' => 'Record created successfully.'];

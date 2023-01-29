@@ -92,7 +92,7 @@
   position: fixed;
   width: var(--sidebar-width);
   top: 0;
-  background: var(--sidebar-color);
+  background: #000;
   z-index: 998;
 }
 .settings-area .settings-header h2 {
@@ -115,7 +115,7 @@
 .settings-area .settings-content{
   margin-top: 60px;
   width: 100%;
-  background: var(--sidebar-color);
+  background: #000;
   height: 100%;
   overflow: hidden auto;
   padding: 10px 0;

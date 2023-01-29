@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import SuccessAction from '../static/SuccessAction'
 
 function UpdateEquipement() {
   const {id} = useParams()
@@ -75,7 +76,11 @@ function UpdateEquipement() {
     // axios.put(mainPath("equipement.php",id),formData)
     axios.put(mainPath("equipement.php",id),equipement)
     document.querySelector(".update-equipement .add-form").classList.remove("showupdateform");
-    navigate(`/equipement-details/${id}`)
+    document.querySelector(".success-update .card-success").classList.add("showUpdate")
+    setTimeout(()=>{
+      document.querySelector(".success-update .card-success").classList.remove("showUpdate")
+      getAllData()
+    },3000)
     e.target.reset()
   }
 
@@ -85,6 +90,7 @@ function UpdateEquipement() {
 
   return (
     <div className='update-equipement'>
+      <SuccessAction />
       <div className="form-section">
         <div className="add-form">
           <div className="title">Mettre à jour l'équipement <i className="fa-solid fa-xmark" onClick={exitForm}></i></div>

@@ -3,11 +3,25 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import SuccessAction from '../static/SuccessAction';
 
+// Get Current Date
+let localDate = new Date();
+let getDay = localDate.getDate() 
+let getMonth = localDate.getMonth()
+let getYears = localDate.getFullYear()
+
+if(localDate.getDate()<10){
+ getDay =  "0"+localDate.getDate() 
+}
+if(localDate.getMonth()<10){
+  getMonth =  "0"+(localDate.getMonth() +1)
+}
+
 function AddTask(props){
   const navigate = useNavigate()
   const [taskData, setTaskData] = useState({});
   const [etat, setEtat] = useState([]);
   const [equipements, setEquipements] = useState([]);
+  const [inputEtat, setInputEtat] = useState(true)
 
   const mainPath = (page, id, action) => {
     if (page && id && action) {
@@ -28,21 +42,29 @@ function AddTask(props){
     axios.get(mainPath("etat.php")).then(res => setEtat(res.data));
     axios.get(mainPath("equipement.php")).then(res=> setEquipements(res.data));
   };
-  
+
   const handleChange = (e)=>{
+    const date1 = new Date(taskData.start_date);
+    const date2 = new Date(taskData.end_date);
+    if(taskData.start_date && taskData.end_date){
+      const Difference_In_Time = date2.getTime() - date1.getTime();
+      const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setTaskData({...taskData , "dure" : Difference_In_Days})
+    }
     const name = e.target.name
     const value = e.target.value
     setTaskData(values => ({...values , [name] : value}))
   }
-  
+
   const handleForm = (e) => {
     e.preventDefault();
     axios.post(mainPath("task.php"), taskData);
     document.querySelector(".add-task .add-form").classList.remove("showTaskForm")
     document.querySelector(".overly").style.display = "none"
-    document.querySelector(".success-add .card-success").classList.add("showAdd")
+    document.querySelector(".success-task .card-success").classList.add("showTask")
     setTimeout(()=>{
-      document.querySelector(".success-add .card-success").classList.remove("showAdd")
+      document.querySelector(".success-task .card-success").classList.remove("showTask")
+      navigate(0)
     },3000)
     
     if(props.id){
@@ -53,7 +75,7 @@ function AddTask(props){
 
   useEffect(() => {
     getAllData()
-  })
+  },[])
 
   return (
     <div className='add-task'>
@@ -79,6 +101,15 @@ function AddTask(props){
                   }
                 </div>
                 <div className="input-box">
+                  <label htmlFor='start_date' className="details">Démarrer la tâche le</label>
+                  <input type="date" placeholder="start_date" id="start_date" name='start_date' min={getYears+"-"+getMonth+"-"+getDay} onChange={(e)=>{setTaskData({...taskData , "start_date" : e.target.value})
+                setInputEtat(false)}} required/>
+                </div>
+                <div className="input-box">
+                  <label htmlFor='end_date' className="details">Fin de tâche le</label>
+                  <input type="date" placeholder="end_date" id="end_date" disabled = {inputEtat} name='end_date' min={taskData.start_date} onChange={(e)=>{setTaskData({...taskData , "end_date" : e.target.value})}} required/>
+                </div>
+                <div className="input-box">
                   <label htmlFor="description" className="details">Description</label>
                   <textarea placeholder="Description..." id="description" name="description" onChange={(e)=>{
                     if(props.id){
@@ -88,10 +119,6 @@ function AddTask(props){
                     }
                   }
                   } required></textarea>
-                </div>
-                <div className="input-box">
-                  <label htmlFor="dure" className="details">Durée</label>
-                  <input type="text" placeholder="Durée" id="dure" name='dure' onChange={handleChange} required/>
                 </div>
                 <div className="input-box">
                   <label className="details">Spécifier l'état</label>

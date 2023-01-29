@@ -102,6 +102,10 @@ ul{
   transition: var(--transition-time);
   cursor: pointer;
 }
+.btn-action.btn-disabled{
+  opacity: .5;
+  cursor: not-allowed;
+}
 .btn-action:hover{
   color: rgb(230, 226, 226);
 }
@@ -138,7 +142,7 @@ ul{
   background: var(--card-color);
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+  border: 1px solid var(--border-color);
   position: relative;
   overflow: auto;
   min-height: fit-content;
@@ -326,11 +330,23 @@ background: var(--main-color);
   font-size: 16px;
   padding: 5px var(--padding-inside);
 }
+.table-data tbody tr:nth-child(odd){
+  background-color: var(--bg-color);
+}
+.table-data tbody tr:hover{
+  background-color: var(--bg-color);
+}
 .table-data tbody td {
   border: 1px solid var(--border-color);
-  padding: var(--padding-inside);
+  padding:5px var(--padding-inside);
+  height: 100%;
 }
-
+.table-data .actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+}
 
 @media (max-width : 600px){
   .add-form{

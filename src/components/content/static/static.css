@@ -67,16 +67,17 @@
   border-radius: 10px;
   position: fixed;
   z-index: 999999;
-  transform: translate(-50%,-600%);
+  transform: translate(-50%,-50%);
   left: 50%;
-  top: 50%;
+  top: 35%;
   opacity: 0;
+  visibility: hidden;
   transition: var(--transition-time);
   border: 1px solid var(--border-color);
 }
 .confirm-delete.show{
   opacity: 1;
-  transform: translate(-50%,-100%);
+  visibility: visible;
 }
 .confirm-delete i{
   color: red;
@@ -113,20 +114,20 @@
 }
 
 .success-action .card-success{
-  background: #18b918c4;
+  background: #048204c4;
   border-radius: 10px;
   margin-bottom: 10px;
   display: block;
-  width: 350px;
+  width: fit-content;
   text-align: center;
-  padding: 10px 0;
+  padding: 10px;
   position: fixed;
   left: 50%;
-  top: 10%;
-  transform: translate(-50%,-600%);
+  top: -100%;
+  transform: translateX(-50%);
   z-index: 999999;
-  opacity: 0;
   transition: var(--transition-time);
+  opacity: 0;
 }
 .success-action .card-success h2 {
   font-size: 18px;
@@ -134,11 +135,12 @@
   font-weight: 600;
 }
 
-.success-add .card-success.showAdd{
-  opacity: 1;
-  transform: translate(-50%,-100%);
-}
+.success-task .card-success.showTask,
+.success-activity .card-success.showActivity,
+.success-equip .card-success.showEquip,
+.success-update .card-success.showUpdate,
+.success-technician .card-success.showTech,
 .success-remove .card-success.showRemove{
   opacity: 1;
-  transform: translate(-50%,-100%);
+  top: 10%;
 }

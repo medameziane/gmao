@@ -75,7 +75,7 @@ function Dash() {
         </div>
       </div>
 
-      <div className="latest-section">
+      {/* <div className="latest-section">
         <div className="latest">
           <div className="box-content">
             <div className="box-header"><h3>5 dernières tâches</h3><span><Link to="/technician">View more</Link></span></div>
@@ -114,7 +114,7 @@ function Dash() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className="progress-section">
         <div className="box-content">

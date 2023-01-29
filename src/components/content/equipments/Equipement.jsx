@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import AddEquipement from './AddEquipement';
 import AddTask from '../tasks/AddTask';
 import ConfirmDelete from '../static/ConfirmDelete';
+import SuccessAction from '../static/SuccessAction';
 
 function Equipement() {
   const [equipements, setEquipements] = useState([])
@@ -49,11 +50,12 @@ function Equipement() {
     document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
       axios.delete((mainPath("equipement.php",id)))
       document.querySelector(".confirm-delete").classList.remove("show")
-      document.querySelector(".overly").style.display = "none"
-      document.querySelector(".success-action .card-success").classList.add("showSuccess")
+      document.querySelector(".success-action .success-remove .card-success").classList.add("showRemove")
       setTimeout(()=>{
-        document.querySelector(".success-action .card-success").classList.remove("showSuccess")
+        document.querySelector(".success-action .success-remove .card-success").classList.remove("showRemove")
+        getAllData()
       },3000)
+      document.querySelector(".overly").style.display = "none"
     })
   }
 
@@ -70,11 +72,12 @@ function Equipement() {
 
   useEffect(()=>{
     getAllData();
-  })
+  },[])
 
   return (
     <div className="equipement-section">
       <ConfirmDelete />
+      <SuccessAction />
       <AddEquipement />
       <AddTask id={equipID.id}/>
       <HeaderContent title = "Liste d'équipement"/>
