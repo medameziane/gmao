@@ -63,15 +63,15 @@ function AddTask(props){
     document.querySelector(".overly").style.display = "none"
     document.querySelector(".success-task .card-success").classList.add("showTask")
     setTimeout(()=>{
-      document.querySelector(".success-task .card-success").classList.remove("showTask")
-      navigate(0)
-    },3000)
+        document.querySelector(".success-task .card-success").classList.remove("showTask")
+        navigate(0)
+      },3000)
     
     if(props.id){
       navigate("/equipement-details/"+props.id)
     }
-    e.target.reset();
-  };
+      e.target.reset();
+    };
 
   useEffect(() => {
     getAllData()
@@ -88,7 +88,7 @@ function AddTask(props){
               <div className="form-details">
                 <div className="input-box">
                   {
-                    props.id?equipements.map(equip=>{
+                    props.id ? equipements.map(equip=>{
                       return equip.id === props.id ?<input type ="text" key={equip.id} readOnly defaultValue={equip.nom}/>:""
                     }):
                     <>
@@ -100,21 +100,30 @@ function AddTask(props){
                     </>
                   }
                 </div>
+
                 <div className="input-box">
                   <label htmlFor='start_date' className="details">Démarrer la tâche le</label>
-                  <input type="date" placeholder="start_date" id="start_date" name='start_date' min={getYears+"-"+getMonth+"-"+getDay} onChange={(e)=>{setTaskData({...taskData , "start_date" : e.target.value})
-                setInputEtat(false)}} required/>
+                  {
+                    props.startDate ?<input type="date" defaultValue={props.startDate} readOnly/> // If true 
+                    : <input type="date" placeholder="start_date" id="start_date" name='start_date' min={getYears+"-"+getMonth+"-"+getDay} onChange={(e)=>{setTaskData({...taskData , "start_date" : e.target.value})
+                    setInputEtat(false)}} required/> // If false
+                  }
                 </div>
+
                 <div className="input-box">
                   <label htmlFor='end_date' className="details">Fin de tâche le</label>
-                  <input type="date" placeholder="end_date" id="end_date" disabled = {inputEtat} name='end_date' min={taskData.start_date} onChange={(e)=>{setTaskData({...taskData , "end_date" : e.target.value})}} required/>
+                  <input type="date" placeholder="end_date" id="end_date" name='end_date' min={taskData.start_date} onChange={(e)=>{setTaskData({...taskData , "end_date" : e.target.value})}} required/>
                 </div>
                 <div className="input-box">
                   <label htmlFor="description" className="details">Description</label>
                   <textarea placeholder="Description..." id="description" name="description" onChange={(e)=>{
                     if(props.id){
                       setTaskData({...taskData,"equipement_id" : props.id,"description" : e.target.value})
-                    }else{
+                    }
+                    else if(props.startDate){
+                      setTaskData({...taskData,"start_date" : props.startDate,"description" : e.target.value})
+                    }
+                    else{
                       setTaskData({...taskData,"description" : e.target.value})
                     }
                   }

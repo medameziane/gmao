@@ -1,11 +1,11 @@
 import './technician.css'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import HeaderContent from "../static/HeaderContent";
 import {CSVLink} from "react-csv"
 import jsPDF from "jspdf";
 import 'jspdf-autotable'
 import { Link } from 'react-router-dom';
+import HeaderContent from "../static/HeaderContent";
 import AddTechnicien from './AddTechnicien';
 import ConfirmDelete from '../static/ConfirmDelete';
 import SuccessAction from '../static/SuccessAction';

@@ -117,7 +117,7 @@ function AddEquipement() {
                   <input type="file" id="fileInput" onChange={handleImage} required/>
                   <span className="input-error">{handleError.image}</span>
                 </div>
-                {/* <div className="input-box">
+                <div className="input-box">
                   <label htmlFor="name" className="details">Nom</label>
                   <input type="text" placeholder="Nom" id="name" name='nom' onChange={handleChange} required/>
                 </div>
@@ -170,7 +170,7 @@ function AddEquipement() {
                       })
                     }
                   </select>
-                </div> */}
+                </div>
               </div>
               <div className="button">
                 <input type="submit" value="Créer"/>

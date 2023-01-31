@@ -11,6 +11,7 @@ import TaskDetails from './content/tasks/TaskDetails'
 import Equipement from './content/equipments/Equipement'
 import EquipementDetails from './content/equipments/EquipementDetails'
 import TechnicianDetails from './content/technician/TechnicianDetails'
+import Calendar from './content/calendar/Calendar'
 
 function RoutePath() {
   return (
@@ -36,6 +37,8 @@ function RoutePath() {
 
               <Route path="/technician" element={<Technician />} />
               <Route path="/tech-details/:id" element={<TechnicianDetails />} />
+
+              <Route path="/calendar" element={<Calendar />} />
 
             </Routes>
           </div>

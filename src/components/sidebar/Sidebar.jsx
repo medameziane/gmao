@@ -35,6 +35,8 @@ function Sidebar() {
           <li className="nav-link"><Link to="/task"><span className="link-name"><i className="fa-solid fa-calendar-check"></i> Tâches</span></Link></li>
           <li className="nav-link"><Link to="/technician"><span className="link-name"><i className="fa-solid fa-users"></i> Techniciens</span></Link></li>
           <li className="nav-link"><Link to="/activity"><span className="link-name"><i className="fa-solid fa-screwdriver-wrench"></i> Activités</span></Link></li>
+          <li className="nav-link"><Link to="/calendar"><span className="link-name"><i className="fa-sharp fa-solid fa-calendar-days"></i>
+          Calendrier</span></Link></li>
           
           {/* <li className="nav-link" onClick={ShowMenu}><Link to="#"><span className="link-name"><i className="fa-solid fa-user"></i>Users</span> <i className="fa-solid fa-chevron-right arrow"></i></Link>
             <ul className="drop-menu">
