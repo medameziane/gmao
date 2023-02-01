@@ -72,7 +72,7 @@ function Equipement() {
 
   useEffect(()=>{
     getAllData();
-  },[])
+  },[equipements])
 
   return (
     <div className="equipement-section">

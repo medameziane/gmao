@@ -1,26 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import SuccessAction from '../static/SuccessAction';
+import { insertTech } from './techSlice';
 
 function AddTechnicien() {
-  const navigate = useNavigate()
   const [technicienData, setTechnicienData]= useState({});
   const [specialites, setSpecialites] = useState([]);
-
-  // main path php
-  const mainPath = (page, id, action) => {
-    if (page && id && action) {
-      return "http://localhost/gmao-react/backend/tables/" +page +"/" +id +"/" +action
-    } else if (page && id) {
-      return "http://localhost/gmao-react/backend/tables/" + page + "/" + id;
-    } else {
-      return "http://localhost/gmao-react/backend/tables/" + page;
-    }
-  }
+  const dispatch = useDispatch()
 
   const getAllData = () => {
-    axios.get(mainPath("specialite.php")).then(res=> setSpecialites(res.data));
+    axios.get("http://localhost/gmao-react/backend/tables/specialite.php").then(res=> setSpecialites(res.data));
   }
 
   const handleChange = (e)=>{
@@ -31,15 +21,14 @@ function AddTechnicien() {
   
   const handleForm = (e) => {
     e.preventDefault();
-    axios.post(mainPath("technicien.php"), technicienData);
     document.querySelector(".add-task .add-form").classList.remove("showTaskForm")
     document.querySelector(".success-technician .card-success").classList.add("showTech")
     setTimeout(()=>{
       document.querySelector(".success-technician .card-success").classList.remove("showTech")
-      navigate(0)
     },3000)
     document.querySelector(".overly").style.display = "none"
     e.target.reset();
+    dispatch(insertTech(technicienData))
   }
 
   const exitForm = () => {
@@ -47,7 +36,13 @@ function AddTechnicien() {
     document.querySelector(".overly").style.display = "none";
   }
 
-  useEffect(() => {
+  const specialities = specialites.map((sp)=>{
+    return (
+      <option key={sp.id} value={sp.id}>{sp.specialite}</option>
+    )
+  })
+
+  useEffect(()=>{
     getAllData()
   },[]);
 
@@ -80,13 +75,7 @@ function AddTechnicien() {
                   <label className="details">Spécifier la spécialité</label>
                   <select name='specialite_id' onChange={handleChange} required>
                     <option value="" disabled selected>Spécialité</option>
-                    {
-                      specialites.map((sp)=>{
-                        return (
-                          <option key={sp.id} value={sp.id}>{sp.specialite}</option>
-                        )
-                      })
-                    }
+                    {specialities}
                   </select>
                 </div>
               </div>

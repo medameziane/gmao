@@ -8,6 +8,7 @@ function AddEquipement() {
   const [equipementData,setEquipementData]=useState({})
   const [categorieData,setCategorieData]=useState({})
   const [handleError,setHandleError]=useState({})
+  const [inputEtat, setInputEtat] = useState(false)
   const formData = new FormData();
 
   const mainPath = (page, id, action) => {
@@ -26,7 +27,7 @@ function AddEquipement() {
   }
 
   const showHideInput = ()=>{
-    document.querySelector(".hide-categorie").classList.toggle("showHideCategoie")
+    document.querySelector(".hide-input").classList.toggle("showHideInput")
   }
 
   const handleImage = (e)=>{
@@ -68,15 +69,21 @@ function AddEquipement() {
     setEquipementData(values => ({...values , [name] : value}))
   }
 
+  const submitCategorie = ()=>{
+    if(categorieData.categorie){
+      axios.post(mainPath("categorie.php"),categorieData)
+      document.querySelector(".hide-input").classList.toggle("showHideInput")
+      setCategorieData('')
+      setInputEtat(true)
+    }
+  }
+
   const handleForm = (e)=>{
     e.preventDefault()
-    // handleImage()
-    // handleDocument()
-    // axios.post("http://localhost/gmao-react/backend/tables/equipement.php",formData)
-    // axios.post('http://localhost/gmao-react/backend/tables/equipement.php',equipementData)
-    if(categorieData.categorie){
-      axios.post('http://localhost/gmao-react/backend/tables/categorie.php',categorieData)
-    }
+    handleImage()
+    handleDocument()
+    axios.post(mainPath("equipement.php"),formData)
+    axios.post(mainPath("equipement.php"),equipementData)
     document.querySelector(".equipement-section .add-form").classList.remove("showEquipementForm")
     document.querySelector(".overly").style.display = "none"
     document.querySelector(".add-equipement .success-equip .card-success").classList.add("showEquip")
@@ -88,7 +95,7 @@ function AddEquipement() {
   
   useEffect(()=>{
     getAllData();
-  },[])
+  },[categories])
 
   return (
     <div className='add-equipement'>
@@ -143,7 +150,12 @@ function AddEquipement() {
                     </select>
                     <span className='btn-select-hidden' onClick={showHideInput}>Autre</span>
                   </div>
-                  <input type="text" className='hide-categorie' placeholder="Catégorie" name='categorie' onChange={(e)=>{setCategorieData({...categorieData , 'categorie' : e.target.value})}}/>
+                  <div className="sub-input">
+                    <div className="hide-input">
+                      <input type="text" className='hide-categorie' disabled = {inputEtat} placeholder="Catégorie" onChange={(e)=>{setCategorieData({...categorieData , 'categorie' : e.target.value})}}/>
+                      <span className='btn-action' onClick={submitCategorie}>Confirm</span>
+                    </div>
+                  </div>
                 </div>
                 <div className="input-box">
                   <label htmlFor="price" className="details">Prix</label>

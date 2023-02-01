@@ -12,8 +12,9 @@
   transform: translateX(0%);
   opacity: 1;
 }
-.equipement-section .add-form .sub-input {
+.equipement-section .add-form .sub-input{
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 .btn-select-hidden{
@@ -34,10 +35,15 @@
   margin: 10px auto;
   width: calc(100% - 100px);
   float: left;
+}
+.hide-input{
   display: none;
 }
-.equipement-section .add-form .hide-categorie.showHideCategoie{
-  display: block;
+.hide-input.showHideInput{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 .equipement-section .equipement-content .list-equipements{
   display: grid;

@@ -61,7 +61,7 @@ function Task() {
 
   useEffect(() => {
     getAllData();
-  },[]);
+  },[tasks]);
 
   return (
     <div className="task-section">
@@ -119,21 +119,21 @@ function Task() {
                             case "En cours":
                               return (
                               <>
-                                <i className="fa-solid fa-hourglass-half" style={{"color" : et.couleur}}></i>
+                                <i key={et.id} className="fa-solid fa-hourglass-half" style={{"color" : et.couleur}}></i>
                                 <p className="etat">{et.etat}</p>
                               </>
                               )
                             case "Terminée":
                               return (
                               <>
-                                <i className="fa-solid fa-circle-check" style={{"color" : et.couleur}}></i>
+                                <i key={et.id} className="fa-solid fa-circle-check" style={{"color" : et.couleur}}></i>
                                 <p className="etat">{et.etat}</p>
                               </>
                               )
                             case "En retard":
                               return (
                               <>
-                                <i className="fa-solid fa-circle-exclamation" style={{"color" : et.couleur}}></i>
+                                <i key={et.id} className="fa-solid fa-circle-exclamation" style={{"color" : et.couleur}}></i>
                                 <p className="etat">{et.etat}</p>
                               </>
                               )

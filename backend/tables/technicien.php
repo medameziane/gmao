@@ -10,7 +10,7 @@ include '../db.php';
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method){
   case "GET":
-    $sql = "SELECT * FROM technicien";
+    $sql = "SELECT technicien.* , specialite.specialite,specialite.id as sp_id FROM technicien,specialite WHERE technicien.specialite_id = specialite.id";
     $path = explode('/', $_SERVER['REQUEST_URI']);
     if (isset($path[5]) && is_numeric($path[5])){
       $sql = "SELECT * FROM technicien WHERE id = :id";

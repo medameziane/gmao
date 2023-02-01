@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2023 at 10:01 PM
+-- Generation Time: Jan 31, 2023 at 09:56 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -31,6 +31,7 @@ CREATE TABLE `activite` (
   `id` int(11) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
   `date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
   `dure` double DEFAULT NULL,
   `etat_id` int(11) DEFAULT NULL,
   `technicien_id` int(11) DEFAULT NULL,
@@ -41,20 +42,10 @@ CREATE TABLE `activite` (
 -- Dumping data for table `activite`
 --
 
-INSERT INTO `activite` (`id`, `description`, `date`, `dure`, `etat_id`, `technicien_id`, `tache_id`) VALUES
-(9, 'Description Description Description Description Description Description Description Description Desc', '0000-00-00', 10, 1, 1, 35),
-(10, 'Description Description Description Description Description Description Description Description Desc', '0000-00-00', 10, 3, 7, 35),
-(11, 'Description Description Description Description Description Description Description Description Desc', '0000-00-00', 10, 2, 3, 35),
-(12, 'Description Description Description Description Description Description Description Description Desc', '0000-00-00', 10, 4, 1, 35),
-(13, 'Description Description Description Description Description Description Description Description Desc', '0000-00-00', 10, 1, 7, 36),
-(14, 'Description Description Description Description Description Description Description Description Desc', '0000-00-00', 10, 3, 3, 36),
-(15, 'ffggfhg hgjhg gjgjg gjgjgj gjgjgj g jghjg', '0000-00-00', 10, 1, 1, 37),
-(16, 'hg hghg jhgjgh jjghjghj hgjgh jgh jgh jghjg ghj h jgj gh jghj', '0000-00-00', 10, 4, 15, 35),
-(17, 'new activity for this equipment', '0000-00-00', 10, 4, 3, 42),
-(18, 'Planned Planned Planned Planned Planned Planned', '0000-00-00', 10, 4, 1, 44),
-(19, 'gdf ffd  h hf', '0000-00-00', 10, 3, 3, 48),
-(20, 'fthfgh hfgfh  fg f  j   jhg ', '0000-00-00', 10, 4, 16, 48),
-(21, 'hgjgh jghj gjj hgjgj ghj', '0000-00-00', 10, 1, 7, 51);
+INSERT INTO `activite` (`id`, `description`, `date`, `end_date`, `dure`, `etat_id`, `technicien_id`, `tache_id`) VALUES
+(67, 'activity 1', '2023-01-30', '2023-01-31', 1, 3, 33, 165),
+(68, 'hjgfjg  jhkhkjk', '2023-01-31', '2023-02-02', 2, 1, 36, 165),
+(69, 'trhtyujyuyyiyui', '2023-01-30', '2023-02-08', 9, 2, 37, 168);
 
 -- --------------------------------------------------------
 
@@ -73,7 +64,10 @@ CREATE TABLE `categorie` (
 
 INSERT INTO `categorie` (`id`, `categorie`) VALUES
 (1, 'machaine'),
-(2, 'mechanique');
+(2, 'mechanique'),
+(3, 'Learning'),
+(7, 'categorie 10'),
+(12, 'categorie 11');
 
 -- --------------------------------------------------------
 
@@ -89,7 +83,7 @@ CREATE TABLE `equipement` (
   `prix` double DEFAULT NULL,
   `marque` varchar(100) DEFAULT NULL,
   `reference` varchar(100) DEFAULT NULL,
-  `piecedeRechange` tinyint(1) DEFAULT NULL,
+  `piecedeRechange` tinyint(1) DEFAULT 0,
   `document` varchar(100) DEFAULT NULL,
   `equip_image` varchar(255) NOT NULL,
   `categorie_id` int(11) DEFAULT NULL,
@@ -101,28 +95,9 @@ CREATE TABLE `equipement` (
 --
 
 INSERT INTO `equipement` (`id`, `nom`, `description`, `dateDebut`, `prix`, `marque`, `reference`, `piecedeRechange`, `document`, `equip_image`, `categorie_id`, `service_id`) VALUES
-(89, '33503-img-t', '', '2023-01-16', 5200, 'Compressor', '6.1981.1 - 619811', 0, '', '33503-img-t.jpg', 1, NULL),
-(109, '43681-inside-NXE3400-waferstage-during-exposure', '', '2023-01-16', 140, 'ghg', 'mù', 0, 'ggh', '43681-inside-NXE3400-waferstage-during-exposure.jpg', 1, NULL),
-(111, '43681-inside-NXE3400-waferstage-during-exposure', '', '2023-01-16', 1450, 'KAESER', 'Compressor KAESER', 0, 'C:fakepath	âches (1).pdf', '43681-inside-NXE3400-waferstage-during-exposure.jpg', 1, NULL),
-(113, 'CS805183 - New Industrial machine offering page - UL.com-2400x1600', '', '2023-01-16', 45200, 'KAESER', '6.1981.1 - 619811', 0, 'tâches.pdf', 'CS805183 - New Industrial machine offering page - UL.com-2400x1600.png', 2, NULL),
-(115, 'custom_machine_building_2d3a1d6c4660e39955aecb97f54c9b2c', '', '2023-01-16', 65200, 'Compressor', '6.1981.1 - 619811', 0, 'tâches 2.pdf', 'custom_machine_building_2d3a1d6c4660e39955aecb97f54c9b2c.jpg', 1, NULL),
-(117, 'Robotics-Production-Line-Belden-2020-07', '', '2023-01-16', 652100, 'Compressor', '6.1981.1 - 619811', 0, 'tâches 3.pdf', 'Robotics-Production-Line-Belden-2020-07.jpg', 2, NULL),
-(119, 'waterjetcutting_en_co_rs_w738_h415_image', '', '2023-01-16', 452100, 'KAESER', 'Compressor KAESER', 0, 'tâches 4.pdf', 'waterjetcutting_en_co_rs_w738_h415_image.jpg', 1, NULL),
-(121, 'Tebunus-Eigen-werkplaats', '', '2023-01-16', 4519, 'ghg', 'Compressor KAESER', 0, 'tâches 5.pdf', 'Tebunus-Eigen-werkplaats.jpg', 1, NULL),
-(123, 'BP73311-1920x1278', '', '2023-01-16', 45199, 'Compressor', '6.1981.1 - 619811', 0, 'tâches 5.pdf', 'BP73311-1920x1278.jpg', 1, NULL),
-(125, 'wasteboard_4-1', '', '2023-01-17', 52100, 'Compressor', '10', 0, 'tâches 8.pdf', 'wasteboard_4-1.jpg', 1, NULL),
-(137, '-S1200-FWEBP', '', '2023-01-18', 14520, 'Compressor', 'Compressor KAESER', 0, 'techniciens.pdf', '-S1200-FWEBP.png', 1, NULL),
-(142, 'BP73311-1920x1278', '', '2023-01-18', 145199, 'Compressor', '6.1981.1 - 619811', 0, 'techniciens.pdf', 'BP73311-1920x1278.jpg', 2, 5),
-(145, 'Construction-3D-printers-aspect-ratio-420-216-1', '', '2023-01-18', 45200, 'Compressor', '6.1981.1 - 619811', 0, 'techniciens.pdf', 'Construction-3D-printers-aspect-ratio-420-216-1.jpg', 1, 1),
-(146, '43681-inside-NXE3400-waferstage-during-exposure', '', '2023-01-18', 1450, 'KAESER', '6.1981.1 - 619811', 0, 'techniciens.pdf', '43681-inside-NXE3400-waferstage-during-exposure.jpg', 1, 1),
-(148, '43681-inside-NXE3400-waferstage-during-exposure 43681-inside-NXE3400-waferstage-during-exposure', 'gfgfg gfhghghfgh ', '2023-01-18', 1449, 'ghg', '6.1981.1 - 619811', 0, 'techniciens.pdf', '43681-inside-NXE3400-waferstage-during-exposure.jpg', 1, 4),
-(150, 'CS805183 - New Industrial machine offering page - UL.com-2400x1600', '', '2023-01-18', 45800, 'Compressor', '6.1981.1 - 619811', 0, 'techniciens.pdf', 'CS805183 - New Industrial machine offering page - UL.com-2400x1600.png', 1, 1),
-(152, 'Robotics-Production-Line-Belden-2020-07', '', '2023-01-18', 8521, 'Compressor', '6.1981.1 - 619811', 0, 'techniciens.pdf', 'Robotics-Production-Line-Belden-2020-07.jpg', 1, 4),
-(154, '43681-inside-NXE3400-waferstage-during-exposure 43681-inside-NXE3400-waferstage-during-exposure 4368', '', '2023-01-18', 7856, 'Compressor', '6.1981.1 - 619811', 0, 'tâches (1).pdf', '43681-inside-NXE3400-waferstage-during-exposure.jpg', 1, 4),
-(156, '43681-inside-NXE3400-waferstage-during-exposure', '', '2023-01-18', 68538, 'Compressor', '6.1981.1 - 619811', 0, 'techniciens.pdf', '43681-inside-NXE3400-waferstage-during-exposure.jpg', 1, 3),
-(158, 'Terry', '', '2023-01-18', 7853, 'Compressor', '6.1981.1 - 619811', 0, 'techniciens.pdf', '43681-inside-NXE3400-waferstage-during-exposure.jpg', 1, 4),
-(160, '43681-inside-NXE3400-waferstage-during-exposure', '', '2023-01-18', 68500, 'KAESER', '6.1981.1 - 619811', 0, 'techniciens.pdf', '43681-inside-NXE3400-waferstage-during-exposure.jpg', 2, 4),
-(162, '43681-inside-NXE3400-waferstage-during-exposure', '43681-inside-NXE3400-waferstage-during-exposure', '2023-01-18', 6500, 'Compressor', 'Compressor KAESER', 0, 'techniciens.pdf', '43681-inside-NXE3400-waferstage-during-exposure.jpg', 1, 4);
+(252, 'Fusce a magna eget dolor laoreet sollicitudin.', 'Praesent accumsan lacinia ligula, sollicitudin sollicitudin mauris tempus eget. Maecenas commodo turpis at enim pulvinar viverra. In ac dignissim magna. Vestibulum facilisis porta fermentum.', '2023-01-24', 14520, 'KAESER', '6.1981.1 - 619811', 0, '2301240301240124tâches.pdf', '2301240301240124CustomMachine2-crop.jpg', 1, 4),
+(285, 'equipement editable 1214', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words,', '2023-01-26', 65412, 'Compressor', '6.1981.1 - 619811', 0, '23012601011801182301240301120112TD_1 .pdf', '2301260101180118DSC00650-2.jpg', 2, 1),
+(289, 'equipement editable 152', 'Mauris porttitor, mauris eget tincidunt aliquet, libero risus pharetra orci, blandit luctus sem eros at nisl. Proin maximus quam nisl, egestas dictum felis laoreet id.', '2023-01-27', 14438, 'Compressor', '6.1981.1 - 619811', 0, '23012706013001302301240301240124tâches.pdf', '2301270601300130Robotics-Production-Line-Belden-2020-07.jpg', 12, 4);
 
 -- --------------------------------------------------------
 
@@ -166,8 +141,7 @@ CREATE TABLE `etat` (
 INSERT INTO `etat` (`id`, `etat`, `couleur`) VALUES
 (1, 'En retard', 'red'),
 (2, 'Terminée', 'green'),
-(3, 'En cours', 'purple'),
-(4, 'En retard et commencé', 'orange');
+(3, 'En cours', 'Orange');
 
 -- --------------------------------------------------------
 
@@ -235,7 +209,8 @@ CREATE TABLE `tache` (
   `id` int(11) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `dure` double DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `dure` int(11) DEFAULT 0,
   `etat_id` int(11) DEFAULT NULL,
   `equipement_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -244,19 +219,17 @@ CREATE TABLE `tache` (
 -- Dumping data for table `tache`
 --
 
-INSERT INTO `tache` (`id`, `description`, `date`, `dure`, `etat_id`, `equipement_id`) VALUES
-(35, 'Description Description Description Description Description Description Description Description Desc', '2023-01-16', 10, 3, 113),
-(36, 'Tache here', '2023-01-16', 10, 1, 117),
-(37, 'ffggfhg hgjhg gjgjg gjgjgj gjgjgj g jghjg', '2023-01-17', 10, 1, 113),
-(39, 'Tache very important Tache very important Tache very important Tache very important Tache very impor', '2023-01-17', 10, 1, 117),
-(42, 'Task for this equipment', '2023-01-18', 10, 4, 137),
-(43, 'Construction-3D-printers-aspect-ratio-420-216-1 Construction-3D-printers-aspect-ratio-420-216-1', '2023-01-18', 10, 4, 145),
-(44, 'Construction-3D-printers-aspect-ratio-420-216-1 Construction-3D-printers-aspect-ratio-420-216-1', '2023-01-18', 10, 4, 145),
-(45, '1s infinite alternate identifier  1s infinite alternate identifier  v', '2023-01-18', 10, 1, 113),
-(48, 'fhghhg ghj jj', '2023-01-18', 10, 1, 109),
-(49, 'fghfh hfg fgjgf fg jf jj j fjfjghj', '2023-01-18', 10, 1, 113),
-(50, 'fdhgdfdg hggfgf jhgjhg jjfjff jj', '2023-01-18', 10, 1, 111),
-(51, 'ghg jgj gjghj  jjgh jgghjg', '2023-01-18', 10, 3, 123);
+INSERT INTO `tache` (`id`, `description`, `date`, `end_date`, `dure`, `etat_id`, `equipement_id`) VALUES
+(154, 'fgfhgfggj', '2023-01-29', '2023-01-30', 1, 2, 285),
+(165, 'TACHE 40', '2023-01-29', '2023-02-09', 11, 1, 285),
+(167, 'tache 50', '2023-01-28', '2023-02-11', 14, 3, 289),
+(168, 'tache 60', '2023-01-29', '2023-02-04', 6, 1, 285),
+(171, 'tacvhe 112', '2023-01-30', '2023-01-31', 1, 2, 252),
+(172, 'fd jg hj', '2023-01-28', '2023-01-30', 2, 1, 285),
+(173, 'ttvtttggt', '2023-02-01', '2023-03-03', 30, 3, 285),
+(174, 'ghjjhk', '2023-01-03', '2023-01-31', 28, 1, 285),
+(175, 'tache test', '2023-02-01', '2023-02-01', 0, 3, 289),
+(176, 'task test', '2023-01-08', '2023-01-08', 0, 2, 285);
 
 -- --------------------------------------------------------
 
@@ -278,11 +251,12 @@ CREATE TABLE `technicien` (
 --
 
 INSERT INTO `technicien` (`id`, `nom`, `prenom`, `email`, `tel`, `specialite_id`) VALUES
-(1, 'Oussama', 'Chakroun', 'choussama816@gmail.com', '0641254152', 1),
-(3, 'Anas', 'Srija', 'anas2540@gmail.com', '0625314125', 3),
-(7, 'Ameziane', 'Mohammed', 'ameziane45@gmail.com', '0685412543', 2),
-(15, 'Ali', 'Ali', 'ali@gmail.com', '0655620287', 2),
-(16, 'Youness', 'Idrissi', 'youness@gmail.com', '0102030410', 3);
+(32, 'Oussama', 'Chakroun', 'oussama@gmail.com', '0102034020', 1),
+(33, 'Ameziane', 'Mohammed', 'mohamed@gmail.com', '0102030410', 2),
+(34, 'Srija', 'Anas', 'anas@gmail.com', '0620010504', 3),
+(35, 'Idrissi', 'Youness', 'youness@gmail.com', '0102034020', 2),
+(36, 'Kamal', 'Kamli', 'kamal@gmail.com', '0102034020', 2),
+(37, 'simo', 'simo', 'simo@gmail.com', '0102030406', 1);
 
 --
 -- Indexes for dumped tables
@@ -367,19 +341,19 @@ ALTER TABLE `technicien`
 -- AUTO_INCREMENT for table `activite`
 --
 ALTER TABLE `activite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `categorie`
 --
 ALTER TABLE `categorie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `equipement`
 --
 ALTER TABLE `equipement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=293;
 
 --
 -- AUTO_INCREMENT for table `etablissement`
@@ -415,13 +389,13 @@ ALTER TABLE `specialite`
 -- AUTO_INCREMENT for table `tache`
 --
 ALTER TABLE `tache`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
 -- AUTO_INCREMENT for table `technicien`
 --
 ALTER TABLE `technicien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- Constraints for dumped tables

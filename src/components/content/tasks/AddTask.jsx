@@ -63,9 +63,9 @@ function AddTask(props){
     document.querySelector(".overly").style.display = "none"
     document.querySelector(".success-task .card-success").classList.add("showTask")
     setTimeout(()=>{
-        document.querySelector(".success-task .card-success").classList.remove("showTask")
-        navigate(0)
-      },3000)
+      document.querySelector(".success-task .card-success").classList.remove("showTask")
+      // navigate(0)
+    },3000)
     
     if(props.id){
       navigate("/equipement-details/"+props.id)
@@ -100,19 +100,20 @@ function AddTask(props){
                     </>
                   }
                 </div>
-
                 <div className="input-box">
                   <label htmlFor='start_date' className="details">Démarrer la tâche le</label>
                   {
-                    props.startDate ?<input type="date" defaultValue={props.startDate} readOnly/> // If true 
-                    : <input type="date" placeholder="start_date" id="start_date" name='start_date' min={getYears+"-"+getMonth+"-"+getDay} onChange={(e)=>{setTaskData({...taskData , "start_date" : e.target.value})
+                    props.bet_date ?<input type="date" defaultValue={props.bet_date.startStr} readOnly/> // If true 
+                    : <input type="date" id="start_date" min={getYears+"-"+getMonth+"-"+getDay} onChange={(e)=>{setTaskData({...taskData , "start_date" : e.target.value})
                     setInputEtat(false)}} required/> // If false
                   }
                 </div>
-
                 <div className="input-box">
                   <label htmlFor='end_date' className="details">Fin de tâche le</label>
-                  <input type="date" placeholder="end_date" id="end_date" name='end_date' min={taskData.start_date} onChange={(e)=>{setTaskData({...taskData , "end_date" : e.target.value})}} required/>
+                  {
+                    props.bet_date ?<input type="date" defaultValue={props.bet_date.endStr} readOnly/> // If true 
+                    : <input type="date" disabled={inputEtat} id="end_date" min={taskData.start_date} onChange={(e)=>{setTaskData({...taskData , "end_date" : e.target.value})}} required/> // If false
+                  }
                 </div>
                 <div className="input-box">
                   <label htmlFor="description" className="details">Description</label>
@@ -120,8 +121,8 @@ function AddTask(props){
                     if(props.id){
                       setTaskData({...taskData,"equipement_id" : props.id,"description" : e.target.value})
                     }
-                    else if(props.startDate){
-                      setTaskData({...taskData,"start_date" : props.startDate,"description" : e.target.value})
+                    else if(props.bet_date){
+                      setTaskData({...taskData,"start_date":props.bet_date.startStr,"end_date":props.bet_date.endStr,"description":e.target.value})
                     }
                     else{
                       setTaskData({...taskData,"description" : e.target.value})
@@ -132,7 +133,7 @@ function AddTask(props){
                 <div className="input-box">
                   <label className="details">Spécifier l'état</label>
                   <select name='etat_id' onChange={handleChange} required>
-                    <option value="" disabled selected>Spécifier l'état</option>{
+                    <option defaultValue="" disabled selected>Spécifier l'état</option>{
                     etat.map(et=>{
                       return(<option key={et.id} value={et.id}>{et.etat}</option>)
                       })

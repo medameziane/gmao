@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import HeaderContent from "../static/HeaderContent";
 import axios from "axios";
-import FullCalendar from "@fullcalendar/react";
-import daygridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
 import AddTask from "../tasks/AddTask";
+import FullCalendar from '@fullcalendar/react'
+import daygridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from "@fullcalendar/interaction";
 
 function Calendar() {
   const [tasks, setTasks] = useState([]);
   const [events, setEvents] = useState([]);
   const [etat, setEtat] = useState([]);
-  const [startDate, setStartDate]= useState([]);
+  const [betDate, setBetDate]= useState([]);
 
   const getAllData = () => {
     axios.get("http://localhost/gmao-react/backend/tables/task.php").then(res=>setTasks(res.data))
@@ -25,7 +26,7 @@ function Calendar() {
   const getEvent = () => {
     const event = tasks.map(a => {
       const startDate = new Date(a.date);
-      const endDate = new Date(startDate.setDate(startDate.getDate() + a.dure));
+      const endDate = new Date(a.end_date);
       return (
         {
           title: a.description,
@@ -43,55 +44,39 @@ function Calendar() {
     document.querySelector(".add-task .add-form").classList.add("showTaskForm");
     document.querySelector(".overly").style.display = "block";
     const {startStr,endStr} = info;
-    // const eventNamePrompt = prompt("Enter, event name");
-    // if (eventNamePrompt) {
-    //   setEvents([...events,{
-    //     startStr,
-    //     endStr,
-    //     title: eventNamePrompt,
-    //     allDay: false,
-    //     backgroundColor: "red",
-    //     id: "000",
-    //   }]);
-    // }
-    setStartDate(startStr)
+    setBetDate({startStr,endStr})
   };
-
-  // const EventItem = ({info})=>{
-  //   const { event } = info;
-  //   return (
-  //     <div>
-  //       <p>{event.title}</p>
-  //       <p>{event.backgroundColor}</p>
-  //     </div>
-  //   );
-  // };
-
 
   useEffect(() => {
     getAllData()
     getEvent()
-  }, [])
+  },[events])
 
+  const eventInfo = (info)=>{
+    console.log(info)
+  }
   return (
     <div className="calendar-content">
       <HeaderContent title = "Calendrier"/>
-      <AddTask startDate ={startDate} />
+      <AddTask bet_date ={betDate} />
       <div className="box-content">
         <div className="box-body">
           <FullCalendar
+            initialView='dayGridMonth'
             events={events}
             // eventContent={info=><EventItem info={info} />}
             // editable
             selectable
             select={handleSelect}
-
+            eventClick={eventInfo}
             headerToolbar={{
               left: "today prev next",
               center: "title",
-              end: "dayGridMonth dayGridWeek dayGridDay",
+              // end: "dayGridMonth dayGridWeek dayGridDay",
+              end: 'dayGridMonth,timeGridWeek,timeGridDay'
             }}
-            plugins={[daygridPlugin, interactionPlugin]}
+
+            plugins={[daygridPlugin, timeGridPlugin, interactionPlugin]}
             views={["dayGridMonth", "dayGridWeek", "dayGridDay"]}
           />
         </div>

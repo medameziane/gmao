@@ -1,6 +1,6 @@
 import './technician.css'
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import {CSVLink} from "react-csv"
 import jsPDF from "jspdf";
 import 'jspdf-autotable'
@@ -9,45 +9,28 @@ import HeaderContent from "../static/HeaderContent";
 import AddTechnicien from './AddTechnicien';
 import ConfirmDelete from '../static/ConfirmDelete';
 import SuccessAction from '../static/SuccessAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteTech, getTech } from './techSlice';
 
 function Technician() {
-  const [techniciens, setTechniciens] = useState([]);
-  const [specialites, setSpecialites] = useState([]);
+  const techniciens = useSelector(state => state.technicien)
+  const dispatch =  useDispatch()
 
-  // main path php
-  const mainPath = (page, id, action) => {
-    if (page && id && action) {
-      return "http://localhost/gmao-react/backend/tables/" +page +"/" +id +"/" +action
-    } else if (page && id) {
-      return "http://localhost/gmao-react/backend/tables/" + page + "/" + id;
-    } else {
-      return "http://localhost/gmao-react/backend/tables/" + page;
-    }
-  };
-
-  const getAllData = () => {
-    axios.get(mainPath("technicien.php")).then(res=>setTechniciens(res.data))
-    axios.get(mainPath("specialite.php")).then(res=> setSpecialites(res.data))
-  };
-
-  // Export Data to pdf
   const pdfData = ()=>{
     const pdf = new jsPDF()
     pdf.autoTable({html:"#techniciens"})
     pdf.save('techniciens.pdf')
   }
 
-
   const handleDelete = (id)=>{
     document.querySelector(".confirm-delete").classList.add("show")
     document.querySelector(".overly").style.display = "block"
     document.querySelector(".delete-actions .confirm").addEventListener(("click"),()=>{
-      axios.delete((mainPath("technicien.php",id)))
+      dispatch(deleteTech(id))
       document.querySelector(".confirm-delete").classList.remove("show")
       document.querySelector(".success-action .success-remove .card-success").classList.add("showRemove")
       setTimeout(()=>{
         document.querySelector(".success-action .success-remove .card-success").classList.remove("showRemove")
-        getAllData()
       },3000)
       document.querySelector(".overly").style.display = "none"
     })
@@ -59,8 +42,24 @@ function Technician() {
   };
 
   useEffect(() => {
-    getAllData()
-  },[]);
+    dispatch(getTech())
+  },[techniciens]);
+
+  const loopData = techniciens.map(tech=>{
+    return (
+      <tr key={tech.id}>
+        <td><Link to={"/tech-details/"+tech.id}>{tech.nom+" "+tech.prenom}</Link></td>
+        <td>{tech.email}</td>
+        <td>{tech.specialite}</td>
+        <td>
+          <div className="actions">
+            <i className="fa-solid fa-trash-can icon-delete" onClick={()=>{handleDelete(tech.id)}}></i>
+            <Link to={"/tech-details/"+tech.id}><i className="fa-solid fa-eye icon-edit"></i></Link>
+          </div>
+        </td>
+      </tr>
+    )
+  })
 
   return (
     <div className="technician-section">
@@ -90,37 +89,7 @@ function Technician() {
                 <td>Actions</td>
               </tr>
             </thead>
-            <tbody>
-              {
-                techniciens.map((tech) => {
-                  return (
-                    <tr key={tech.id}>
-                      <td>
-                        <div className="task-quick-info">
-                          <ul>
-                            <li><Link to={"/tech-details/"+tech.id}>{tech.nom+" "+tech.prenom}</Link></li>
-                          </ul>
-                        </div>
-                      </td>
-                      <td>{tech.email}</td>
-                      <td>{
-                        specialites.map(sp=>{
-                          if(tech.specialite_id === sp.id){
-                            return sp.specialite
-                          }
-                        })
-                      }</td>
-                      <td>
-                        <div className="actions">
-                          <i className="fa-solid fa-trash-can icon-delete" onClick={()=>{handleDelete(tech.id)}}></i>
-                          <Link to={"/tech-details/"+tech.id}><i className="fa-solid fa-eye icon-edit"></i></Link>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
-              }
-            </tbody>
+            <tbody>{loopData}</tbody>
           </table>
         </div>
         </div>
